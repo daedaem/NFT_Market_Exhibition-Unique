@@ -16,11 +16,13 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// implementation 'org.springframework.boot:spring-boot-starter-security'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -55,7 +57,8 @@ dependencies {
     
     // https://mvnrepository.com/artifact/org.web3j/core
 	implementation group: 'org.web3j', name: 'core', version: '4.9.0'
-    
+	
+	implementation 'com.github.ipfs:java-ipfs-http-client:v1.3.3'
 }
 
 tasks.named('test') {
