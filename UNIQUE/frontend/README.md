@@ -1,64 +1,24 @@
-## Guide for Testing Smart Contracts
-<br/>
+# frontend
 
-### Prerequisites
-
-```bash
-$ npm install -g truffle
-$ npm i
+## Project setup
+```
+npm install
 ```
 
-<br/>
-
-### ```truffle-config.js``` 설정
-
-<br/>
-아래 부분을 테스트 환경에 맞게 변경
-
-```js
-module.exports = {
-  networks: {
-     development: {
-      host: "127.0.0.1",    
-      port: 7545,           
-      network_id: "*",    
-     },
-     ...
-  }
-}
+### Compiles and hot-reloads for development
+```
+npm run serve
 ```
 
-위 --network 옵션을 지정하지 않고 truffle test 실행  시, "development"를 기본으로 지정함.
-
-```bash
-$ truffle test --network <network-name>
+### Compiles and minifies for production
 ```
-<br/>
-
-### 테스트 코드 실행
-
-```bash
-$ truffle test ./test/NFTCreateorTest.js
-$ truffle test ./test/SaleTest.js
+npm run build
 ```
 
-<br/>
-<br/>
-
-# NFT 프론트엔드
-
-
-### Installation
-
-``` bash
-$ npm install
-
+### Lints and fixes files
+```
+npm run lint
 ```
 
-
-### Basic Usage
-
-
-``` bash
-$ npm run start
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
