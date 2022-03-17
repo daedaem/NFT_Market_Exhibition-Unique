@@ -1,5 +1,6 @@
-package com.ssafy.unique.ipfsdemo;
+package com.ssafy.unique.ipfsdemo.service;
 
+import com.ssafy.unique.ipfsdemo.config.IPFSConfig;
 import io.ipfs.api.IPFS;
 import io.ipfs.api.MerkleNode;
 import io.ipfs.api.NamedStreamable;

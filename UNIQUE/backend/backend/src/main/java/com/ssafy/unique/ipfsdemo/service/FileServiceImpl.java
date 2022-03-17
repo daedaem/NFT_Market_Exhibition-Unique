@@ -1,4 +1,4 @@
-package com.ssafy.unique.ipfsdemo;
+package com.ssafy.unique.ipfsdemo.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

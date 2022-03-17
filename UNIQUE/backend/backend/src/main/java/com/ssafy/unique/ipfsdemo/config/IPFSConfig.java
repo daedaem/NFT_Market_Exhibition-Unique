@@ -1,4 +1,4 @@
-package com.ssafy.unique.ipfsdemo;
+package com.ssafy.unique.ipfsdemo.config;
 
 import io.ipfs.api.IPFS;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class IPFSConfig {
 
 
-    IPFS ipfs;
+    public IPFS ipfs;
     public IPFSConfig() {
 
         ipfs = new IPFS("localhost",5001);

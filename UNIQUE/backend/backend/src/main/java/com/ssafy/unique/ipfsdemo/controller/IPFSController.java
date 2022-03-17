@@ -1,5 +1,6 @@
-package com.ssafy.unique.ipfsdemo;
+package com.ssafy.unique.ipfsdemo.controller;
 
+import com.ssafy.unique.ipfsdemo.service.IPFSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
