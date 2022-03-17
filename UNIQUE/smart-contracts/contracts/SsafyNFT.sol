@@ -63,9 +63,13 @@ contract SsafyNFT is ERC721 {
         // TODO
         return tokenURIs[tokenId];
     }
-    // function current() public view returns (uint256) {
-    //     return Counters._tokenIds;
-    // }
+    function current() public view returns (uint256) {
+        // return _tokenIds;
+        // _tokenIds = Counters._value;
+        uint256 tokenid = _tokenIds.current();
+        return tokenid;
+    }
+    
     function create(address to, string memory _tokenURI) public returns (uint256) {
         // TODO
         // 현재까지 생성된 NFT 토큰 ID에서 하나 올린다.
@@ -82,7 +86,6 @@ contract SsafyNFT is ERC721 {
 
         // 새 NFTID와 NFT의 JSON정보인 URI로 토큰 URI 생성
         tokenURIs[newItemid] = _tokenURI;
-
         return newItemid;
     }
 }
