@@ -32,9 +32,29 @@ import HeaderMain from './components/common/HeaderMain.vue';
 import LogoLink from './components/common/LogoLink.vue';
 import ButtonLink from './components/common/ButtonLink.vue';
 import ButtonGroup from './components/common/ButtonGroup.vue';
+import FullScreenSlider from './components/common/FullScreenSlider.vue';
+import SectionHeading from './components/common/SectionHeading.vue';
+import ProductsContainer from './components/section/ProductsContainer.vue';
+import Featured from './components/section/Featured.vue';
+import HowItWork from './components/section/HowItWork.vue';
+import Category from './components/section/Category.vue';
+import Newsletter from './components/section/Newsletter.vue';
+import Footer from './pages/Footer.vue';
+import FooterSection from './components/section/FooterSection.vue';
+
 
 app.component('HeaderMain', HeaderMain);
 app.component('LogoLink', LogoLink)
 app.component('ButtonLink', ButtonLink)
 app.component('ButtonGroup', ButtonGroup)
+app.component('FullScreenSlider', FullScreenSlider)
+app.component('SectionHeading', SectionHeading);
+app.component('ProductsContainer', ProductsContainer)
+app.component('Featured', Featured)
+app.component('HowItWork', HowItWork)
+app.component('Category', Category)
+app.component('Newsletter', Newsletter)
+app.component('Footer', Footer)
+app.component('FooterSection', FooterSection)
+
 app.use(router).mount('#app')
