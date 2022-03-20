@@ -213,34 +213,7 @@ let SectionData = {
           badge: "New",
           badgeClass: "badge text-primary bg-primary-50",
         },
-        {
-          id: 3,
-          title: "Explore v3",
-          path: "/explore-v3",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 4,
-          title: "Explore v4",
-          path: "/explore-v4",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 5,
-          title: "Explore v5",
-          path: "/explore-v5",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 5,
-          title: "Explore v6",
-          path: "/explore-v6",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
+
         {
           id: 6,
           title: "Item Details",

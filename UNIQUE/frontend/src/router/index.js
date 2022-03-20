@@ -12,6 +12,16 @@ const routes = [
     component: () => import("../pages/ProductDetail.vue"),
     props: true,
   },
+  {
+    path: "/explore",
+    name: "explore",
+    component: () => import("../pages/Explore.vue"),
+  },
+  {
+    path: "/explore-v2",
+    name: "exploreV2",
+    component: () => import("../pages/Explore-v2.vue"),
+  },
 ];
 
 const router = createRouter({
