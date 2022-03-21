@@ -27,9 +27,7 @@ $menu-sub-gap-x: $menu-sub-gap-y;
 
 $header-main-gap-y: 14px;
 $header-main-border-width: 1px;
-$header-height: (
-  $header-main-gap-y * 2 + $logo-height + $header-main-border-width
-);
+$header-height: ($header-main-gap-y * 2 + $logo-height + $header-main-border-width);
 
 //font weight
 $fw-light: 300;

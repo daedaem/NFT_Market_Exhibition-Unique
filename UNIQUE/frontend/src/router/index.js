@@ -22,6 +22,17 @@ const routes = [
     name: "exploreV2",
     component: () => import("../pages/Explore-v2.vue"),
   },
+
+  {
+    path: "/create",
+    name: "create",
+    component: () => import("../pages/Create.vue"),
+  },
+  {
+    path: "/create-single",
+    name: "create-single",
+    component: () => import("../pages/CreateSingle.vue"),
+  },
 ];
 
 const router = createRouter({

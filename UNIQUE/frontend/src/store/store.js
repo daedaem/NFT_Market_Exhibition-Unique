@@ -213,24 +213,6 @@ let SectionData = {
           badge: "New",
           badgeClass: "badge text-primary bg-primary-50",
         },
-
-        {
-          id: 6,
-          title: "Item Details",
-          path: "/product-details-v1-1",
-        },
-        {
-          id: 7,
-          title: "Item Details v2",
-          path: "/product-details-v2-1",
-        },
-        {
-          id: 8,
-          title: "Item Details v3",
-          path: "/product-details-v3-1",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
       ],
     },
     menuList3: {
