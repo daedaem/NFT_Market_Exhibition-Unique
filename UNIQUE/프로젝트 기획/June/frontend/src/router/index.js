@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Signup from "@/views/Signup.vue";
-import Home from "@/views/Home.vue";
-import Login from "@/views/Login.vue";
+import Signup from "@/pages/Signup.vue";
+import Home from "@/pages/Home.vue";
+import Login from "@/pages/Login.vue";
 import store from "@/store";
-import Shop from "@/views/Shop.vue";
-import MyPage from "@/views/MyPage.vue";
-import Item from "@/views/Item.vue";
-import Explorer from "@/views/Explorer.vue";
-import Escrow from "@/views/Escrow.vue";
+import Shop from "@/pages/Shop.vue";
+import MyPage from "@/pages/MyPage.vue";
+import Item from "@/pages/Item.vue";
+import Explorer from "@/pages/Explorer.vue";
+import Escrow from "@/pages/Escrow.vue";
 
 Vue.use(VueRouter);
 
@@ -136,8 +136,8 @@ const routes = [
       {
         name: "escrow.history",
         path: "history/:id",
-        component: () => import("@/components/escrow/EscrowHistory.vue")
-      }
+        component: () => import("@/components/escrow/EscrowHistory.vue"),
+      },
     ],
   },
   {
