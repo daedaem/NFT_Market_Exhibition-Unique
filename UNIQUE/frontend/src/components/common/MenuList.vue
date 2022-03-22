@@ -12,34 +12,23 @@
         </ul>
       </div>
     </li>
+    <li class="menu-item">
+      <router-link :to="SectionData.headerData.menuList3.navList[0].path" class="menu-link">{{ SectionData.headerData.menuList3.title }}</router-link>
+    </li>
     <li class="menu-item has-sub">
-      <a href="#" class="menu-link menu-toggle">{{ SectionData.headerData.menuList3.title }}</a>
+      <a href="#" class="menu-link menu-toggle">{{ SectionData.headerData.menuList2.title }}</a>
       <div class="menu-sub">
         <ul class="menu-list">
-          <li class="menu-item" v-for="nav in SectionData.headerData.menuList3.navList" :key="nav.id">
-            <router-link :to="nav.path" class="menu-link">{{ nav.title }}</router-link>
+          <li class="menu-item" v-for="nav in SectionData.headerData.menuList2.navList" :key="nav.id">
+            <router-link :to="nav.path" class="menu-link"
+              >{{ nav.title }} <span :class="nav.badgeClass" v-if="nav.badge">{{ nav.badge }}</span></router-link
+            >
           </li>
         </ul>
       </div>
-    </li>
-    <li class="menu-item has-sub">
-      <a href="#" class="menu-link menu-toggle">{{ SectionData.headerData.menuList4.title }}</a>
-      <div class="menu-sub menu-mega">
-        <div class="menu-mega-row">
-          <ul class="menu-list menu-list-mega">
-            <li class="menu-item" v-for="nav in SectionData.headerData.menuList4.navList" :key="nav.id">
-              <router-link :to="nav.path" class="menu-link"
-                >{{ nav.title }} <span :class="nav.badgeClass" v-if="nav.badge">{{ nav.badge }}</span></router-link
-              >
-            </li>
-          </ul>
-          <ul class="menu-list menu-list-mega">
-            <li class="menu-item" v-for="nav in SectionData.headerData.menuList4.navListTwo" :key="nav.id">
-              <router-link :to="nav.path" class="menu-link">{{ nav.title }}</router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
+    </li>  
+    <li class="menu-item">
+      <router-link :to="SectionData.headerData.menuList5.navList[0].path" class="menu-link">{{ SectionData.headerData.menuList5.title }}</router-link>
     </li>
   </ul>
 </template>
