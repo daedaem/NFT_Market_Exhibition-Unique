@@ -22,7 +22,7 @@
                 <h5 class="mb-3">Upload file</h5>
                 <div class="file-upload-wrap">
                   <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
-                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" hidden />
+                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFilefunction" hidden />
                   <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
                 </div>
               </div>
@@ -108,11 +108,11 @@
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
-                  <input type="text" class="form-control form-control-s1" placeholder="e. g. Redeemable T-Shirt with logo" />
+                  <input type="text" class="form-control form-control-s1" v-model="form.title" placeholder="e. g. Redeemable T-Shirt with logo" />
                 </div>
                 <div class="mb-4">
                   <label class="mb-2 form-label">Description</label>
-                  <textarea name="message" class="form-control form-control-s1" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
+                  <textarea name="message" class="form-control form-control-s1" v-model="form.description" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="mb-2 form-label">Royalties</label>
@@ -121,7 +121,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-              <button class="btn btn-dark" type="button">Create Item</button>
+              <button class="btn btn-dark" type="button" @click="submitCreateNFT">Create Item</button>
             </form>
           </div>
           <!-- endn col -->
@@ -139,6 +139,8 @@
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
+import axios from "axios";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import SectionData from "@/store/store.js";
 export default {
   name: "CreateSingle",
@@ -147,7 +149,44 @@ export default {
       SectionData,
       selected: "Select Collection",
       options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
+      // d
+      form: {
+        files: null,
+        title: null,
+        description: null,
+      },
     };
+  },
+  methods: {
+    selectFilefunction(data) {
+      if (data.type.includes("video")) {
+        // 나는 비디오
+        this.form.files = {
+          type: "video",
+          content: data[0],
+          // previewImage: URL.createObjectURL(data[i]),
+        };
+      } else {
+        this.form.files = {
+          type: "img",
+          content: data[0],
+          // previewImage: URL.createObjectURL(data[i]),
+        };
+      }
+    },
+    submitCreateNFT() {
+      axios({
+        method: "POST",
+        url: `${SERVER_URL}/file`,
+        data: form,
+        headers: {
+          // Authorization: token,
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    },
   },
   mounted() {
     /*==============File upload =============== */
