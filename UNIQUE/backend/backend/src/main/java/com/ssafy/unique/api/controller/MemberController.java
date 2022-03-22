@@ -25,9 +25,6 @@ import com.ssafy.unique.api.service.MemberService;
 import com.ssafy.unique.jwt.JwtFilter;
 import com.ssafy.unique.jwt.TokenProvider;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(
 		origins = { "http://localhost:5500", "http://172.30.1.59:5500", "http://192.168.0.100:5500", "http://192.168.0.40:5500","https://j6e205.p.ssafy.io" },
@@ -54,11 +51,7 @@ public class MemberController {
 
 	private static final int SUCCESS = 1;
 	
-	@ApiOperation(value="로그인", notes="로그인하는 기능")
-	@ApiResponses({
-        @ApiResponse(code = 200, message = "로그인 성공"),
-        @ApiResponse(code = 500, message = "로그인 실패")
-	})
+
 	@PostMapping("/login")
 	public ResponseEntity<MemberRes> memberLogin(@RequestBody LoginReq loginReq) {
 		System.out.println("Enter memberLogin()");
