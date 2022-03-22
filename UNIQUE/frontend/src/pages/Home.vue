@@ -28,7 +28,7 @@
 
     <!-- trending-section -->
     <!-- Footer  -->
-    <Footer classname="on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
   </div>
   <!-- end page-wrap -->
 </template>
