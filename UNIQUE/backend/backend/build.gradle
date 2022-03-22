@@ -59,6 +59,9 @@ dependencies {
 	implementation group: 'org.web3j', name: 'core', version: '4.9.0'
 	
 	implementation 'com.github.ipfs:java-ipfs-http-client:v1.3.3'
+	
+	// SWAGGER UI
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 }
 
 tasks.named('test') {
