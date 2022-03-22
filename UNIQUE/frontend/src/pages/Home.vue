@@ -50,8 +50,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-footer {
-  background: black;
-}
-</style>
+<style scoped></style>

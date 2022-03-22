@@ -386,8 +386,8 @@ let SectionData = {
     products: [
       {
         id: 1,
-        img: require("@/images/thumb/nft-2.jpg"),
-        imgLg: require("@/images/thumb/nft-lg.jpg"),
+        img: require("@/images/thumb/nft-full.0609d1e0.jpg"),
+        imgLg: require("@/images/thumb/nft-full.0609d1e0.jpg"),
         title: "One Tribe Black Edition",
         content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
         author: "ZeniconStudio",
@@ -436,7 +436,7 @@ let SectionData = {
       },
       {
         id: 2,
-        img: require("@/images/thumb/nft3.jpg"),
+        img: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
         imgLg: require("@/images/thumb/nft-lg2.jpg"),
         title: "Operation Jade Fury",
         content: "Bazzors is a tiny buzzing, electrifying and irascible Elfin. Bazzors appear intermittently during thunderstorms in the Elfin Kingdom ",
@@ -989,8 +989,8 @@ let SectionData = {
       },
       {
         id: 2,
-        img: require("@/images/thumb/nft3.jpg"),
-        imgLg: require("@/images/thumb/nft-lg2.jpg"),
+        img: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
+        imgLg: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
         title: "Operation Jade Fury",
         content: "Bazzors is a tiny buzzing, electrifying and irascible Elfin. Bazzors appear intermittently during thunderstorms in the Elfin Kingdom ",
         author: "CanvaNetwork",
@@ -1696,7 +1696,7 @@ let SectionData = {
         id: 2,
         icon: "icon ni ni-file-text icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4 text-danger",
         title: "Create collection",
-        content: 'Click <a href="profile" class="btn-link">My Collections</a> and set up your collection. Add social links, a description',
+        content: 'Click <a href="profile">My Collections</a> and set up your collection. Add social links, a description',
       },
       {
         id: 3,
