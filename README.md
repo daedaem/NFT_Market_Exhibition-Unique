@@ -92,8 +92,8 @@ Remove:  파일 삭제
 ```
 
 ```bash
-`#`지라이슈넘버 + 커밋 타입: 내용 자세히 적어주기
-ex) `#`지라이슈넘버 + FEAT: 로그인 rest api 추가
+`#`Jira이슈넘버 + 커밋 타입: Jira내용
+ex) S06P22E205-52 feat:[FE] 메인 페이지 - 레이아웃 설정 및 프레임 제작
 ```
 
 
@@ -107,9 +107,12 @@ ex) `#`지라이슈넘버 + FEAT: 로그인 rest api 추가
 - Git Flow 사용 브랜치
 
   - feature - 기능
-  - develop - 개발
-  - master - 배포
-  - hotfix - 급한 에러 수정
+
+    develop - 개발
+
+    master - 배포
+
+    hotfix - 급한 에러 수정
 
 - Git Flow 진행 방식
 
@@ -124,51 +127,40 @@ ex) `#`지라이슈넘버 + FEAT: 로그인 rest api 추가
   - feature/[front or back]/[기능 이름]
 
     ex) feature/front/login
-
+  
     ex) feature/webrtc
-
 
 
 ### ✨유니크(UNIQUE) 팀원을 소개합니다!
 
 ---
 
-|                    조해성                     |                         조성현                         |                     **김범주**                     |                                                          |
+|                    조해성                     |                         조성현                         |                     **김범주**                     |                          임창현                          |
 | :-------------------------------------------: | :----------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------------: |
 | ![Cho_haisung](README.assets/Cho_haisung.jpg) | ![sunghyun](README.assets/sunghyun-16475797899344.jpg) | ![beomju](README.assets/beomju-16475797929495.jpg) | ![changhyun](README.assets/changhyun-16475797945576.jpg) |
 |               Leader & Frontend               |                        Frontend                        |                      Backend                       |                         Backend                          |
+
+
 
 ### 😃 팀원 역할
 
 ---
 
-- **김범주**
-  - 김범주가 프로젝트에 기여한 부분
-  - ex) openvidu 서버 on-premise로 배포
-  - ex) Spring Boot를 사용해 백엔드 방 관리 API 구현(방 만들기/빠른 시작/방 찾기/방 나가기/방장 부여)
-  - ex) Spring Boot를 사용해 백엔드 관리자 API 구현
-  - ex) openvidu를 통한 방 참가자 정보 실시간 통신
-  - ex) 전체적인 디자인 및 styled-component와 material-ui를 통한 css 스타일링
-- **임창현**
-  - ex) react와 redux-toolkit을 활용하여 SPA 구현
-  - ex) 프론트 개발(회원가입, 로그인, 회원정보 수정, 메인 화면, 랭킹, 튜토리얼, 마이페이지, 방만들기, 방찾기등, 관리자 페이지 구현)
-  - ex) styled-components와 material-ui를 통한 컴포넌트 레이아웃 구현 및 css 스타일링
+- **조해성**
+
+  - 
+
 - **조성현**
-  - ex) Teachable Machine을 통한 운동 인식 구현
-  - ex) 운동별 로직을 통한 운동 카운트 기능 및 튜토리얼 구현
-  - ex) openvidu를 통한 게임 내부 정보 실시간 통신
-  - ex) 게임 시작, 종료 이벤트 처리 및 실시간 랭킹, 채팅 기능 구현
-  - ex) styled-component와 material-ui를 통한 css 스타일링
-- 조해성
-  - ex) Spring security, JWT, JPA를 이용한 이메일 인증(폼 구현)회원가입, 로그인 기능 구현 (인증, 인가)
-  - ex) JWT, Redis 캐싱을 이용한 랭킹 조회 정보 캐싱 처리 구현
-  - ex) JWT, Redis를 이용해 로그아웃된 토큰 재사용 불가 처리 구현
-  - ex) 비밀번호 변경, 닉네임 변경, 회원 정보 CRUD 구현
-  - ex) 연속 운동일 수 조회, 1일 1홈동 조회, 방장 게임 시작 기능, 게임 끝 기능, 렝킹 페이지 기능, 최고 기록 조회, 뱃지 조회 등의 Spring Boot 백엔드 기능 구현
-  - ex) Jenkins, Docker를 이용한 CI/CD 구현 - Docker로 nginx+react container, spring boot container 생성하여 배포
-  - ex)Nginx 리다이렉트 설정 및 백엔드 및 프론트엔드 url 분기 처리 (/, /api/\*\*)
 
+  - 
 
-
-
+- **김범주**
+  
+  - 
+  
+- **임창현**
+  
+  - 
+  
+  
 
