@@ -22,31 +22,31 @@
                 <h5 class="mb-3">Upload file</h5>
                 <div class="file-upload-wrap">
                   <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
-                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFilefunction" hidden />
+                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFile" hidden />
                   <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
                 </div>
               </div>
               <!-- end form-item -->
-              <div class="form-item mb-4">
-                <h5 class="mb-3">Select Method</h5>
-                <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
+              <!-- <div class="form-item mb-4"> -->
+              <!-- <h5 class="mb-3">Select Method</h5> -->
+              <!-- <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
                   <li class="nav-item col-4 col-sm-4 col-lg-3" role="presentation" v-for="list in SectionData.selectMethodTabNav" :key="list.id">
                     <button class="nav-link" :class="list.isActive" :id="list.slug" data-bs-toggle="tab" :data-bs-target="list.bsTarget" type="button">
                       <em class="ni nav-link-icon" :class="list.icon"></em>
                       <span class="nav-link-title mt-1 d-block">{{ list.title }}</span>
                     </button>
                   </li>
-                </ul>
-                <div class="tab-content mt-4" id="myTabContent">
+                </ul> -->
+              <!-- <div class="tab-content mt-4" id="myTabContent">
                   <div class="tab-pane fade show active" id="fixed-price" role="tabpanel" aria-labelledby="fixed-price-tab">
                     <div class="form-create-tab-wrap">
                       <label class="mb-2 form-label">Price</label>
                       <input type="text" class="form-control form-control-s1" placeholder="Enter a price for item" />
-                    </div>
-                    <!-- end form-create-tab-wrap -->
-                  </div>
-                  <!-- end tab-pane -->
-                  <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
+                    </div> -->
+              <!-- end form-create-tab-wrap -->
+              <!-- </div> -->
+              <!-- end tab-pane -->
+              <!-- <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
                     <div class="form-create-tab-wrap">
                       <label class="mb-2 form-label">Minimum bid</label>
                       <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
@@ -54,30 +54,30 @@
                         <div class="col-lg-6">
                           <label class="mb-2 form-label">Starting date</label>
                           <input type="date" class="form-control form-control-s1" />
-                        </div>
-                        <!-- end col-lg-6 -->
-                        <div class="col-lg-6">
+                        </div> -->
+              <!-- end col-lg-6 -->
+              <!-- <div class="col-lg-6">
                           <label class="mb-2 form-label">Expiration date</label>
                           <input type="date" class="form-control form-control-s1" />
-                        </div>
-                        <!-- end col-lg-6 -->
-                      </div>
-                      <!-- end row -->
-                    </div>
-                    <!-- end form-create-tab-wrap -->
-                  </div>
-                  <!-- end tab-pane -->
-                  <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
+                        </div> -->
+              <!-- end col-lg-6 -->
+              <!-- </div> -->
+              <!-- end row -->
+              <!-- </div> -->
+              <!-- end form-create-tab-wrap -->
+              <!-- </div> -->
+              <!-- end tab-pane -->
+              <!-- <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
                     <div class="form-create-tab-wrap">
                       <label class="mb-2 form-label">Minimum bid</label>
                       <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                    </div>
-                    <!-- end form-create-tab-wrap -->
-                  </div>
-                  <!-- end tab-pane -->
-                </div>
-                <!-- end tab-content -->
-              </div>
+                    </div> -->
+              <!-- end form-create-tab-wrap -->
+              <!-- </div> -->
+              <!-- end tab-pane -->
+              <!-- </div> -->
+              <!-- end tab-content -->
+              <!-- </div> -->
               <!-- end form-item -->
               <div class="form-item mb-3">
                 <div class="switch-wrap">
@@ -102,13 +102,13 @@
               <div class="form-item mb-4">
                 <h5 class="mb-1">Choose collection</h5>
                 <p class="form-text mb-3">This is the collection where your item will appear.</p>
-                <v-select class="generic-select" v-model="selected" :options="options"></v-select>
+                <!-- <v-select class="generic-select" v-model="selected" :options="options"></v-select> -->
               </div>
               <!-- end form-item -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
-                  <input type="text" class="form-control form-control-s1" v-model="form.title" placeholder="e. g. Redeemable T-Shirt with logo" />
+                  <input type="text" class="form-control form-control-s1" v-model="form.nftName" placeholder="e. g. Redeemable T-Shirt with logo" />
                 </div>
                 <div class="mb-4">
                   <label class="mb-2 form-label">Description</label>
@@ -151,38 +151,50 @@ export default {
       options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
       // d
       form: {
-        files: null,
-        title: null,
+        file: null,
+        nftName: null,
         description: null,
       },
     };
   },
   methods: {
-    selectFilefunction(data) {
-      if (data.type.includes("video")) {
-        // 나는 비디오
-        this.form.files = {
-          type: "video",
-          content: data[0],
-          // previewImage: URL.createObjectURL(data[i]),
-        };
-      } else {
-        this.form.files = {
-          type: "img",
-          content: data[0],
-          // previewImage: URL.createObjectURL(data[i]),
-        };
-      }
+    selectFile(data) {
+      this.form.nftName = data.nftName;
+      this.form.file = data.target.files[0];
+      console.log(data.target.files)
+      console.log(data.target.files[0])
+
+      // console.log(data.target.files[0]);
+      // if (data.target.files[0].type.includes("video")) {
+      //   // 나는 비디오
+      //   this.form.file = data[0],
+      //     // type: "video",
+
+      //     // previewImage: URL.createObjectURL(data[i]),
+      // } else {
+      //   // console.log(data.files.type, "11");
+      //   this.form.file = {
+      //     type: "img",
+      //     content: data[0],
+      //     // previewImage: URL.createObjectURL(data[i]),
+      //   };
+      // }
     },
     submitCreateNFT() {
+      console.log(this.form);
+      let data = new FormData();
+      data.append('nftName', this.form.nftName);
+      data.append('file', this.form.file);
+      console.log(data)
+
       axios({
         method: "POST",
         url: `${SERVER_URL}/file`,
-        data: form,
+        data: data,
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
           "Content-Type": "multipart/form-data",
         },
       }).then((res) => {
