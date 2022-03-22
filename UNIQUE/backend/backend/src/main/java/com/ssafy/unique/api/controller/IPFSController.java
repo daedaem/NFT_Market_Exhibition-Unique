@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.NftReq;
 import com.ssafy.unique.api.service.IPFSService;
@@ -41,9 +40,9 @@ public class IPFSController {
 	@PostMapping(value="/file")
 	public String saveFile(
 			@ModelAttribute NftReq nftReq, 
-			@RequestParam("file")MultipartFile file) {
+			MultipartHttpServletRequest request) {
 		System.out.println("Upload 진입");
-		return ipfsService.saveFile(nftReq, file);
+		return ipfsService.saveFile(nftReq, request);
 	}
 	
 	@GetMapping(value="/file/{hash}")
