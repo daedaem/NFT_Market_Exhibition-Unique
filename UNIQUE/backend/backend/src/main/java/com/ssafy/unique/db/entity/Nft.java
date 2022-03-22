@@ -1,0 +1,56 @@
+package com.ssafy.unique.db.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+
+@Entity
+@Getter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicInsert
+@DynamicUpdate
+public class Nft {
+	
+	@Id
+	@Column(name = "NFT_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long nftSeq;
+	
+	@Column(name = "NFT_OWNER_SEQ")
+	private Long nftOwnerSeq;
+	
+	@Column(name = "NFT_CREATOR_SEQ")
+	private Long nftCreatorSeq;
+	
+	@Column(name = "NFT_TYPE")
+	private String nftType;
+	
+	@Column(name = "NFT_NAME")
+	private String nftName;
+	
+	@Column(name = "NFT_METADATA_URI")
+	private String nftMetadataUri;
+	
+	@Column(name = "NFT_WORK_URI")
+	private String nftWorkUri;
+	
+	@Column(name = "NFT_HASH")
+	private String nftHash;
+	
+}
