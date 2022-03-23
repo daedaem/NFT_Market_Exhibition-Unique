@@ -1,5 +1,9 @@
 package com.ssafy.unique.api.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +39,7 @@ import com.ssafy.unique.jwt.TokenProvider;
 
 @RestController
 @RequestMapping(value="/members")
+@Tag(name = "Member Controller", description = "멤버와 관련된 API를 조작한다(로그인,회원가입)")
 public class MemberController {
 
 	private final CustomUserDetailsService customUserDetailsService;
@@ -52,6 +57,11 @@ public class MemberController {
 	private static final int SUCCESS = 1;
 	
 
+	@Operation(description = "로그인 과정을 설명")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "로그인 성공"),
+			@ApiResponse(responseCode = "401", description = "유저 정보가 일치하지 않음. \b 다시 시도")
+	})
 	@PostMapping("/login")
 	public ResponseEntity<MemberRes> memberLogin(@RequestBody LoginReq loginReq) {
 		System.out.println("Enter memberLogin()");
@@ -86,6 +96,11 @@ public class MemberController {
 		return new ResponseEntity<MemberRes> (memberRes, httpHeaders, HttpStatus.OK);
 	}
 
+	@Operation(description = "회원가입 과정을 설명")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "회원가입 성공"),
+			@ApiResponse(responseCode = "500", description = "회원 정보에 문제가 있음. ")
+	})
 	@PostMapping("/register")
 	public ResponseEntity<MemberResultRes> memberRegister(@ModelAttribute MemberReq memberReq, MultipartHttpServletRequest request) {
 		

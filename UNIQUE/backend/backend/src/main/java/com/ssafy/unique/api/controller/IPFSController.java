@@ -2,6 +2,10 @@ package com.ssafy.unique.api.controller;
 
 import java.util.Arrays;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,17 +30,24 @@ import com.ssafy.unique.api.service.IPFSService;
 		methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, 
 				RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.OPTIONS })
 @RestController
+@Tag(name = "IPFS Controller", description = "IPFS의 파일 업로드, NFT화 등, IPFS에서 NFT 관련 기능을 다룬다.")
 public class IPFSController {
 	
 	@Autowired
 	private IPFSService ipfsService;
-	
+
+	@Operation(description = "api 요청 테스트용")
 	@GetMapping(value="/hello")
 	public String hello() {
 		System.out.println("hello");
 		return "hello";
 	}
-	
+
+	@Operation(description = "go-ipfs에 프론트에서 온 파일을 업로드하는 api")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",description = "업로드 성공 후 해당 데이터를 hash화 하여 DB에 등록"),
+			@ApiResponse(responseCode = "401",description = "회원 정보가 등록되어 있지 않아 사용 불가능. 로그인 후 사용")
+	})
 	@PostMapping(value="/file")
 	public String saveFile(
 			@ModelAttribute NftReq nftReq, 
@@ -44,7 +55,11 @@ public class IPFSController {
 		System.out.println("Upload 진입");
 		return ipfsService.saveFile(nftReq, request);
 	}
-	
+	@Operation(description = "프론트에서 요청받은 파일의 메타데이터를 반환하는 api")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",description = "DB에 등록된 Hash 값을 활용하여 정상적으로 메타데이터를 반환"),
+			@ApiResponse(responseCode = "401",description = "회원 정보가 등록되어 있지 않아 사용 불가능. 로그인 후 사용")
+	})
 	@GetMapping(value="/file/{hash}")
 	public ResponseEntity<byte[]> loadFile(@PathVariable("hash") String hash) {
 		System.out.println("LoadFile 진입");
