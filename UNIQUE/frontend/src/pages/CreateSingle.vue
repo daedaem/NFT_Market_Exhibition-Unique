@@ -175,10 +175,12 @@ import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
-import ABI from "../../common/ABI";
-// import abi from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+// import ABI from "../../common/ABI";
+import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-const abi = ABI.CONTRACT_ABI.NFT_ABI;
+// const abi = ABI.CONTRACT_ABI.NFT_ABI;
+const abi = ABIS.abi;
+// console.log(abi);
 const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
@@ -205,6 +207,7 @@ export default {
         description: null,
       },
       authorPrivateKey: null,
+      newtokenId: null,
       // authorPublicKey: null,
     };
   },
@@ -232,13 +235,19 @@ export default {
       // privatekey는 0x로 시작하는듯?
       const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       // console.log(checkPubKey);
+      // 내계좌 조회 1.
       const temp = await web3.eth.getAccounts();
       const myAccount = temp[0];
+      // 내계좌 조회 2번
+      // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
+      // web3.eth.accounts.wallet.add(sender);
+      // web3.eth.defaultAccount = sender.address;
+      // var senderAddress = web3.eth.defaultAccount;
       // console.log(myAccount, "내계좌입니다.");
 
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-        console.log("일치합니다.");
+        // console.log("일치합니다.");
         let data = new FormData();
         // data.append("author", this.form.author);
         data.append("nftName", this.form.nftName);
@@ -254,21 +263,47 @@ export default {
               "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
             "Content-Type": "multipart/form-data",
           },
-        }).then((preIPFSresult) => {
-          async function load() {
-            const IPFSresult = preIPFSresult.data;
-            console.log(IPFSresult, "ipfs결과");
-            const ssafyToken1 = await new web3.eth.Contract(abi, CA);
-            let mintResult = await ssafyToken1.methods.create(myAccount, IPFSresult);
-            //
-            // const finalresult = mintResult.encodeABI();
-            console.log(mintResult, "민트 컨트랙트 결과");
-            // console.log(finalresult, "민트컨트랙트 결과를 해석");
-            // 함수결과값
-            // 메타 url:
-          }
-          load();
-        });
+        })
+          .then((preIPFSresult) => {
+            async function load() {
+              const IPFSresult = preIPFSresult.data;
+              console.log(IPFSresult, "ipfs결과");
+              const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+              // 1번째 방법 state 변경 안시키는 call함수 호출
+              const results = await ssafyToken1.methods.current().call({ from: myAccount });
+              // console.log(results);
+              // 2번째 트랜잭션하는 함수 호출
+              const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+
+              // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
+              const newtokenId = response.events.Transfer.returnValues.tokenId;
+
+              // console.log(newtokenId, "이거토큰아이디임");
+              // 토큰id의 주인주소
+              const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
+              // 해당 토큰의 uri 주소
+              const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
+              // this.newtokenId = newtokenId;
+
+              // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
+              //   console.log(res, "결과");
+              // });
+              // console.log(ssafyToken1.methods, "방법들");
+              // mintResult.methods.get().call().then(console.log);
+              // const finalresult = mintResult.encodeABI();
+            }
+            load();
+          })
+          .then(() => {
+            // console.log(this.newtokenId);
+            this.$router.push({
+              name: "ProductDetail",
+              params: {
+                id: 1,
+                // data: this.nowfeed,
+              },
+            });
+          });
       }
       // 위에 3번 전 과정
       // console.log(this.form);
