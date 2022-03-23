@@ -39,29 +39,29 @@ const routes = [
     component: () => import("../pages/PrivateGallery.vue"),
   },
   {
-    path: '/blog-detail-:id',
-    name:'PrivateGalleryDetail',
-    component: () => import('../pages/PrivateGalleryDetail.vue'),
+    path: "/blog-detail-:id",
+    name: "PrivateGalleryDetail",
+    component: () => import("../pages/PrivateGalleryDetail.vue"),
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../pages/Profile.vue')
+    path: "/profile",
+    name: "profile",
+    component: () => import("../pages/Profile.vue"),
   },
   {
-    path: '/account',
-    name: 'account',
-    component: () => import('../pages/Account.vue')
+    path: "/account",
+    name: "account",
+    component: () => import("../pages/Account.vue"),
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../pages/Login.vue')
+    path: "/login",
+    name: "login",
+    component: () => import("../pages/Login.vue"),
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../pages/Register.vue')
+    path: "/register",
+    name: "Register",
+    component: () => import("../pages/Register.vue"),
   },
   // {
   //   path: "/privateGallery",
