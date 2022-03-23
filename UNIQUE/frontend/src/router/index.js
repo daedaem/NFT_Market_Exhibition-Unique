@@ -12,6 +12,62 @@ const routes = [
     component: () => import("../pages/ProductDetail.vue"),
     props: true,
   },
+  {
+    path: "/explore",
+    name: "explore",
+    component: () => import("../pages/Explore.vue"),
+  },
+  {
+    path: "/explore-v2",
+    name: "exploreV2",
+    component: () => import("../pages/Explore-v2.vue"),
+  },
+
+  {
+    path: "/create",
+    name: "create",
+    component: () => import("../pages/Create.vue"),
+  },
+  {
+    path: "/create-single",
+    name: "create-single",
+    component: () => import("../pages/CreateSingle.vue"),
+  },
+  {
+    path: "/privateGallery",
+    name: "PrivateGallery",
+    component: () => import("../pages/PrivateGallery.vue"),
+  },
+  {
+    path: "/blog-detail-:id",
+    name: "PrivateGalleryDetail",
+    component: () => import("../pages/PrivateGalleryDetail.vue"),
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("../pages/Profile.vue"),
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: () => import("../pages/Account.vue"),
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../pages/Login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../pages/Register.vue"),
+  },
+  // {
+  //   path: "/privateGallery",
+  //   name: "PrivateGallery",
+  //   component: () => import("../pages/PrivateGallery.vue"),
+  // },
 ];
 
 const router = createRouter({

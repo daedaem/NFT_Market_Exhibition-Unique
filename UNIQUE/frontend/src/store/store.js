@@ -104,10 +104,10 @@ let SectionData = {
       ],
     },
     breadcrumbListFive: {
-      title: "News",
+      title: "Private Gallery",
       navList: [
         {
-          title: "News",
+          title: "Private Gallery",
         },
       ],
     },
@@ -186,6 +186,7 @@ let SectionData = {
   ],
   // Header data
   headerData: {
+    // 헤더 목록 리스트
     btnText: "Connect Wallet",
     inputPlaceholderText: "Search item here...",
     menuList: {
@@ -199,7 +200,24 @@ let SectionData = {
       ],
     },
     menuList2: {
-      title: "Explore",
+      title: "Exhibition",
+      navList: [
+        {
+          id: 1,
+          title: "Exhibition",
+          path: "/exhibition",
+        },
+        {
+          id: 2,
+          title: "Private Gallery",
+          path: "/privateGallery",
+          badge: "New", // ??
+          badgeClass: "badge text-primary bg-primary-50",
+        },
+      ],
+    },
+    menuList3: {
+      title: "Market",
       navList: [
         {
           id: 1,
@@ -210,207 +228,26 @@ let SectionData = {
           id: 2,
           title: "Explore v2",
           path: "/explore-v2",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 3,
-          title: "Explore v3",
-          path: "/explore-v3",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 4,
-          title: "Explore v4",
-          path: "/explore-v4",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 5,
-          title: "Explore v5",
-          path: "/explore-v5",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 5,
-          title: "Explore v6",
-          path: "/explore-v6",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-        {
-          id: 6,
-          title: "Item Details",
-          path: "/product-details-v1-1",
-        },
-        {
-          id: 7,
-          title: "Item Details v2",
-          path: "/product-details-v2-1",
-        },
-        {
-          id: 8,
-          title: "Item Details v3",
-          path: "/product-details-v3-1",
-          badge: "New",
-          badgeClass: "badge text-primary bg-primary-50",
-        },
-      ],
-    },
-    menuList3: {
-      title: "Pages",
-      navList: [
-        {
-          id: 1,
-          title: "Author Public",
-          path: "/author",
-        },
-        {
-          id: 2,
-          title: "About Us",
-          path: "/about-us",
-        },
-        {
-          id: 3,
-          title: "Activity",
-          path: "/activity",
-        },
-        {
-          id: 4,
-          title: "Ranking",
-          path: "/ranking",
-        },
-        {
-          id: 5,
-          title: "Wallet",
-          path: "/wallet",
-        },
-        {
-          id: 6,
-          title: "Wallet v2",
-          path: "/wallet-v2",
-        },
-        {
-          id: 7,
-          title: "News",
-          path: "/blog",
-        },
-        {
-          id: 8,
-          title: "News Details",
-          path: "/blog-detail-1",
-        },
-        {
-          id: 9,
-          title: "Login",
-          path: "/login",
-        },
-        {
-          id: 10,
-          title: "Login v2",
-          path: "/login-v2",
-        },
-        {
-          id: 11,
-          title: "Register",
-          path: "/register",
-        },
-        {
-          id: 12,
-          title: "Contact",
-          path: "/contact",
         },
       ],
     },
     menuList4: {
-      title: "User Panel",
+      title: "Mypage",
       navList: [
         {
           id: 1,
-          title: "Dashboard",
-          path: "/offers",
-          badge: "Hot",
-          badgeClass: "badge bg-primary",
-        },
-        {
-          id: 2,
-          title: "Activity",
-          path: "/activity-v2",
-        },
-        {
-          id: 3,
-          title: "Sales and Purchase",
-          path: "/purchases-sales",
-        },
-        {
-          id: 4,
-          title: "Transactions",
-          path: "/transactions",
-        },
-        {
-          id: 5,
-          title: "Display Enfties",
-          path: "/display",
-        },
-        {
-          id: 6,
-          title: "Redeem Enfties",
-          path: "/redeem",
-        },
-        {
-          id: 7,
-          title: "Deposit Enfties",
-          path: "/deposit-enfties",
-        },
-        {
-          id: 8,
-          title: "Author Personal",
+          title: "profile",
           path: "/profile",
         },
       ],
-      navListTwo: [
+    },
+    menuList5: {
+      title: "Login",
+      navList: [
         {
           id: 1,
-          title: "Account Settings",
-          path: "/account",
-        },
-        {
-          id: 2,
-          title: "Payment Methods",
-          path: "/payment-methods",
-        },
-        {
-          id: 3,
-          title: "Seller Settings",
-          path: "/seller-settings",
-        },
-        {
-          id: 4,
-          title: "Notifications",
-          path: "/notifications",
-        },
-        {
-          id: 5,
-          title: "Security",
-          path: "/security",
-        },
-        {
-          id: 6,
-          title: "Create",
-          path: "/create",
-        },
-        {
-          id: 7,
-          title: "Create Single",
-          path: "/create-single",
-        },
-        {
-          id: 8,
-          title: "Create Multiple",
-          path: "/create-multiple",
+          title: "login",
+          path: "/login",
         },
       ],
     },
@@ -431,8 +268,8 @@ let SectionData = {
     products: [
       {
         id: 1,
-        img: require("@/images/thumb/nft-2.jpg"),
-        imgLg: require("@/images/thumb/nft-lg.jpg"),
+        img: require("@/images/thumb/nft-full.0609d1e0.jpg"),
+        imgLg: require("@/images/thumb/nft-full.0609d1e0.jpg"),
         title: "One Tribe Black Edition",
         content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
         author: "ZeniconStudio",
@@ -481,7 +318,7 @@ let SectionData = {
       },
       {
         id: 2,
-        img: require("@/images/thumb/nft3.jpg"),
+        img: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
         imgLg: require("@/images/thumb/nft-lg2.jpg"),
         title: "Operation Jade Fury",
         content: "Bazzors is a tiny buzzing, electrifying and irascible Elfin. Bazzors appear intermittently during thunderstorms in the Elfin Kingdom ",
@@ -1034,8 +871,8 @@ let SectionData = {
       },
       {
         id: 2,
-        img: require("@/images/thumb/nft3.jpg"),
-        imgLg: require("@/images/thumb/nft-lg2.jpg"),
+        img: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
+        imgLg: require("@/images/thumb/nft-full-2.8a0adca0.jpg"),
         title: "Operation Jade Fury",
         content: "Bazzors is a tiny buzzing, electrifying and irascible Elfin. Bazzors appear intermittently during thunderstorms in the Elfin Kingdom ",
         author: "CanvaNetwork",
@@ -1741,7 +1578,7 @@ let SectionData = {
         id: 2,
         icon: "icon ni ni-file-text icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4 text-danger",
         title: "Create collection",
-        content: 'Click <a href="profile" class="btn-link">My Collections</a> and set up your collection. Add social links, a description',
+        content: 'Click <a href="profile">My Collections</a> and set up your collection. Add social links, a description',
       },
       {
         id: 3,
@@ -4616,9 +4453,7 @@ let SectionData = {
     content: "Your email address will not be published. Required fields are marked *",
   },
   loginData: {
-    img: require("@/images/thumb/remote.png"),
-    title: "Welcome Back!",
-    subTitle: "Login to countinue",
+    title: "Login",
     btnText: "Login Now",
     haveAccountText: "Don't have an account",
     btnTextTwo: "Sign Up",
@@ -5030,6 +4865,32 @@ let SectionData = {
       btnClass: "ni-emails",
     },
   ],
+  placeBidModal: {
+    title: "Place a Bid",
+    content: "You are about to place a bid for <strong>The Future is Blossoming - Harlows 2021</strong> from <strong>Nathan walls</strong>",
+    labelText: "Your bid (ETH)",
+    labelTextTwo: 'Enter quantity <span class="text-primary">5 available</span>',
+    totalBidList: [
+      {
+        title: "Your bidding balance",
+        price: "0.013325 ETH",
+      },
+      {
+        title: "Your balance",
+        price: "10.67856 ETH",
+      },
+      {
+        title: "Service fee 3.5%",
+        price: "0.00325 ETH",
+      },
+      {
+        title: "You will pay",
+        price: "0.013325 ETH",
+      },
+    ],
+    btnText: "Place a Bid",
+    btnLink: "wallet",
+  },
   placeBidModal: {
     title: "Place a Bid",
     content: "You are about to place a bid for <strong>The Future is Blossoming - Harlows 2021</strong> from <strong>Nathan walls</strong>",
@@ -5692,6 +5553,12 @@ let SectionData = {
         path: "wallet",
       },
     ],
+  },
+  createNftModal: {
+    title: "Confirm Your Registration",
+    content: "Before this item gets created, please <strong>typing your Private Key</strong> if you'd like to confirm.",
+    labelText: "Private Key",
+    // btnLink: "wallet",
   },
   copyTitle: 'Copyright © 2022 EnftyMart. Template Made by <a href="https://themeforest.net/user/softnio/portfolio" target="_blank">Softnio</a>',
 };
