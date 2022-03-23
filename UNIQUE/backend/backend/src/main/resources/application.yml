@@ -37,6 +37,12 @@ spring:
         smtp:
           auth: true
 
+#springdoc:
+#  packagesToScan: com.ssafy.unique.api.controller
+#  pathsToMatch: /v1, /api/controller/**
+#  swagger-ui:
+#    path: /swagger-ui.html
+
 logging:
   level:
     com.ssafy.unique: TRACE
