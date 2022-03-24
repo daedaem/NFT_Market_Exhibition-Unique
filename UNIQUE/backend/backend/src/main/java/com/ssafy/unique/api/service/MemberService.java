@@ -4,10 +4,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.ResultRes;
 
 public interface MemberService {
 	public MemberResultRes memberRegister(MemberReq memberReq, MultipartHttpServletRequest request);
-//	public MemberResultRes profileImageUpdate( MultipartHttpServletRequest request);
+	public ResultRes memberWalletRegister(String wallet);
+	//	public MemberResultRes profileImageUpdate( MultipartHttpServletRequest request);
 	
 //	public MemberResultRes memberMypageSearch();
 	

@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,16 +19,20 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.LoginReq;
 import com.ssafy.unique.api.request.MemberReq;
+import com.ssafy.unique.api.request.WalletRegisterReq;
 import com.ssafy.unique.api.response.MemberRes;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.api.service.CustomUserDetailsService;
 import com.ssafy.unique.api.service.MemberService;
 import com.ssafy.unique.jwt.JwtFilter;
 import com.ssafy.unique.jwt.TokenProvider;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 @CrossOrigin(
 		origins = { "http://localhost:5500", "http://172.30.1.59:5500", "http://192.168.0.100:5500", "http://192.168.0.40:5500","https://j6e205.p.ssafy.io" },
@@ -38,6 +43,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(value="/members")
+@Tag(name = "Member Controller", description = "멤버와 관련된 API를 조작한다(로그인,회원가입)")
 public class MemberController {
 
 	private final CustomUserDetailsService customUserDetailsService;
@@ -54,10 +60,11 @@ public class MemberController {
 
 	private static final int SUCCESS = 1;
 	
-	@ApiOperation(value="로그인", notes="로그인하는 기능")
-	@ApiResponses({
-        @ApiResponse(code = 200, message = "로그인 성공"),
-        @ApiResponse(code = 500, message = "로그인 실패")
+
+	@Operation(description = "로그인 과정을 설명")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "로그인 성공"),
+			@ApiResponse(responseCode = "401", description = "유저 정보가 일치하지 않음. \b 다시 시도")
 	})
 	@PostMapping("/login")
 	public ResponseEntity<MemberRes> memberLogin(@RequestBody LoginReq loginReq) {
@@ -93,6 +100,11 @@ public class MemberController {
 		return new ResponseEntity<MemberRes> (memberRes, httpHeaders, HttpStatus.OK);
 	}
 
+	@Operation(description = "회원가입 과정을 설명")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "회원가입 성공"),
+			@ApiResponse(responseCode = "500", description = "회원 정보에 문제가 있음. ")
+	})
 	@PostMapping("/register")
 	public ResponseEntity<MemberResultRes> memberRegister(@ModelAttribute MemberReq memberReq, MultipartHttpServletRequest request) {
 		
@@ -105,6 +117,24 @@ public class MemberController {
 		}
 	}
 	
+	
+	@Operation(description = "지갑을 등록")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "지갑 등록 성공"),
+			@ApiResponse(responseCode = "500", description = "지갑 등록 실패")
+	})
+	@PutMapping("/wallet")
+	public ResponseEntity<ResultRes> memberWalletRegister(@RequestBody WalletRegisterReq wallet) {
+		System.out.println(wallet.getWallet());
+		ResultRes resultRes = memberService.memberWalletRegister(wallet.getWallet());
+		
+		if (resultRes.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (resultRes, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (resultRes, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 	
 }
 
