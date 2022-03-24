@@ -95,7 +95,7 @@ public class IPFSServiceImpl implements IPFSService {
 				
 				nftRes.setResult(SUCCESS);
 				nftRes.setNftSeq(nftReq.getNftAuthorSeq());
-				nftRes.setNftWorkUri(merkleNode.hash.toBase58());
+				nftRes.setNftMetadataUri(merkleNode.hash.toBase58());
 			} else {
 				System.out.println("null file");
 				nftRes.setResult(FAIL);
