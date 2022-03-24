@@ -177,28 +177,16 @@ import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 import ABI from "../../common/ABI";
 // import abi from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import networks from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
 const abi = ABI.CONTRACT_ABI.NFT_ABI;
-const CA = networks;
+const CA = SsafyNFT.networks["5777"].address;
+// console.log(CA);
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
-
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
-async function load() {
-  let myAccounts = await web3.eth.getAccounts();
-  let myAccount = myAccounts[0];
-  const ssafyToken1 = new web3.eth.Contract(abi, CA);
-  console.log(ssafyToken1, "싸피토큰1");
-  let mintResult = await ssafyToken1.methods.create(myAccount, "토큰url");
-  console.log(mintResult, "민트결과");
-  console.log(mintResult, "결과 확인");
-  // 함수결과값
-  // 메타 url:
-}
-load();
 
 export default {
   name: "CreateSingle",
@@ -210,7 +198,7 @@ export default {
       // d
       form: {
         // author: null,
-        author: "해성",
+        author: "성현",
         file: null,
         nftName: null,
         description: null,
@@ -224,7 +212,7 @@ export default {
       this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
     },
-    submitCreateNFT() {
+    async submitCreateNFT() {
       /**
        * PJT Ⅱ - 과제 1: 작품 등록 및 NFT 생성
        * Req.1-F1 작품 등록 화면 및 등록 요청
@@ -239,16 +227,19 @@ export default {
        * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
        */
       // url:해시된, nft:이름, 작성자 일련번호
-      console.log(this.authorPrivateKey);
+      // console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
-      const checkKey = getAddressFrom("0x" + this.authorPrivateKey);
-      console.log(checkKey);
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const temp = await web3.eth.getAccounts();
+      const myAccount = temp[0];
+
       // 공개키가 유효하다면 정보 등록
-      if (checkKey === this.authorPrivateKey) {
+      if (checkPubKey === myAccount) {
+        console.log("일치합니다.");
         let data = new FormData();
-        data.append("author", this.form.author);
+        // data.append("author", this.form.author);
         data.append("nftName", this.form.nftName);
-        data.append("description", this.form.description);
+        // data.append("description", this.form.description);
         data.append("file", this.form.file);
         axios({
           method: "POST",
@@ -260,8 +251,21 @@ export default {
               "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
             "Content-Type": "multipart/form-data",
           },
-        }).then((IPFSresult) => {
-          console.log(IPFSresult);
+        }).then((preIPFSresult) => {
+          async function load() {
+            const IPFSresult = preIPFSresult.data;
+            console.log(IPFSresult, "ipfs결과");
+            const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+            console.log(ssafyToken1,)
+            let mintResult = await ssafyToken1.methods.create(myAccount, IPFSresult);
+            //
+            // const finalresult = mintResult.encodeABI();
+            console.log(mintResult, "민트 컨트랙트 결과");
+            // console.log(finalresult, "민트컨트랙트 결과를 해석");
+            // 함수결과값
+            // 메타 url:
+          }
+          load();
         });
       }
       // 위에 3번 전 과정
@@ -288,6 +292,18 @@ export default {
     // },
   },
   mounted() {
+    // async function loadMyAccount() {
+    //   await web3.eth.getAccounts().then((res) => (this.myAccount = res[0]));
+    //   // console.log(myAccounts[0]);
+    //   await console.log(this.myAccount);
+    //   // this.myAccount = await myAccounts[0];
+
+    //   // console.log(myAccounts, "내계좌주소");
+    //   // console.log(mintResult, "결과 확인");
+    //   // 함수결과값
+    //   // 메타 url:
+    // }
+    // loadMyAccount();
     // async function hello() {
     //   const result = await new Web3.eth.Contract(abi, CA);
     //   console.log(result);
