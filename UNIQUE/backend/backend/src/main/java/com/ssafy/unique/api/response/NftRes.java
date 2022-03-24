@@ -8,5 +8,5 @@ import lombok.Setter;
 public class NftRes {
 	private int result;
 	private Long nftSeq;
-	private String nftWorkUri;
+	private String nftMetadataUri;
 }
