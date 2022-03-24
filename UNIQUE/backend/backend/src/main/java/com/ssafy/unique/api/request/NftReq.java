@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class NftReq {
 	
-	private Long nftCreatorSeq;
+	private Long nftAuthorSeq;
 	
 	@NotNull
 	private String nftName;
@@ -17,4 +17,8 @@ public class NftReq {
 	private String nftType;
 	
 	private String nftWorkUri;
+	
+	private String nftAuthorName;
+	
+	private String nftDescription;
 }
