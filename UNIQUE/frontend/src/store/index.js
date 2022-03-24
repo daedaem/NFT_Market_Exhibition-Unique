@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
-  state: {},
+  state: { isLogin: false },
   mutations: {},
   actions: {
     async registerWeb3({ commit }) {
