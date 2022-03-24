@@ -278,9 +278,9 @@ export default {
       if (checkPubKey === myAccount) {
         // console.log("일치합니다.");
         let data = new FormData();
-        // data.append("author", this.form.author);
+        data.append("nftAuthorName", this.form.nftAuthorName);
         data.append("nftName", this.form.nftName);
-        // data.append("description", this.form.description);
+        data.append("nftDescription", this.form.nftDescription);
         data.append("file", this.form.file);
         axios({
           method: "POST",
@@ -294,7 +294,7 @@ export default {
           },
         }).then((preIPFSresult) => {
           async function load() {
-            const IPFSresult = preIPFSresult.data;
+            const IPFSresult = preIPFSresult.data.nftMetadataUri;
             console.log(IPFSresult, "ipfs결과");
             const ssafyToken1 = await new web3.eth.Contract(abi, CA);
             // 1번째 방법 state 변경 안시키는 call함수 호출
@@ -312,6 +312,7 @@ export default {
             // 해당 토큰의 uri 주소
             const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
             // 아래 세가지
+
             // ownerof, newtokenId, IPFSresult
 
             // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
