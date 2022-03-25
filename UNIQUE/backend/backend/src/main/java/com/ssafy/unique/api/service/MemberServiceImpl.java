@@ -6,6 +6,8 @@ import java.util.UUID;
 import javax.transaction.Transactional;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.db.entity.Member;
 import com.ssafy.unique.db.repository.MemberRepository;
 
@@ -58,6 +61,25 @@ public class MemberServiceImpl implements MemberService{
 			return memberResultRes;
 		}
 
+	}
+
+	@Override
+	public ResultRes memberWalletRegister(String wallet) {
+		ResultRes resultRes = new ResultRes();
+		
+		// Security Context에서 nftCreatorSeq를 구한다
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Long memberSeq = Long.parseLong(authentication.getName());
+		
+		int result = memberRepository.updateMemberAddressByMemberSeq(wallet, memberSeq);
+		
+		if (result == SUCCESS) {
+			resultRes.setResult(SUCCESS);
+		} else {
+			resultRes.setResult(FAIL);
+		}
+		
+		return resultRes;
 	}
 
 }
