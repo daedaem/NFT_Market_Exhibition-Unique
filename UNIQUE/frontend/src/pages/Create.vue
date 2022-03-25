@@ -113,7 +113,7 @@
                 </div>
                 <div class="mb-4">
                   <label class="mb-2 form-label">Description</label>
-                  <textarea name="message" class="form-control form-control-s1" v-model="form.description" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
+                  <textarea name="message" class="form-control form-control-s1" v-model="form.nftDescription" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="mb-2 form-label">Royalties</label>
@@ -227,12 +227,12 @@ export default {
       options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
       // d
       form: {
-        // author: null,
         nftWorkUri: null,
-        nftAuthorName: "해성",
-        file: null,
+        nftType: null,
         nftName: null,
+        nftAuthorName: "해성",
         nftDescription: null,
+        file: null,
       },
       authorPrivateKey: null,
       newtokenId: null,
@@ -282,7 +282,7 @@ export default {
         data.append("nftName", this.form.nftName);
         data.append("nftDescription", this.form.nftDescription);
         data.append("file", this.form.file);
-        axios({
+        const createIPFS = await axios({
           method: "POST",
           url: `${SERVER_URL}/file`,
           data: data,
@@ -292,38 +292,45 @@ export default {
               "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
             "Content-Type": "multipart/form-data",
           },
-        }).then((preIPFSresult) => {
-          async function load() {
-            const IPFSresult = preIPFSresult.data.nftMetadataUri;
-            console.log(IPFSresult, "ipfs결과");
-            const ssafyToken1 = await new web3.eth.Contract(abi, CA);
-            // 1번째 방법 state 변경 안시키는 call함수 호출
-            const results = await ssafyToken1.methods.current().call({ from: myAccount });
-            // console.log(results);
-            // 2번째 트랜잭션하는 함수 호출
-            const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
-
-            // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
-            const newtokenId = response.events.Transfer.returnValues.tokenId;
-
-            // console.log(newtokenId, "이거토큰아이디임");
-            // 토큰id의 주인주소
-            const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
-            // 해당 토큰의 uri 주소
-            const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
-            // 아래 세가지
-
-            // ownerof, newtokenId, IPFSresult
-
-            // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
-            //   console.log(res, "결과");
-            // });
-            // console.log(ssafyToken1.methods, "방법들");
-            // mintResult.methods.get().call().then(console.log);
-            // const finalresult = mintResult.encodeABI();
-          }
-          load();
         });
+        const IPFSresult = createIPFS.data.nftMetadataUri;
+        console.log(IPFSresult, "ipfs결과");
+        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+        // 1번째 방법 state 변경 안시키는 call함수 호출
+        const results = await ssafyToken1.methods.current().call({ from: myAccount });
+        // console.log(results);
+        // 2번째 트랜잭션하는 함수 호출
+        const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+        // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
+        const newtokenId = response.events.Transfer.returnValues.tokenId;
+        this.newtokenId = newtokenId;
+        console.log(newtokenId, "이거토큰아이디임");
+        // 토큰id의 주인주소
+        const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
+        // 해당 토큰의 uri 주소
+        const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
+        // 아래 세가지
+        const createNFTtoBack = await axios({
+          method: "PUT",
+          url: `${SERVER_URL}/file/update`,
+          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
+          headers: {
+            // Authorization: token,
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+          },
+        });
+        console.log(createNFTtoBack);
+        console.log(this.newtokenId, "나오나");
+
+        // ownerof, newtokenId, IPFSresult
+
+        // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
+        //   console.log(res, "결과");
+        // });
+        // console.log(ssafyToken1.methods, "방법들");
+        // mintResult.methods.get().call().then(console.log);
+        // const finalresult = mintResult.encodeABI();
         // .then(() => {
         //   // console.log(this.newtokenId);
         //   this.$router.push({
