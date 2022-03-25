@@ -197,11 +197,8 @@ export default {
       options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
       // d
       form: {
-<<<<<<< HEAD
-=======
         // author: null,
         author: "성현",
->>>>>>> FE/sunghyun
         file: null,
         nftName: null,
         description: null,
@@ -214,48 +211,6 @@ export default {
     selectFile(data) {
       this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
-<<<<<<< HEAD
-      console.log(data.target.files)
-      console.log(data.target.files[0])
-
-      // console.log(data.target.files[0]);
-      // if (data.target.files[0].type.includes("video")) {
-      //   // 나는 비디오
-      //   this.form.file = data[0],
-      //     // type: "video",
-
-      //     // previewImage: URL.createObjectURL(data[i]),
-      // } else {
-      //   // console.log(data.files.type, "11");
-      //   this.form.file = {
-      //     type: "img",
-      //     content: data[0],
-      //     // previewImage: URL.createObjectURL(data[i]),
-      //   };
-      // }
-    },
-    submitCreateNFT() {
-      console.log(this.form);
-      let data = new FormData();
-      data.append('nftName', this.form.nftName);
-      data.append('file', this.form.file);
-      console.log(data)
-
-      axios({
-        method: "POST",
-        url: `${SERVER_URL}/file`,
-        data: data,
-        headers: {
-          // Authorization: token,
-          Authorization:
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
-          "Content-Type": "multipart/form-data",
-        },
-      }).then((res) => {
-        console.log(res);
-      });
-    },
-=======
     },
     async submitCreateNFT() {
       /**
@@ -335,7 +290,6 @@ export default {
     //   let vote = await electionContract.methods.vote(this.selectedCandidate).send({ from: process.env.VUE_APP_ETHADDRESS });
     //   console.log(vote);
     // },
->>>>>>> FE/sunghyun
   },
   mounted() {
     // async function loadMyAccount() {
