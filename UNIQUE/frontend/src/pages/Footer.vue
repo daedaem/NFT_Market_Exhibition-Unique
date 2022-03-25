@@ -12,3 +12,6 @@ export default {
   props: ["classname"],
 };
 </script>
+
+<style scoped>
+</style>

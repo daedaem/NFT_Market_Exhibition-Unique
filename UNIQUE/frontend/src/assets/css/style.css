@@ -286,6 +286,9 @@ hr {
   margin-left: 8px;
 }
 
+/* prefers-reduced-motion 미디어 쿼리는 사용자가 요청했는지 여부를 감지합니다.
+
+운영 체제에서 사용하는 애니메이션이나 모션의 양을 최소화합니다. */
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: auto;
@@ -424,7 +427,7 @@ hr {
   transition: all 0.3s;
 }
 .styled-icon .icon:hover {
-  background-color: #7952b3;
+  background-color: black;
   color: #ffffff;
 }
 
