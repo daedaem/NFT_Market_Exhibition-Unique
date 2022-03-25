@@ -13,6 +13,8 @@ contract SaleFactory is Ownable {
     address public admin;
     address[] public sales;
 
+    // Newsale이라는 이벤트안에 출력되는 값 세가지
+    // event에서 사용되는 indexed, 이후 web3.js filter로 해당조건에 맞는 블록만 불러올 수 있음.
     event NewSale(
         address indexed _saleContract,
         address indexed _owner,

@@ -29,11 +29,6 @@ const routes = [
     component: () => import("../pages/Create.vue"),
   },
   {
-    path: "/create-single",
-    name: "create-single",
-    component: () => import("../pages/CreateSingle.vue"),
-  },
-  {
     path: "/privateGallery",
     name: "PrivateGallery",
     component: () => import("../pages/PrivateGallery.vue"),
