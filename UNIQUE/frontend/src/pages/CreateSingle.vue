@@ -121,7 +121,11 @@
                 </div>
               </div>
               <!-- end form-item -->
-              <button class="btn btn-dark" type="button" @click="submitCreateNFT">Create Item</button>
+
+              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
+
+              <!-- 
+              <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
             </form>
           </div>
           <!-- endn col -->
@@ -133,15 +137,57 @@
     <!-- create-section -->
     <!-- Footer  -->
     <Footer classname="bg-dark on-dark"></Footer>
+    <!-- Modal -->
+    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{ SectionData.createNftModal.title }}</h4>
+            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
+              <em class="ni ni-cross"></em>
+            </button>
+          </div>
+          <!-- end modal-header -->
+          <div class="modal-body">
+            <p class="mb-3" v-html="SectionData.createNftModal.content"></p>
+            <div class="mb-3">
+              <label class="form-label">{{ SectionData.createNftModal.labelText }}</label>
+              <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
+            </div>
+            <button class="btn btn-dark d-block" @click="submitCreateNFT">Confirm</button>
+            <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="submitCreateNFT"></a> -->
+          </div>
+          <!-- end modal-body -->
+        </div>
+        <!-- end modal-content -->
+      </div>
+      <!-- end modal-dialog -->
+    </div>
+    <!-- endmodal -->
   </div>
   <!-- end page-wrap -->
 </template>
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
-import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+import axios from "axios";
+import Web3 from "web3";
 import SectionData from "@/store/store.js";
+import getAddressFrom from "../utils/AddressExtractor";
+import ABI from "../../common/ABI";
+// import abi from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+const abi = ABI.CONTRACT_ABI.NFT_ABI;
+const CA = SsafyNFT.networks["5777"].address;
+// console.log(CA);
+
+// 네트워크 연결
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+// let webs = new Web3("http://127.0.0.1:7545");
+
+// let pollWeb3 = state => {
+
 export default {
   name: "CreateSingle",
   data() {
@@ -151,16 +197,24 @@ export default {
       options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
       // d
       form: {
+<<<<<<< HEAD
+=======
+        // author: null,
+        author: "성현",
+>>>>>>> FE/sunghyun
         file: null,
         nftName: null,
         description: null,
       },
+      authorPrivateKey: null,
+      // authorPublicKey: null,
     };
   },
   methods: {
     selectFile(data) {
       this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
+<<<<<<< HEAD
       console.log(data.target.files)
       console.log(data.target.files[0])
 
@@ -201,8 +255,120 @@ export default {
         console.log(res);
       });
     },
+=======
+    },
+    async submitCreateNFT() {
+      /**
+       * PJT Ⅱ - 과제 1: 작품 등록 및 NFT 생성
+       * Req.1-F1 작품 등록 화면 및 등록 요청
+       *
+       * 구현 예)
+       * 1. 아이템 업로드 및 모든 정보가 입력되면 등록 승인을 위한 모달창이 열립니다.
+       * 2. 해당 모달 창에서 개인키를 입력하면 getAddressFrom() 함수를 통해 공개키가 반환되며, 공개키가 유효한 경우 작가명, 제목,
+       * 아이템 소개 정보를 인코딩하여 formData에 아이템의 이미지와 함께 append 합니다.
+       * 3. 만들어진 formData는 아이템 등록 API를 통해 전달되고, 정상적으로 반영된 경우 이미지의 링크와 item ID를 반환 받습니다.
+       * 4. 이후 공개키와 생성된 item ID, 이미지 링크를 이용해 NFT 생성을 위한 함수를 호출합니다.
+       * 정상적으로 트랜잭션이 완결된 후 token Id가 반환됩니다.
+       * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
+       */
+      // url:해시된, nft:이름, 작성자 일련번호
+      // console.log(this.authorPrivateKey);
+      // privatekey는 0x로 시작하는듯?
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const temp = await web3.eth.getAccounts();
+      const myAccount = temp[0];
+
+      // 공개키가 유효하다면 정보 등록
+      if (checkPubKey === myAccount) {
+        console.log("일치합니다.");
+        let data = new FormData();
+        // data.append("author", this.form.author);
+        data.append("nftName", this.form.nftName);
+        // data.append("description", this.form.description);
+        data.append("file", this.form.file);
+        axios({
+          method: "POST",
+          url: `${SERVER_URL}/file`,
+          data: data,
+          headers: {
+            // Authorization: token,
+            Authorization:
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+            "Content-Type": "multipart/form-data",
+          },
+        }).then((preIPFSresult) => {
+          async function load() {
+            const IPFSresult = preIPFSresult.data;
+            console.log(IPFSresult, "ipfs결과");
+            const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+            console.log(ssafyToken1,)
+            let mintResult = await ssafyToken1.methods.create(myAccount, IPFSresult);
+            //
+            // const finalresult = mintResult.encodeABI();
+            console.log(mintResult, "민트 컨트랙트 결과");
+            // console.log(finalresult, "민트컨트랙트 결과를 해석");
+            // 함수결과값
+            // 메타 url:
+          }
+          load();
+        });
+      }
+      // 위에 3번 전 과정
+      // console.log(this.form);
+    },
+    // async getValue() {
+    //   web3 = new Web3(web3.currentProvider);
+    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
+    //   this.currentAddress = electionContract._address;
+    //   let candidatesCount = await electionContract.methods.candidatesCount().call();
+    //   this.tableData = [];
+    //   for (let i = 0; i < candidatesCount; i++) {
+    //     if (i != 0) {
+    //       let candidates = await electionContract.methods.candidates(i).call();
+    //       this.tableData.push({ id: i, name: candidates.name, votes: candidates.voteCount });
+    //     }
+    //   }
+    // },
+    // async setVote() {
+    //   web3 = new Web3(web3.currentProvider);
+    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
+    //   let vote = await electionContract.methods.vote(this.selectedCandidate).send({ from: process.env.VUE_APP_ETHADDRESS });
+    //   console.log(vote);
+    // },
+>>>>>>> FE/sunghyun
   },
   mounted() {
+    // async function loadMyAccount() {
+    //   await web3.eth.getAccounts().then((res) => (this.myAccount = res[0]));
+    //   // console.log(myAccounts[0]);
+    //   await console.log(this.myAccount);
+    //   // this.myAccount = await myAccounts[0];
+
+    //   // console.log(myAccounts, "내계좌주소");
+    //   // console.log(mintResult, "결과 확인");
+    //   // 함수결과값
+    //   // 메타 url:
+    // }
+    // loadMyAccount();
+    // async function hello() {
+    //   const result = await new Web3.eth.Contract(abi, CA);
+    //   console.log(result);
+    //   return result;
+    // }
+    // hello().then((res) => console.log(res, "뒤"));
+
+    // async function hello2() {
+    //   const results = await Web3.eth.Contract(ABI, CA);
+    //   console.log(results);
+    //   return results;
+    // }
+    // hello2().then((res) => console.log(res, "뒤2"));
+
+    // 현재 작가는 해당 아이디 이후 변경예정
+    // console.log(web3.eth.getAccounts(), "요기");
+    // function getAccount() {
+    // web3.eth.getAccounts(function)}
+
     /*==============File upload =============== */
     function fileUpload(selector) {
       let elem = document.querySelectorAll(selector);
