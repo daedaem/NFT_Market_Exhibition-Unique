@@ -3950,17 +3950,11 @@ let SectionData = {
     ],
     contentTwo: "We do not own your private keys and cannot access your funds without your confirmation",
   },
-  // create singledata
-  createSingleData: {
+  // create
+  createData: {
     btnText: "Manage collectible type",
-    path: "/create",
+    // path: "/create",
     title: "Create single collectible",
-  },
-  // multiple data
-  createMultipleData: {
-    btnText: "Manage collectible type",
-    path: "/create",
-    title: "Create multiple collectible",
   },
   // select method tab nav
   selectMethodTabNav: [
