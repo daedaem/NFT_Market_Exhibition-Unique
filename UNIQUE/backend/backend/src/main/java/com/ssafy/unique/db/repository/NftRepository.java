@@ -18,6 +18,9 @@ public interface NftRepository extends JpaRepository<Nft, Long> {
 
 	List<Nft> findAllByNftOwnerAddress(String address);
 
+	List<Nft> findAllByNftTokenId(Long tokenId);
+
+
 	@Modifying(clearAutomatically = true)
 	@Transactional
 	@Query(value = " update nft	set nft_token_id = ?	where nft_owner_address = ? and nft_metadata_uri = ? ", nativeQuery = true)

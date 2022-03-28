@@ -12,4 +12,6 @@ public interface NftService {
 
 
     List<Nft> nftListByNftOwnerAddress(String address);
+
+    List<Nft> findAllByNftTokenId(Long nftTokenId);
 }

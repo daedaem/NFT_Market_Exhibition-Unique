@@ -45,6 +45,18 @@ public class NftController {
     ResponseEntity<List<Nft>> NftListByAddress(@PathVariable String address) {
         List<Nft> list = nftService.nftListByNftOwnerAddress(address);
         if(list != null) {
+            System.out.println(list);
+            return new ResponseEntity<List<Nft>>(list,HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<List<Nft>>(list,HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/details/{tokenId}")
+    ResponseEntity<List<Nft>> NftListByTokenId(@PathVariable Long tokenId) {
+        List<Nft> list = nftService.findAllByNftTokenId(tokenId);
+        if(list != null) {
             return new ResponseEntity<List<Nft>>(list,HttpStatus.OK);
         }
         else {

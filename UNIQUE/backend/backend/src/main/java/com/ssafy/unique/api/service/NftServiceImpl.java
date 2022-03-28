@@ -28,5 +28,12 @@ public class NftServiceImpl implements NftService{
         return list;
     }
 
+    @Override
+    public List<Nft> findAllByNftTokenId(Long nftTokenId) {
+        List<Nft> list = nftRepository.findAllByNftTokenId(nftTokenId);
+        return list;
+    }
+
+    //토큰 ID로
 
 }
