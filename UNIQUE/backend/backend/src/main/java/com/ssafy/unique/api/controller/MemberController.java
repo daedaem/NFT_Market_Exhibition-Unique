@@ -1,9 +1,5 @@
 package com.ssafy.unique.api.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,12 +19,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.LoginReq;
 import com.ssafy.unique.api.request.MemberReq;
+import com.ssafy.unique.api.request.WalletRegisterReq;
 import com.ssafy.unique.api.response.MemberRes;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.api.service.CustomUserDetailsService;
 import com.ssafy.unique.api.service.MemberService;
 import com.ssafy.unique.jwt.JwtFilter;
 import com.ssafy.unique.jwt.TokenProvider;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 @CrossOrigin(
@@ -113,6 +117,24 @@ public class MemberController {
 		}
 	}
 	
+	
+	@Operation(description = "지갑을 등록")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "지갑 등록 성공"),
+			@ApiResponse(responseCode = "500", description = "지갑 등록 실패")
+	})
+	@PutMapping("/wallet")
+	public ResponseEntity<ResultRes> memberWalletRegister(@RequestBody WalletRegisterReq wallet) {
+		System.out.println(wallet.getWallet());
+		ResultRes resultRes = memberService.memberWalletRegister(wallet.getWallet());
+		
+		if (resultRes.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (resultRes, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (resultRes, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 	
 }
 

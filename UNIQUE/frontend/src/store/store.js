@@ -185,7 +185,8 @@ let SectionData = {
     },
   ],
   // Header data
-  headerData: { // 헤더 목록 리스트
+  headerData: {
+    // 헤더 목록 리스트
     btnText: "Connect Wallet",
     inputPlaceholderText: "Search item here...",
     menuList: {
@@ -3949,17 +3950,11 @@ let SectionData = {
     ],
     contentTwo: "We do not own your private keys and cannot access your funds without your confirmation",
   },
-  // create singledata
-  createSingleData: {
+  // create
+  createData: {
     btnText: "Manage collectible type",
-    path: "/create",
+    // path: "/create",
     title: "Create single collectible",
-  },
-  // multiple data
-  createMultipleData: {
-    btnText: "Manage collectible type",
-    path: "/create",
-    title: "Create multiple collectible",
   },
   // select method tab nav
   selectMethodTabNav: [
@@ -4890,6 +4885,32 @@ let SectionData = {
     btnText: "Place a Bid",
     btnLink: "wallet",
   },
+  placeBidModal: {
+    title: "Place a Bid",
+    content: "You are about to place a bid for <strong>The Future is Blossoming - Harlows 2021</strong> from <strong>Nathan walls</strong>",
+    labelText: "Your bid (ETH)",
+    labelTextTwo: 'Enter quantity <span class="text-primary">5 available</span>',
+    totalBidList: [
+      {
+        title: "Your bidding balance",
+        price: "0.013325 ETH",
+      },
+      {
+        title: "Your balance",
+        price: "10.67856 ETH",
+      },
+      {
+        title: "Service fee 3.5%",
+        price: "0.00325 ETH",
+      },
+      {
+        title: "You will pay",
+        price: "0.013325 ETH",
+      },
+    ],
+    btnText: "Place a Bid",
+    btnLink: "wallet",
+  },
   reportModalData: {
     title: "Why are you reporting?",
     content: "If you believe there's been a violation of EnftyMart's Terms of Service or Community Guidelines, please complete this report.",
@@ -5526,6 +5547,12 @@ let SectionData = {
         path: "wallet",
       },
     ],
+  },
+  createNftModal: {
+    title: "Confirm Your Registration",
+    content: "Before this item gets created, please <strong>typing your Private Key</strong> if you'd like to confirm.",
+    labelText: "Private Key",
+    // btnLink: "wallet",
   },
   copyTitle: 'Copyright © 2022 EnftyMart. Template Made by <a href="https://themeforest.net/user/softnio/portfolio" target="_blank">Softnio</a>',
 };

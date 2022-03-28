@@ -31,4 +31,6 @@ public class Member {
 	@Column(name = "MEMBER_PASSWORD")
 	private String memberPassword;
 
+	@Column(name = "MEMBER_ADDRESS")
+	private String memberAddress;
 }
