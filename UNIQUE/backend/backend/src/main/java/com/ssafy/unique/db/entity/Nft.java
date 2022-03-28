@@ -35,8 +35,11 @@ public class Nft {
 	@Column(name = "NFT_OWNER_SEQ")
 	private Long nftOwnerSeq;
 	
-	@Column(name = "NFT_CREATOR_SEQ")
-	private Long nftCreatorSeq;
+	@Column(name = "NFT_AUTHOR_SEQ") //이거 NFT_AUTHOR_SEQ 아닌가?
+	private Long nftAuthorSeq;
+
+	@Column(name = "NFT_OWNER_ADDRESS")
+	private String nftOwnerAddress;
 	
 	@Column(name = "NFT_TYPE")
 	private String nftType;
@@ -52,5 +55,9 @@ public class Nft {
 	
 	@Column(name = "NFT_HASH")
 	private String nftHash;
+
+	@Column(name = "NFT_DESCRIPTION")
+	private String nftDescription;
+
 	
 }

@@ -69,7 +69,7 @@ public class IPFSServiceImpl implements IPFSService {
 				// DB에 반영
 				nftRepository.save(Nft.builder()
 						.nftOwnerSeq(nftReq.getNftCreatorSeq())
-						.nftCreatorSeq(nftReq.getNftCreatorSeq())
+						.nftAuthorSeq(nftReq.getNftCreatorSeq())
 						.nftName(nftReq.getNftName())
 						.nftType(nftReq.getNftType())
 						.nftWorkUri(nftReq.getNftWorkUri())
