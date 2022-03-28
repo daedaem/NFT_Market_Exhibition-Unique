@@ -112,7 +112,7 @@
     }
   }
   &-grad {
-    background-image: linear-gradient(to right, $accent-color 0%,$accent-color-3 100%);
+    background-image: linear-gradient(to right, $accent-color 0%, $accent-color-3 100%);
     @include transition(0.5s);
     background-size: 200% auto;
     color: $white;
@@ -121,24 +121,24 @@
     &:hover {
       background-position: right center;
       color: $white;
-    }   
+    }
   }
   &.g-btn {
     &:hover {
-      background-color: $red!important;
-      color: $white!important;
+      background-color: $red !important;
+      color: $white !important;
     }
   }
   &.f-btn {
     &:hover {
-      background-color: $blue!important;
-      color: $white!important;
+      background-color: $blue !important;
+      color: $white !important;
     }
   }
   &.t-btn {
     &:hover {
-      background-color: $cyan!important;
-      color: $white!important;
+      background-color: $cyan !important;
+      color: $white !important;
     }
   }
 }
@@ -150,11 +150,11 @@
     flex-wrap: wrap;
     align-items: center;
     margin: -7px;
-    >* {
+    > * {
       padding: 7px;
     }
     &-full-mobile {
-      >* {
+      > * {
         width: 100%;
         .btn {
           display: block;
@@ -223,7 +223,7 @@
   .btns {
     &-group {
       &-full-mobile {
-        >* {
+        > * {
           width: auto;
           .btn {
             display: inline-block;
@@ -237,12 +237,12 @@
   .btns {
     &-group {
       margin: -9px;
-      >* {
+      > * {
         padding: 9px;
       }
       &-2 {
         margin: -5px;
-        >* {
+        > * {
           padding: 5px;
         }
       }

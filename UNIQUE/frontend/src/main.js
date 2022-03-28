@@ -57,6 +57,16 @@ import ExploreSection from "./components/section/ExploreSection.vue";
 // import RelatedProduct from "./components/section/RelatedProduct.vue";
 
 //
+import HeaderDashboard from "./components/common/HeaderDashboard.vue";
+import AuthorHero from "./components/section/AuthorHero.vue";
+import ProfileSection from "./components/section/ProfileSection.vue";
+import AuthorSidebar from "./components/common/AuthorSidebar.vue";
+import UserSidebar from "./components/common/UserSidebar.vue";
+import AccountSection from "./components/section/AccountSection.vue";
+
+import LoginSection from "./components/section/LoginSection.vue";
+import RegisterSection from "./components/section/RegisterSection.vue";
+
 app.component("HeaderMain", HeaderMain);
 app.component("LogoLink", LogoLink);
 app.component("ButtonLink", ButtonLink);
@@ -85,3 +95,13 @@ app.component("ExploreSection", ExploreSection);
 // app.component("RelatedProduct", RelatedProduct);
 
 app.use(router).mount("#app");
+
+app.component("HeaderDashboard", HeaderDashboard);
+app.component("AuthorHero", AuthorHero);
+app.component("ProfileSection", ProfileSection);
+app.component("AuthorSidebar", AuthorSidebar);
+app.component("UserSidebar", UserSidebar);
+app.component("AccountSection", AccountSection);
+
+app.component("LoginSection", LoginSection);
+app.component("RegisterSection", RegisterSection);

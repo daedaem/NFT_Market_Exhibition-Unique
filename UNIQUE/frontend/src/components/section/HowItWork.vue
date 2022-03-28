@@ -38,4 +38,10 @@ export default {
 /* .HowItWork .MainSectionHeading { */
 /* color: white; */
 /* } */
+.card-text-s1 {
+  color: #e8e8e8;
+}
+.card-text-s1 .a {
+  color: #e8e8e8;
+}
 </style>
