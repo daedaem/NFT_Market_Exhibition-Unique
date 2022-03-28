@@ -284,7 +284,7 @@ export default {
         data.append("file", this.form.file);
         const createIPFS = await axios({
           method: "POST",
-          url: `${SERVER_URL}/file`,
+          url: `${SERVER_URL}/api/file`,
           data: data,
           headers: {
             // Authorization: token,
@@ -312,7 +312,7 @@ export default {
         // 아래 세가지
         const createNFTtoBack = await axios({
           method: "PUT",
-          url: `${SERVER_URL}/file/update`,
+          url: `${SERVER_URL}/api/file/update`,
           data: { tokenId: newtokenId, ownerAddress: "kbjid17", metadataUri: IPFSresult },
           headers: {
             // Authorization: token,
