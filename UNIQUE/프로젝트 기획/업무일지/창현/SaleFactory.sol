@@ -31,10 +31,10 @@ contract SaleFactory is Ownable {
      * @dev 반드시 구현해야하는 함수입니다.
      */
     function createSale(
+        uint256 itemId,
+        uint256 purchasePrice,
         uint256 startTime,
         uint256 endTime,
-        uint256 purchasePrice,
-        uint256 itemId,
         address currencyAddress,
         address nftAddress
     ) public returns (address) {
