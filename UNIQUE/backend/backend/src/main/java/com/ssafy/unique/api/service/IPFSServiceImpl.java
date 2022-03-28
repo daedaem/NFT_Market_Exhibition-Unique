@@ -76,7 +76,7 @@ public class IPFSServiceImpl implements IPFSService {
 
 				// Owner Address를 구한다
 				String ownerAddress = memberRepository.findMemberAddressByMemberSeq(nftReq.getNftAuthorSeq());
-
+				System.out.println(ownerAddress);
 				// DB에 반영
 				nftRepository.save(Nft.builder()
 						.nftAuthorSeq(nftReq.getNftAuthorSeq())

@@ -3,15 +3,15 @@
   <div>조성현123</div>
   <hr>
   <button @click="getItemsAll">전체 데이터 가져오기</button>
-  <ul v-for="item in items" :key="item.token_id">
-    <li>{{item.token_id}}</li>
+  <ul v-for="item in items" :key="item.nftName">
+    <li>{{item.nftName}}</li>
   </ul>
   <hr>
   <input type="text" v-model="inputaddress">
   <div>{{inputaddress}}</div>
   <button @click="getItmesByAddress(inputaddress)">주소로 데이터 가져오기</button>
-  <ul v-for="aitem in aitems" :key="aitem.token_id">
-    <li>{{aitem.token_id}}</li>
+  <ul v-for="aitem in aitems" :key="aitem.nftName">
+    <li>{{aitem.nftName}}</li>
   </ul>
   <hr>
   <div>{{exampleTokenId}}</div>
@@ -51,31 +51,31 @@ export default {
     };
   },
   methods: {
-    async getItmesAll() {
+    async getItemsAll() {
       const getItems = await axios({
         method: "GET",
-        url: `${SERVER_URL}/api/items`,
+        url: `${SERVER_URL}/api/nft/items`,
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
-          "Content-Type": "multipart/form-data",
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
         },
       });
       this.items = getItems
+      console.log(this.items);
     },
     async getItmesByAddress(address) {
       const getItems = await axios({
         method: "GET",
-        url: `${SERVER_URL}/api/items?address=${address}`,
+        url: `${SERVER_URL}/api/nft/items/${address}`,
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
-          "Content-Type": "multipart/form-data",
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
         },
       });
       this.aitems = getItems
+      console.log(this.aitems)
     },
     async getDetail(token_id) {
       const getDetails = await axios({
@@ -84,7 +84,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
           "Content-Type": "multipart/form-data",
         },
       });
