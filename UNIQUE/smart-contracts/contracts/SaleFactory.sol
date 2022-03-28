@@ -58,23 +58,22 @@ contract SaleFactory is Ownable {
             startTime,
             endTime,  
             // 
-            nftAddress
+            nftAddress,
+            _workId.current(),
+            address(this)
         );
         // setApprovalForAll(address(this), true);
         // ERC721.setApprovalForAll(address(sale), true);
-        
-        
         // erc721Constract.setApprovalForAll(msg.sender, address(sale), true);
-        _workId.increment();
         
         // 4-2). 등록된 세일들에 대한 내용들을 sales리스트에 추가한다.
         // sales[_workId.current()] = address(this);
-        
         sales.push(address(sale));
         // 4-3). 생성된 sale 컨트랙트 주소정보를 반환한다.
         // 밑둘다 있어야하는건지 하나만 있으면 되는건지
         emit NewSale(address(sale), msg.sender, _workId.current());
-        
+        _workId.increment();
+
         return address(sale);
 
     }
@@ -88,6 +87,7 @@ contract SaleFactory is Ownable {
  *  PJT Ⅲ - Req.1-SC2) Sale 구현
  */
 contract Sale {
+    SaleFactory salefactory;
     // 생성자에 의해 정해지는 값
     address public seller;
     address public buyer;
@@ -100,6 +100,9 @@ contract Sale {
     address public currencyAddress;
     address public nftAddress;
     bool public ended;
+    uint256 public workId;
+    address public saleFactoryAddress;
+    
     // 현재 최고 입찰 상태
     // address public highestBidder;
     // uint256 public highestBid;
@@ -119,7 +122,9 @@ contract Sale {
         uint256 _purchasePrice,
         uint256 startTime,
         uint256 endTime,
-        address _nftAddress
+        address _nftAddress,
+        uint256 _workId,
+        address _saleFactoryAddress
     ) {
         // require(_minPrice > 0);
         admin = _admin;
@@ -134,6 +139,10 @@ contract Sale {
         ended = false;
         erc20Contract = IERC20(_currencyAddress);
         erc721Constract = IERC721(_nftAddress);
+        workId = _workId;
+        saleFactoryAddress = _saleFactoryAddress;
+        salefactory = SaleFactory(_saleFactoryAddress);
+        // saleFactoryAddress = SaleFactory(_saleFactoryAddress).call(allSales);
         
         //스마트컨트랙트에게 NFT토큰 전송권한 부여
         // erc721Constract.approve(address(this), tokenId);
@@ -230,8 +239,17 @@ contract Sale {
         erc721Constract.safeTransferFrom(address(this), seller, tokenId);
         // erc721Constract.safeTransferFrom(highestBidder, seller, tokenId);
         // 7-3) 컨트랙트의 거래 상태를 업데이트 한다.
+        // 구매 취소하면
+        // sales 배열에서 삭제
+        // delete SaleFactory().call()
+        // delete saleFactoryAddress.call(bytes4(allSales()))[workId];
+        delete salefactory.allSales()[workId];
         _end();
     }
+
+    // function delete() public {
+        // require(msg.sender == owner, "")
+    // }
 
     function getTimeLeft() public view returns (int256) {
         return (int256)(saleEndTime - block.timestamp);
