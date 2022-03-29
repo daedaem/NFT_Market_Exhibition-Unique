@@ -58,9 +58,9 @@ contract SaleFactory is Ownable {
             startTime,
             endTime,  
             // 
-            nftAddress,
-            _workId.current(),
-            address(this)
+            nftAddress
+            // _workId.current(),
+            // address(this)
         );
         // setApprovalForAll(address(this), true);
         // ERC721.setApprovalForAll(address(sale), true);
@@ -89,15 +89,22 @@ contract SaleFactory is Ownable {
 contract Sale {
     SaleFactory salefactory;
     // 생성자에 의해 정해지는 값
+    // 판매자정보
     address public seller;
+    // 최종구매자정보
     address public buyer;
+    // 슈퍼권한자주소
     address admin;
     uint256 public saleStartTime;
     uint256 public saleEndTime;
     // uint256 public minPrice;
+    // 6 즉시구매가
     uint256 public purchasePrice;
+    // 거래할 nft 정보(토큰식별자))
     uint256 public tokenId;
+    // 거래시 사용할 erc-20의 주소
     address public currencyAddress;
+    // 거래할 nft 정보(nft주소)
     address public nftAddress;
     bool public ended;
     uint256 public workId;
@@ -122,9 +129,9 @@ contract Sale {
         uint256 _purchasePrice,
         uint256 startTime,
         uint256 endTime,
-        address _nftAddress,
-        uint256 _workId,
-        address _saleFactoryAddress
+        address _nftAddress
+        // uint256 _workId,
+        // address _saleFactoryAddress
     ) {
         // require(_minPrice > 0);
         admin = _admin;
@@ -139,15 +146,14 @@ contract Sale {
         ended = false;
         erc20Contract = IERC20(_currencyAddress);
         erc721Constract = IERC721(_nftAddress);
-        workId = _workId;
-        saleFactoryAddress = _saleFactoryAddress;
-        salefactory = SaleFactory(_saleFactoryAddress);
-        // saleFactoryAddress = SaleFactory(_saleFactoryAddress).call(allSales);
+        // workId = _workId;
+        // saleFactoryAddress = _saleFactoryAddress;
+        // salefactory = SaleFactory(_saleFactoryAddress);
         
         //스마트컨트랙트에게 NFT토큰 전송권한 부여
         // erc721Constract.approve(address(this), tokenId);
         // 소유권을 스마트컨트랙트에게 줘버리자.
-        erc721Constract.transferFrom(seller, address(this), tokenId);
+        // erc721Constract.transferFrom(seller, address(this), tokenId);
     }
 
 
@@ -170,10 +176,9 @@ contract Sale {
     // }
 
     // modifier onlyAfterStart 사용
-    function purchase() public onlyAfterStart onlyUserPermissioned {
+    function purchase() public onlyAfterStart  {
     // function purchase() public onlyAfterStart onlyUserPermissioned payable {
         // TODO 
-        
         // 5- 제약사항들
         // 판매자가 아닌 경우 호출가능
         require(msg.sender != seller, "Sale: You couldn't purchase this item because you are a seller.");
@@ -190,12 +195,12 @@ contract Sale {
         require(purchasePrice > nowpayable);
 
         // 함수 호출자의 계좌로 부터 seller가 bid_amount만큼 인출 허용하도록
-        erc20Contract.approve(address(this), purchasePrice);
+        // erc20Contract.approve(address(this), purchasePrice);
         erc20Contract.transfer(seller, purchasePrice);
         // 5-3) NFT 소유권을 구매자에게 이전
         // NFT 소유권 승인 APPROVE
         // 
-        erc721Constract.approve(msg.sender, tokenId);
+        // erc721Constract.approve(msg.sender, tokenId);
         erc721Constract.safeTransferFrom(address(this), msg.sender, tokenId);
         
         // 5-4) 컨트랙트의 거래 상태와 구매자 정보를 업데이트 한다.
@@ -234,16 +239,14 @@ contract Sale {
         // erc20Contract.transferFrom(seller, highestBidder, highestBid);
         //  7-2) 소유권을 판매자에게 되돌려 준다.
         // erc721Constract.setApprovalForAll(msg.sender, address(this), false);
-        erc721Constract.approve(seller, tokenId);
+        // erc721Constract.approve(seller, tokenId);
         // erc721Constract.safeTransferFrom(address(this), msg.sender, tokenId);
-        erc721Constract.safeTransferFrom(address(this), seller, tokenId);
+        // erc721Constract.safeTransferFrom(address(this), seller, tokenId);
         // erc721Constract.safeTransferFrom(highestBidder, seller, tokenId);
         // 7-3) 컨트랙트의 거래 상태를 업데이트 한다.
         // 구매 취소하면
         // sales 배열에서 삭제
-        // delete SaleFactory().call()
-        // delete saleFactoryAddress.call(bytes4(allSales()))[workId];
-        delete salefactory.allSales()[workId];
+        // delete salefactory.allSales()[workId];
         _end();
     }
 
@@ -311,9 +314,9 @@ contract Sale {
         _;
     }
     
-    modifier onlyUserPermissioned() {
-        require(buyer !=address(0), "Sale: This Buyer is not found.");
-        require(erc20Contract.approve(seller, purchasePrice), "Sale:This Contract is not allowed");
-        _;
-    }
+    // modifier onlyUserPermissioned() {
+    //     require(buyer !=address(0), "Sale: This Buyer is not found.");
+    //     // require(erc20Contract.approve(seller, purchasePrice), "Sale:This Contract is not allowed");
+    //     _;
+    // }
 }
