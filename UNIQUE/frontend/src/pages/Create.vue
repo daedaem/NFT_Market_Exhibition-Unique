@@ -212,7 +212,7 @@ const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -284,7 +284,7 @@ export default {
         data.append("file", this.form.file);
         const createIPFS = await axios({
           method: "POST",
-          url: `${SERVER_URL}/file`,
+          url: `${SERVER_URL}/api/file`,
           data: data,
           headers: {
             // Authorization: token,
@@ -312,7 +312,7 @@ export default {
         // 아래 세가지
         const createNFTtoBack = await axios({
           method: "PUT",
-          url: `${SERVER_URL}/file/update`,
+          url: `${SERVER_URL}/api/file/update`,
           data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
           headers: {
             // Authorization: token,
