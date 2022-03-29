@@ -196,7 +196,7 @@ contract Sale {
 
         // 함수 호출자의 계좌로 부터 seller가 bid_amount만큼 인출 허용하도록
         // erc20Contract.approve(address(this), purchasePrice);
-        erc20Contract.transfer(seller, purchasePrice);
+        erc20Contract.transferFrom(msg.sender, seller, purchasePrice);
         // 5-3) NFT 소유권을 구매자에게 이전
         // NFT 소유권 승인 APPROVE
         // 
