@@ -27,9 +27,7 @@ $menu-sub-gap-x: $menu-sub-gap-y;
 
 $header-main-gap-y: 14px;
 $header-main-border-width: 1px;
-$header-height: (
-  $header-main-gap-y * 2 + $logo-height + $header-main-border-width
-);
+$header-height: ($header-main-gap-y * 2 + $logo-height + $header-main-border-width);
 
 //font weight
 $fw-light: 300;
@@ -71,9 +69,9 @@ $black-6: #1c1c1c;
 $black-7: #5b6678;
 $black-8: #7e8899;
 
-$dark: #1c2b46;
+$dark: #3a3a3a;
 $black-100: #8091a7;
-$black-200: #d9e1ef;
+$black-200: #ebebeb;
 
 $green: #08dd67;
 $red: #dc3545;
@@ -125,11 +123,11 @@ $headding-color: $dark;
 $paragraph-color: $base-color;
 
 //accent colors
-$accent-color: #7952b3;
-$accent-color-2: #9371c7;
-$accent-color-3: #bfabdf;
-$accent-color-4: #4a2283;
-$accent-color-5: #3c1971;
+$accent-color: #939393;
+$accent-color-2: #787878;
+$accent-color-3: #606060;
+$accent-color-4: #4a4a4a;
+$accent-color-5: #3a3a3a;
 
 $primary: $accent-color;
 $primary-2: $accent-color-2;

@@ -28,7 +28,7 @@
 
     <!-- trending-section -->
     <!-- Footer  -->
-    <Footer classname="on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
   </div>
   <!-- end page-wrap -->
 </template>
@@ -50,8 +50,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-footer {
-  background: black;
-}
-</style>
+<style scoped></style>
