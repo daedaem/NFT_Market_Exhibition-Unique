@@ -9,4 +9,5 @@ public class NftUpdateReq {
 	private Long tokenId;
 	private String ownerAddress;
 	private String metadataUri;
+	private String contractAddress;
 }
