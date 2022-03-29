@@ -101,9 +101,9 @@ public class IPFSController {
 	})
 	@PutMapping(value="/file/update")
 	public ResponseEntity<ResultRes> updateNFT(@RequestBody NftUpdateReq nftUpdateReq) {
-		
+		System.out.print(nftUpdateReq);
 		ResultRes resultRes = ipfsService.updateNFT(nftUpdateReq);
-		
+
 		if (resultRes.getResult() == SUCCESS) {
 			return new ResponseEntity<ResultRes>(resultRes, HttpStatus.OK);
 		} else {

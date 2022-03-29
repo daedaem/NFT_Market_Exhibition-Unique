@@ -6,6 +6,12 @@
     <ul class="menu-btns">
       <li><ButtonLink :text="SectionData.headerData.btnText" link="/wallet" classname="btn" :class="classname"></ButtonLink></li>
       <li>
+        <!-- 로그인 부분 해결되면 밑에꺼 사용 start-->
+        <!-- <li v-if="this.$store.state.isLogin == false"><ButtonLink :text="SectionData.headerData.btnText" link="/wallet" classname="btn" :class="classname"></ButtonLink></li>
+      <li v-else>
+        <ButtonLink :text="SectionData.headerData.btnText" link="/create" classname="btn" :class="classname"></ButtonLink>
+      </li> -->
+        <!-- 로그인 부분 해결되면 사용할 end -->
         <!-- <ThemeSwitcher></ThemeSwitcher>/ -->
       </li>
     </ul>
