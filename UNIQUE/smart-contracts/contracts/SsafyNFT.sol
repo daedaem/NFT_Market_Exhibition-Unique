@@ -91,7 +91,7 @@ contract SsafyNFT is ERC721 {
         return newItemid;
     }
 
-    function getContractAddress(uint256 _newItemid) public view returns(address){
-        return contractAddress[_newItemid];
-    }
+    // function getContractAddress(uint256 _newItemid) public view returns(address){
+    //     return contractAddress[_newItemid];
+    // }
 }
