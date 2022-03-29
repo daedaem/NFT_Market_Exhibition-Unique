@@ -1,8 +1,11 @@
 package com.ssafy.unique.api.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,9 @@ import com.ssafy.unique.api.request.NftReq;
 import com.ssafy.unique.api.request.NftUpdateReq;
 import com.ssafy.unique.api.response.NftRes;
 import com.ssafy.unique.api.response.ResultRes;
+import com.ssafy.unique.db.entity.FileList;
 import com.ssafy.unique.db.entity.Nft;
+import com.ssafy.unique.db.repository.FileListRepository;
 import com.ssafy.unique.db.repository.MemberRepository;
 import com.ssafy.unique.db.repository.NftRepository;
 
@@ -30,12 +35,17 @@ public class IPFSServiceImpl implements IPFSService {
 	private final IPFSConfig ipfsConfig;
 	private final NftRepository nftRepository;
 	private final MemberRepository memberRepository;
+	private final FileListRepository fileRepository;
 	
-	public IPFSServiceImpl(IPFSConfig _ipfsConfig, NftRepository _nftRepository, MemberRepository _memberRepository) {
+	public IPFSServiceImpl(IPFSConfig _ipfsConfig, NftRepository _nftRepository, MemberRepository _memberRepository, FileListRepository _fileRepository) {
 		this.ipfsConfig = _ipfsConfig;
 		this.nftRepository = _nftRepository;
 		this.memberRepository = _memberRepository;
+		this.fileRepository = _fileRepository;
 	}
+	
+	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
+	String uploadFolder = "upload";
 	
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
@@ -49,6 +59,31 @@ public class IPFSServiceImpl implements IPFSService {
 			MultipartFile file = request.getFile("file");
 			
 			if (file != null) {
+				// 추가: 서버에 이미지를 저장
+				
+				// 파일 저장 위치 설정
+				File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+				if (!uploadDir.exists()) uploadDir.mkdir();
+				
+				// 실제 파일이름 저장
+				String fileName = file.getOriginalFilename();
+				
+				// Random File Id + File Extension 으로 저장될 파일이름 설정
+				UUID uuid = UUID.randomUUID();
+				String extension = FilenameUtils.getExtension(fileName);
+				String savingFileName = uuid + "." + extension;
+				
+				// 파일 저장
+				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+				System.out.println(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+				file.transferTo(destFile);
+				
+
+				
+				
+				
+				
+				// IPFS Upload
 				InputStream stream = new ByteArrayInputStream(file.getBytes());
 				NamedStreamable.InputStreamWrapper inputStreamWrapper = new NamedStreamable.InputStreamWrapper(stream);
 				IPFS ipfs = ipfsConfig.ipfs;
@@ -59,7 +94,6 @@ public class IPFSServiceImpl implements IPFSService {
 				nftReq.setNftWorkUri(merkleNode.hash.toBase58());
 				
 				// nftWorkUri가 이미 존재하는지 DB에서 확인하고, 없다면 밑으로 진행
-				
 				
 				
 				// Security Context에서 nftCreatorSeq를 구한다
@@ -79,6 +113,9 @@ public class IPFSServiceImpl implements IPFSService {
 				// Owner Address를 구한다
 				String ownerAddress = memberRepository.findMemberAddressByMemberSeq(nftReq.getNftAuthorSeq());
 				
+				// MetadataUri를 구한다
+				String nftMetadataUri = merkleNode.hash.toBase58();
+				
 				// DB에 반영
 				nftRepository.save(Nft.builder()
 						.nftAuthorSeq(nftReq.getNftAuthorSeq())
@@ -86,16 +123,37 @@ public class IPFSServiceImpl implements IPFSService {
 						.nftOwnerSeq(nftReq.getNftAuthorSeq())
 						.nftOwnerAddress(ownerAddress)
 						.nftWorkUri(nftReq.getNftWorkUri())
-						.nftMetadataUri(merkleNode.hash.toBase58())
+						.nftMetadataUri(nftMetadataUri)
 						.nftName(nftReq.getNftName())
 						.nftType(nftReq.getNftType())
 						.nftDescription(nftReq.getNftDescription())
 						.build()
 				);
 				
+				
+				
+				
+				
+				// FILE_LIST DB에 파일 기록 => NFT_SEQ의 값이 정해지고 나서 진행해야함
+				String fileUrl = uploadFolder + "/" + savingFileName;
+				fileRepository.save(FileList.builder()
+						.nftSeq(nftRepository.findByNftMetadataUri(nftMetadataUri).getNftSeq())
+						.fileName(fileName)
+						.fileSize(file.getSize())
+						.fileContentType(file.getContentType())
+						.fileUrl(fileUrl)
+						.build()
+				);
+				
+				
+				
+				
+				
+				
+				
 				nftRes.setResult(SUCCESS);
 				nftRes.setNftSeq(nftReq.getNftAuthorSeq());
-				nftRes.setNftMetadataUri(merkleNode.hash.toBase58());
+				nftRes.setNftMetadataUri(nftMetadataUri);
 			} else {
 				System.out.println("null file");
 				nftRes.setResult(FAIL);
@@ -135,6 +193,7 @@ public class IPFSServiceImpl implements IPFSService {
 			
 			int result = nftRepository.updateNftByNftTokenIdAndNftOwnerAddress(
 					nftUpdateReq.getTokenId(), 
+					nftUpdateReq.getContractAddress(),
 					nftUpdateReq.getOwnerAddress(),
 					nftUpdateReq.getMetadataUri()
 			);
