@@ -203,12 +203,12 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["5777"].address;
+const CA = SsafyNFT.networks["1377"].address;
 // console.log(CA);
 
 // 네트워크 연결
@@ -313,7 +313,7 @@ export default {
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
-          data: { tokenId: newtokenId, ownerAddress: "kbjid17", metadataUri: IPFSresult },
+          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
           headers: {
             // Authorization: token,
             Authorization:

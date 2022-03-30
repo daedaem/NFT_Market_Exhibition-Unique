@@ -20,8 +20,6 @@ contract SaleFactory is Ownable {
     address public admin;
     address[] public sales;
 
-    // Newsale이라는 이벤트안에 출력되는 값 세가지
-    // event에서 사용되는 indexed, 이후 web3.js filter로 해당조건에 맞는 블록만 불러올 수 있음.
     event NewSale(
         address indexed _saleContract,
         address indexed _owner,
@@ -37,13 +35,17 @@ contract SaleFactory is Ownable {
      */
     function createSale(
         uint256 itemId,
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
         // uint256 minPrice,
+=======
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
         uint256 purchasePrice,
         uint256 startTime,
         uint256 endTime,
         address currencyAddress,
         address nftAddress
     ) public returns (address) {
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
         // TODO
         // 계약 내에서 다른 새로운 계약 생성을 위해서
         // 4-1).
@@ -76,6 +78,28 @@ contract SaleFactory is Ownable {
         emit NewSale(address(sale), msg.sender, _workId.current());
         _workId.increment();
 
+=======
+        // Sale Contract를 생성한다
+        Sale sale = new Sale(
+            msg.sender,
+            admin,
+            startTime,
+            endTime,
+            purchasePrice,
+            itemId,
+            currencyAddress,
+            nftAddress
+        );
+
+        // 카운터를 자동으로 증가시킨다
+        // _workId를 사용해서 해당 Sale이 몇번째 생성된 Sale인지 기록한다
+        _workId.increment();
+
+        // event를 사용해서 기록한다
+        emit NewSale(address(sale), msg.sender, _workId.current());
+
+        // return으로 생성된 Sale 컨트랙트 주소를 반환한다
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
         return address(sale);
     }
 
@@ -98,8 +122,11 @@ contract Sale {
     address admin;
     uint256 public saleStartTime;
     uint256 public saleEndTime;
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
     // uint256 public minPrice;
     // 6 즉시구매가
+=======
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
     uint256 public purchasePrice;
     // 거래할 nft 정보(토큰식별자))
     uint256 public tokenId;
@@ -111,19 +138,21 @@ contract Sale {
     uint256 public workId;
     address public saleFactoryAddress;
 
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
     // 현재 최고 입찰 상태
     // address public highestBidder;
     // uint256 public highestBid;
 
+=======
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
     IERC20 public erc20Contract;
     IERC721 public erc721Constract;
 
-    event HighestBidIncereased(address bidder, uint256 amount);
     event SaleEnded(address winner, uint256 amount);
 
     constructor(
-        address _admin,
         address _seller,
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
         uint256 _tokenId,
         // uint256 _minPrice,
         address _currencyAddress,
@@ -135,6 +164,18 @@ contract Sale {
         address _saleFactoryAddress
     ) {
         // require(_minPrice > 0);
+=======
+        address _admin,
+        uint256 startTime,
+        uint256 endTime,
+        uint256 _purchasePrice,
+        uint256 _tokenId,
+        address _currencyAddress,
+        address _nftAddress
+    ) {
+        require(_purchasePrice > 0);
+        seller = _seller;
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
         admin = _admin;
         seller = _seller;
         tokenId = _tokenId;
@@ -143,6 +184,12 @@ contract Sale {
         purchasePrice = _purchasePrice;
         saleStartTime = startTime;
         saleEndTime = endTime;
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
+=======
+        purchasePrice = _purchasePrice;
+        tokenId = _tokenId;
+        currencyAddress = _currencyAddress;
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
         nftAddress = _nftAddress;
         ended = false;
         erc20Contract = IERC20(_currencyAddress);
@@ -158,6 +205,7 @@ contract Sale {
         erc721Constract.transferFrom(seller, address(this), tokenId);
     }
 
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
     // function bid(uint256 bid_amount) public onlyAfterStart onlyUserPermissioned {
     //     // TODO
     //     require(msg.sender != seller, "Sale: You couldn't be a bidder because you are a seller.");
@@ -265,6 +313,23 @@ contract Sale {
     // function delete() public {
     // require(msg.sender == owner, "")
     // }
+=======
+    function purchase() public {
+        // 구매 희망자가 판매자가 제시한 즉시 구매가에 작품를 구매
+        // 판매자가 아닌 경우 호출가능 -> require or modifier 를 사용해서 제약사항 추가
+        // 해당 Sale의 판매 시점이 유효한 경우 -> ended의 값 확인 + start, end time확인
+        // 구매 희망자가 Sale 컨트랙트에게 구매 희망자의 ERC-20 토큰을 송금할 수 있는 권한을 허용
+        // -> 권한을 ERC-20 approve를 통해서 허가해주어야 한다
+        // 위 제약사항을 만족한다면,
+        // 구매자의 ERC-20 토큰을 즉시 구매가 만큼 판매자에게 전송
+        // NFT 소유권을 구매자에게 이전
+        // 컨트랙트 거래 상태
+    }
+
+    function cancelSales() public {
+        // TODO
+    }
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
 
     function getTimeLeft() public view returns (int256) {
         return (int256)(saleEndTime - block.timestamp);
@@ -279,8 +344,11 @@ contract Sale {
             // uint256,
             uint256,
             uint256,
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
             // address,
             // uint256,
+=======
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
             address,
             address
         )
@@ -288,20 +356,28 @@ contract Sale {
         return (
             saleStartTime,
             saleEndTime,
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
             // minPrice,
             purchasePrice,
             tokenId,
             // highestBidder,
             // highestBid,
+=======
+            purchasePrice,
+            tokenId,
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
             currencyAddress,
             nftAddress
         );
     }
 
+<<<<<<< HEAD:UNIQUE/smart-contracts/contracts/SaleFactory.sol
     // function getHighestBid() public view returns(uint256){
     //     return highestBid;
     // }
 
+=======
+>>>>>>> 5795a0dd1e975e2490e5ca5011e05bbb6e37fade:UNIQUE/프로젝트 기획/업무일지/창현/SaleFactory.sol
     // internal 혹은 private 함수 선언시 아래와 같이 _로 시작하도록 네이밍합니다.
     function _end() internal {
         ended = true;
