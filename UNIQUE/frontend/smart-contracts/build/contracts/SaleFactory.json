@@ -61,7 +61,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -74,7 +75,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -100,7 +102,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -170,7 +173,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_saleContract\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_workId\",\"type\":\"uint256\"}],\"name\":\"NewSale\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"allSales\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"itemId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"purchasePrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"currencyAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"nftAddress\",\"type\":\"address\"}],\"name\":\"createSale\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"sales\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"createSale(uint256,uint256,uint256,uint256,address,address)\":{\"details\":\"\\ubc18\\ub4dc\\uc2dc \\uad6c\\ud604\\ud574\\uc57c\\ud558\\ub294 \\ud568\\uc218\\uc785\\ub2c8\\ub2e4. \"},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"PJT \\u2162 - Req.1-SC1 SaleFactory \\uad6c\\ud604 \\uc0c1\\ud0dc \\ubcc0\\uc218\\ub098 \\ud568\\uc218\\uc758 \\uc2dc\\uadf8\\ub2c8\\ucc98, \\uc774\\ubca4\\ud2b8\\ub294 \\uad6c\\ud604\\uc5d0 \\ub530\\ub77c \\ubcc0\\uacbd\\ud560 \\uc218 \\uc788\\uc2b5\\ub2c8\\ub2e4.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SaleFactory.sol\":\"SaleFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/Counters.sol\":{\"keccak256\":\"0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee\",\"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu\"]},\"project:/contracts/SaleFactory.sol\":{\"keccak256\":\"0x81201dc73a621a996931aedfcd2527879396a741e2f54c04bd3bd53d2bf64713\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4e7a6fd3b49fceec91d344188dfeaf2d0a4a07e34caf3d6de789b10dd4f4c1f2\",\"dweb:/ipfs/QmdbLQL7ZG1wWWC6zrxowNa6Kg8wN6DXZvoxGnCAZURjeo\"]},\"project:/contracts/access/Ownable.sol\":{\"keccak256\":\"0xd361a9c6589bb6d6616e5181ced8ce7b06f751d191c20fe3eb50fe1422f83734\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f4ac7e3ec3b0f103d9c4ebe6f485bff79d58e781531fa157f02cd3a128d877dd\",\"dweb:/ipfs/Qmf2azYYcqzpCFMZH99oveaAzkTurCQQuV6Q7LeT8d1DSy\"]},\"project:/contracts/token/ERC20/ERC20.sol\":{\"keccak256\":\"0x6c1b7a51f379599d1ea2b66ac7c4e5ff38844fb132834c3de3de5b3a88a1fd3e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4ca733ceaf159127efed0adc493a157a9d02cc74abc2752f1cd85e41ed5bb27f\",\"dweb:/ipfs/QmNcUQCXReen9BR27rYEEhcjcRTF9PbCJ5NDeYEsFHnokg\"]},\"project:/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x74ae1a773c1ce27b59c22903469389a6aeb2c882c2485e014aaf50710b9bc32c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c399a2b2bcac88e61c5c617ef7f1341429fa589aba5a9563df6f422996a48b76\",\"dweb:/ipfs/QmWEdyWLZLUy8aMSyYk4E4mD2WhPvrvtxC2KvA5pjBAzXn\"]},\"project:/contracts/token/ERC20/extensions/IERC20Metadata.sol\":{\"keccak256\":\"0x625b87cf2c51463b99de1dda2afd18075618faafac512850ee78c205c82d1f93\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://02d72e8ea6e5c90e628b3b9391947658561c90809e4f9f18c76037ed2b3f61a9\",\"dweb:/ipfs/QmXtdaEkMFehAN5C4F8TEW2HknLBhxfDzqorn3R1ZaGZaK\"]},\"project:/contracts/token/ERC721/ERC721.sol\":{\"keccak256\":\"0xd87008cb1de77ba35d4529b899df91b854b7c3b8ee45c20367a596c663beea0a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c5834b25a604fc77b3fd141b3ccb65755618e839d9ca33d6e6f53d45e931bfda\",\"dweb:/ipfs/QmX1Yh6tWzwQPi84nZ7d4nb6NcqMsmRia34iEjWKisC7PD\"]},\"project:/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0x7d46ae705c48880d435f3128a5f36e102452c1035a880eb314f9cab5cb3248b6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://114d79b2fba48981056703bd70200b528331f6e7b3c85f7fa0fcaed7d91f6025\",\"dweb:/ipfs/QmReeV1Z7UiW73Zr4iLbqvoRB9YiW9V68uEiNqXcjzi8xh\"]},\"project:/contracts/token/ERC721/IERC721Receiver.sol\":{\"keccak256\":\"0x7cb02bc96de2719a6701ab18ef3873c6928e392ebaa624124499dda76c88b067\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a6d6aacfc8b749b7dc40f341cad484e5feb571073959d5d5b8103bf57fb573bd\",\"dweb:/ipfs/QmZDJqj2pciNw4v5N5FMeC2Q1vhBv2jHU3uDQvC5STgsT4\"]},\"project:/contracts/token/ERC721/extensions/IERC721Metadata.sol\":{\"keccak256\":\"0xb61391c8adec70c983c47cff53d490d8ddc71bf37a12da18dc053b45b4d813ae\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5d08e865414ac6e52f1a61c93acc173079fb3471db5138e3a2c23db2550114cd\",\"dweb:/ipfs/QmUhQ71H29HyjX9GnSWXdZ1Lnh4EPWAbXPhMyuWgSrDxby\"]},\"project:/contracts/utils/Address.sol\":{\"keccak256\":\"0x4cdad91fcb345358c77f4c752b2b3983f783fb6bcd4c6f7f42dba588612907be\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://678c1bfbb9fc26b0aaa34d404adbe08aa36b88b51c9eba6eba13389dac8580b7\",\"dweb:/ipfs/QmZdv53JrE4MtTR915KRpDjao32uCg6TPAXs3p95HMFvw1\"]},\"project:/contracts/utils/Context.sol\":{\"keccak256\":\"0xdb19f5cb22f6551fbb03ba38b8af9e543e26deb4d23788f2946f25c091256ca3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9381d108c93f3fdd1e5a4580834362f20d0f5e919d97820afd55be553ef10c19\",\"dweb:/ipfs/QmWjioeW1kKfZHtmgrpxDYhwF2sVZ8gXoWTA9mKZvWvZot\"]},\"project:/contracts/utils/Strings.sol\":{\"keccak256\":\"0x90bf9a67cda8539274966706149096a2c6df1c5504aa1a4c36e8be275db822e8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://29937e4bb514219e1873d0b765e9980c86d2815e521e2b8608c981e284e808cd\",\"dweb:/ipfs/QmeJTbsBXFsdkL1KQERnwr1GPqsqci2dB4jzzcVrgGtBHi\"]},\"project:/contracts/utils/introspection/ERC165.sol\":{\"keccak256\":\"0xf0389fb699481b09fe24019d5a53d6a9e4af3c3fb5d0083eed137aed8020ff69\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ddebb3d549798a232d7e7c74547a802f7fd075a6e4f02a7560e902b5e6f6d995\",\"dweb:/ipfs/QmP1XhRy71vYxiU5eZfo3D4zZvzxgb4VjGhfjm6N4sK683\"]},\"project:/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0xe09bdf91dde6872fa597c6554ced17e679727988578019bf8aa7954e4479ef76\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d262e8e7efe5037ade4db603f32b45e320609777241d01498b988acbad81c8e4\",\"dweb:/ipfs/Qme5ngXzkphT96C1qKWz7XP7yFhYboiP9tVt8AMQHBEkYZ\"]}},\"version\":1}",
@@ -14473,14 +14477,60 @@
   },
   "networks": {
     "1337": {
-      "events": {},
+      "events": {
+        "0x874bdb649427dfeceaa7f10beee59a823d3e45a6814f50bc18ba2adefd058e48": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_saleContract",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_owner",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_workId",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewSale",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xf8a0bd735B7578ed7Bb333359a00EAa99641C690",
-      "transactionHash": "0x63aae91dc9940b1e7eae13c966aa948f6ccb3c30bd748882c02157b23959be43"
+      "address": "0xCC24D94388Ec61FD0b47C2Ba9029C09021b5eFFa",
+      "transactionHash": "0x15438c4062c260665080823053dc94e26edf5943fec6b2ee85fc414298d367f8"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-30T06:48:27.788Z",
+  "updatedAt": "2022-03-30T09:20:16.675Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

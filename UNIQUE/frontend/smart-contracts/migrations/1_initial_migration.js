@@ -2,6 +2,7 @@ const Migrations = artifacts.require("Migrations");
 const SsafyToken = artifacts.require("SsafyToken");
 const SsafyNFT = artifacts.require("SsafyNFT");
 const SaleFactory = artifacts.require("SaleFactory");
+// const Sale = artifacts.require("Sale");
 
 /**
  * PJT Ⅰ/Ⅲ - 시나리오 테스트
