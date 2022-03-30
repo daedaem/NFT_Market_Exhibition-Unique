@@ -22,27 +22,26 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Exhibition {
+public class ProfileImage {
 	
 	@Id
-	@Column(name = "EXHIBITION_ID")
+	@Column(name = "PROFILE_IMAGE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long exhibitionId;
+	private Long profileImageId;
 	
 	@Column(name = "MEMBER_SEQ")
 	private Long memberSeq;
 	
-	@Column(name = "EXHIBITION_TYPE")
-	private char exhibitionType;
+	@Column(name = "PROFILE_IMAGE_NAME")
+	private String profileImageName;
 	
-	@Column(name = "EXHIBITION_COMMENT")
-	private String exhibitionComment;
+	@Column(name = "PROFILE_IMAGE_SIZE")
+	private Long profileImageSize;
+	
+	@Column(name = "PROFILE_IMAGE_URL")
+	private String profileImageUrl;
 	
 	@CreationTimestamp
-	@Column(name = "REG_Dt")
+	@Column(name = "REG_DT")
 	private Date regDt;
 }
-
-
-
-

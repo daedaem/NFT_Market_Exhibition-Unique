@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,6 +50,7 @@ public class Market {
 	@Column(name = "END_TIME")
 	private Date endTime;
 	
+	@CreationTimestamp
 	@Column(name = "REG_DT")
 	private Date regDt;
 	
