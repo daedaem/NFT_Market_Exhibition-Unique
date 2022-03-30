@@ -108,7 +108,6 @@ contract Sale {
     address public nftAddress;
     bool public ended;
     uint256 public workId;
-    address public saleFactoryAddress;
     
     // 현재 최고 입찰 상태
     // address public highestBidder;
