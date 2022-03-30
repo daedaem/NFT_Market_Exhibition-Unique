@@ -47,7 +47,8 @@ contract("Sale Contract Testing", (accounts) => {
     // 민팅된 토큰 식별자 확인
     const TokenId = nftContractResult.logs[0].args["2"].toNumber();
     // 토큰 소유자 확인
-    const owner = nftContract.ownerOf(TokenId);
+    let owner = nftContract.ownerOf(TokenId);
+    // console.log("원래", owner);
     // NFT 판매 컨트랙트 배포
     salesFactoryContract = await SaleFactory.deployed();
 
@@ -63,24 +64,29 @@ contract("Sale Contract Testing", (accounts) => {
     // 권한 부여
     createSaleCA = SalesFactoryContractResult.logs[0].args._saleContract;
     // erc20 토큰 approve
-    await ssafyTokenContract.approve(createSaleCA, purchaseprice, {from: purchaser});
-    // await ssafyTokenContract.approve(msg.sender, await ssafyTokenContract.balanceOf(purchaser));
-    // await ssafyTokenContract.approve(msg.sender, 0);
+    await ssafyTokenContract.approve(createSaleCA, purchaseprice, { from: purchaser });
+    // await ssafyTokenContract.approve({ from: purchaser }, seller, purchaseprice + 100);
+
+    // const results1t = await ssafyTokenContract.allowance(seller, createSaleCA);
+    // await ssafyTokenContract.approve(purchaser, await ssafyTokenContract.balanceOf(purchaser));
+    // await ssafyTokenContract.approve(purchaser, 0);
+
+    // console.log("1번쓰", results1t.toNumber());
     // erc721 토큰 approve
     await nftContract.approve(createSaleCA, TokenId);
     // purchase 함수호출
     const createSaleInstance = await Sale.at(createSaleCA);
-    // const finalresults = await createSaleInstance.purchase({from: purchaser});
-    const finalresults = await createSaleInstance.purchase({from: purchaser});
-    console.log('wwwwwwwwwwwwwwwwwwwwwwwwww',finalresults);
-
+    const finalresults = await createSaleInstance.purchase({ from: purchaser });
+    // console.log(finalresults);
+    const newowner = nftContract.ownerOf(TokenId);
+    // console.log("지금", newowner);
     // await child1.purchase({ from: purchaser });
 
     // 다음을 테스트를 통과해야합니다.
     // TODO  // 구매자의 잔액이 900과 같다. 최종 NFT소유자가 구매자.
     // 확인사항
-    assert.equal(purchaser, await getNftOwner(), "Not Owned By Purchaser");
-    assert.equal(900, await web3.eth.getBalance(purchaser), "Transfer Failed");
+    assert.equal(purchaser, await nftContract.ownerOf(TokenId), "Not Owned By Purchaser");
+    assert.equal(900, await ssafyTokenContract.balanceOf(purchaser), "Transfer Failed");
   });
   // it("Bid and confirm", async () => {
   //   const seller = accounts[0];

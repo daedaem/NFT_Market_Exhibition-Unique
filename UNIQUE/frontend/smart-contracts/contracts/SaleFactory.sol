@@ -185,7 +185,7 @@ contract Sale {
         // 해당 Sale의 판매 시점이 유효한 경우
         // 끝난시간보다 현재시각이 아직 남았어야하고
         // 현재시간보다 판매시점이 전이어야함
-        require(saleEndTime - block.timestamp >= 0);
+        require(saleEndTime - block.timestamp >= 0, "seconde error");
         // require(block.timestamp >= saleStartTime);
         // 구매 희망자가 Sale 컨트랙트에게 구매 희망자의 ERC-20 토큰을 송금할 수 있는 권한을 허용
         // 5-1)은 일단 입찰기능이 없어서 우리는 해결안해도 됨
@@ -196,12 +196,15 @@ contract Sale {
 
         // 함수 호출자의 계좌로 부터 seller가 bid_amount만큼 인출 허용하도록
         // erc20Contract.approve(address(this), purchasePrice);
+        // 구매자 호출
+
         erc20Contract.transferFrom(msg.sender, seller, purchasePrice);
+
         // 5-3) NFT 소유권을 구매자에게 이전
         // NFT 소유권 승인 APPROVE
         //
         // erc721Constract.approve(msg.sender, tokenId);
-        erc721Constract.safeTransferFrom(address(this), msg.sender, tokenId);
+        erc721Constract.safeTransferFrom(seller, msg.sender, tokenId);
 
         // 5-4) 컨트랙트의 거래 상태와 구매자 정보를 업데이트 한다.
         // 거래상태 끝남
