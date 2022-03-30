@@ -208,7 +208,7 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["1337"].address;
+const CA = SsafyNFT.networks["1377"].address;
 // console.log(CA);
 
 // 네트워크 연결
@@ -289,7 +289,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
             "Content-Type": "multipart/form-data",
           },
         });
@@ -317,7 +317,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
           },
         });
         console.log(createNFTtoBack);

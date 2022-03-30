@@ -109,6 +109,7 @@ public class MemberController {
 	public ResponseEntity<MemberResultRes> memberRegister(@ModelAttribute MemberReq memberReq, MultipartHttpServletRequest request) {
 		
 		MemberResultRes memberResultRes = memberService.memberRegister(memberReq, request);
+
 		
 		if (memberResultRes.getResult() == SUCCESS) {
 			return new ResponseEntity<MemberResultRes>(memberResultRes, HttpStatus.OK);

@@ -58,9 +58,8 @@ contract("Sale Contract Testing", (accounts) => {
     // NFT 판매 함수 호출
     const purchaseprice = 100;
     const SalesFactoryContractResult = await salesFactoryContract.createSale(TokenId, purchaseprice, startTime, endTime, currencyAddress, nftAddress);
-
     const Allsales = await salesFactoryContract.allSales();
-    // console.log(purchaseprice, "구매가격");
+
     //  5) 구매자 100토큰 purchase()호출
     // 권한 부여
     createSaleCA = SalesFactoryContractResult.logs[0].args._saleContract;

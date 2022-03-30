@@ -16,4 +16,6 @@ module.exports = function (deployer) {
   deployer.deploy(SsafyNFT);
   deployer.deploy(SsafyToken, "SSAFY", "SSF", 0);
   deployer.deploy(SaleFactory);
+  // deployer.deploy(Sale);
+
 };

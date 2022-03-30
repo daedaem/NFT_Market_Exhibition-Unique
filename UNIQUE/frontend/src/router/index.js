@@ -58,6 +58,12 @@ const routes = [
     name: "Register",
     component: () => import("../pages/Register.vue"),
   },
+
+  {
+    path: "/test",
+    name: "Test",
+    component: () => import("../pages/Test.vue"),
+  },
   // {
   //   path: "/privateGallery",
   //   name: "PrivateGallery",
