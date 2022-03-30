@@ -136,6 +136,22 @@ public class MemberController {
 		
 	}
 	
+	@Operation(description = "프로필 이미지 업데이트")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@PostMapping("/profileImage")
+	public ResponseEntity<ResultRes> profileImageUpdate(MultipartHttpServletRequest request) {
+		ResultRes res = memberService.profileImageUpdate(request);
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 }
 
 

@@ -50,6 +50,7 @@ contract SsafyNFT is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     mapping(uint256 => string) tokenURIs;
+    mapping(uint256 => address) contractAddress;
 
     constructor() ERC721("ssafyNFT", "SFT") {
         // TODO
@@ -86,6 +87,11 @@ contract SsafyNFT is ERC721 {
 
         // 새 NFTID와 NFT의 JSON정보인 URI로 토큰 URI 생성
         tokenURIs[newItemid] = _tokenURI;
+        contractAddress[newItemid] = address(this);
         return newItemid;
+    }
+
+    function getContractAddress(uint256 _newItemid) public view returns(address){
+        return contractAddress[_newItemid];
     }
 }

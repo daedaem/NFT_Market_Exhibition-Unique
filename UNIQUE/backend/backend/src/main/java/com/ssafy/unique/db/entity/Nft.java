@@ -1,11 +1,14 @@
 package com.ssafy.unique.db.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -64,4 +67,7 @@ public class Nft {
 	@Column(name = "NFT_CONTRACT_ADDRESS")
 	private String nftContractAddress;
 	
+	@CreationTimestamp
+	@Column(name = "REG_DT")
+	private Date regDt;
 }

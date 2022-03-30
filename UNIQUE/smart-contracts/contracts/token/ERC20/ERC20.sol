@@ -35,6 +35,7 @@ import "../../utils/Context.sol";
 contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping(address => uint256) private _balances;
 
+    // from, to, amount 순
     mapping(address => mapping(address => uint256)) private _allowances;
 
     string private _name;
@@ -148,11 +149,11 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
      * - the caller must have allowance for ``sender``'s tokens of at least
      * `amount`.
      */
-    function transferFrom(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) public virtual override returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
+        // _transfer함수에서 sender와 recipient가 zero address인지 확인
+        // sender의 계좌에서 amout를 빼고, recepient계좌에 amount를 추가
+        // transfer(sender,recipient,amount) emit
+        
         _transfer(sender, recipient, amount);
 
         uint256 currentAllowance = _allowances[sender][_msgSender()];

@@ -7,7 +7,7 @@ const routes = [
     component: () => import("../pages/Home.vue"),
   },
   {
-    path: "/product-details-v1-:id",
+    path: "/product-details-:id",
     name: "ProductDetail",
     component: () => import("../pages/ProductDetail.vue"),
     props: true,
@@ -27,11 +27,6 @@ const routes = [
     path: "/create",
     name: "create",
     component: () => import("../pages/Create.vue"),
-  },
-  {
-    path: "/create-single",
-    name: "create-single",
-    component: () => import("../pages/CreateSingle.vue"),
   },
   {
     path: "/privateGallery",
