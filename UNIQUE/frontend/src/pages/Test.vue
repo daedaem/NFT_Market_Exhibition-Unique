@@ -98,7 +98,7 @@ export default {
             "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
         },
       });
-      this.exampleResult = getDetails.data
+      this.exampleResult = getDetails.data[0]
       console.log(this.exampleResult)
     }
   }

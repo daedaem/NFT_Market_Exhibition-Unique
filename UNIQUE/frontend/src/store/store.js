@@ -187,7 +187,7 @@ let SectionData = {
   // Header data
   headerData: {
     // 헤더 목록 리스트
-    btnText: "Connect Wallet",
+    btnText: "MyPage",
     inputPlaceholderText: "Search item here...",
     menuList: {
       title: "Home",

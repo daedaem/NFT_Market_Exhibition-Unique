@@ -26,7 +26,13 @@ export default {
   data() {
     return {
       SectionData,
+      msg: "This is demo net work",
     };
+  },
+  methods:{
+    onComplete(data){
+        console.log('data:', data);
+    }
   },
 };
 </script>

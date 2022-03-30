@@ -212,7 +212,7 @@ const CA = SsafyNFT.networks["5777"].address;
 // console.log(CA);
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
