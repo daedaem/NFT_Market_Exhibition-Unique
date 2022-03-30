@@ -26,8 +26,8 @@ import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
-import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 
 const abi = ABIS.abi;
 // console.log(abi);
