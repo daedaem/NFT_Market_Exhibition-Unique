@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -45,8 +44,10 @@ public class Nft {
 
 	@Column(name = "NFT_WORK_URI")
 	private String nftWorkUri;
+
 	@Column(name = "NFT_METADATA_URI")
 	private String nftMetadataUri;
+
 	@Column(name = "NFT_TOKEN_ID")
 	private Long nftTokenId;
 
@@ -58,5 +59,8 @@ public class Nft {
 
 	@Column(name = "NFT_DESCRIPTION")
 	private String nftDescription;
+
+	@Column(name = "NFT_CONTRACT_ADDRESS")
+	private String nftContractAddress;
 
 }
