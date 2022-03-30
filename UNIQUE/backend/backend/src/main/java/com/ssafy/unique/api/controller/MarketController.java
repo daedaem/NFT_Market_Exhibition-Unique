@@ -33,21 +33,21 @@ public class MarketController {
 
 	private static final int SUCCESS = 1;
 
-	@Operation(description = "마켓에 있는 상품 전체조회")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200",description = "성공"),
-			@ApiResponse(responseCode = "401",description = "회원 정보가 등록되어 있지 않아 사용 불가능. 로그인 후 사용"),
-			@ApiResponse(responseCode = "500",description = "실패"),
-	})
-	@GetMapping(value="")
-	public ResponseEntity<MarketResultRes> marketSearch(MarketParamReq marketParamReq) {
-		MarketResultRes res = ;
-		
-		if (res.getResult() == SUCCESS) {
-			return new ResponseEntity<MarketResultRes>(res, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<MarketResultRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-	}
+//	@Operation(description = "마켓에 있는 상품 전체조회")
+//	@ApiResponses(value = {
+//			@ApiResponse(responseCode = "200",description = "성공"),
+//			@ApiResponse(responseCode = "401",description = "회원 정보가 등록되어 있지 않아 사용 불가능. 로그인 후 사용"),
+//			@ApiResponse(responseCode = "500",description = "실패"),
+//	})
+//	@GetMapping(value="")
+//	public ResponseEntity<MarketResultRes> marketSearch(MarketParamReq marketParamReq) {
+//		MarketResultRes res = ;
+//
+//		if (res.getResult() == SUCCESS) {
+//			return new ResponseEntity<MarketResultRes>(res, HttpStatus.OK);
+//		} else {
+//			return new ResponseEntity<MarketResultRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//
+//	}
 }
