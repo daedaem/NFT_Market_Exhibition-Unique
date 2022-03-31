@@ -35,6 +35,7 @@ import "../../utils/Context.sol";
 contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping(address => uint256) private _balances;
 
+    // from, to, amount 순
     mapping(address => mapping(address => uint256)) private _allowances;
 
     string private _name;

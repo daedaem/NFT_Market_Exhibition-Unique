@@ -9,7 +9,7 @@ import com.ssafy.unique.api.response.ResultRes;
 public interface MemberService {
 	public MemberResultRes memberRegister(MemberReq memberReq, MultipartHttpServletRequest request);
 	public ResultRes memberWalletRegister(String wallet);
-	//	public MemberResultRes profileImageUpdate( MultipartHttpServletRequest request);
+	public ResultRes profileImageUpdate( MultipartHttpServletRequest request );
 	
 //	public MemberResultRes memberMypageSearch();
 	

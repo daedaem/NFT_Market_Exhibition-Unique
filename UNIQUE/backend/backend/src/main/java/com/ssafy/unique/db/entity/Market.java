@@ -1,5 +1,6 @@
 package com.ssafy.unique.db.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,8 +32,8 @@ public class Market {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long marketId;
 	
-	@Column(name = "NFT_SEQ")
-	private Long nftSeq;
+//	@Column(name = "NFT_SEQ")
+//	private Long nftSeq;
 	
 	@Column(name = "MARKET_CONTRACT_ADDRESS")
 	private String marketContractAddress;
@@ -43,11 +48,12 @@ public class Market {
 	private Long price;
 
 	@Column(name = "START_TIME")
-	private Date startTime;
+	private LocalDateTime startTime;
 	
 	@Column(name = "END_TIME")
-	private Date endTime;
+	private LocalDateTime endTime;
 	
+	@CreationTimestamp
 	@Column(name = "REG_DT")
 	private Date regDt;
 	
@@ -57,4 +63,7 @@ public class Market {
 	@Column(name = "CANCELED")
 	private boolean canceled;
 	
+	@ManyToOne(targetEntity=Nft.class)
+	@JoinColumn(name="NFT_SEQ")
+	private Nft nft;
 }
