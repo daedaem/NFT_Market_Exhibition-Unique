@@ -1,10 +1,11 @@
 <template>
   <div class="card card-full">
-    <div class="card-image" style="height: 180px; overflow: hidden">
+    <div class="card-image">
       <img src="@/images/thumb/nft-full.0609d1e0.jpg" class="card-img-top" alt="art image" />
     </div>
     <div class="card-body p-4">
       <h5 class="card-title text-truncate mb-0">{{ product.nftName }}</h5>
+      <h5 class="card-title text-truncate mb-0">{{ product.title }}</h5>
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
@@ -98,6 +99,9 @@ export default {
 
     customTooltip(".custom-tooltip", "active");
   },
+  created: function () {
+    console.log(this.product);
+  },
 };
 </script>
 
@@ -114,5 +118,9 @@ export default {
 .card-price-wrap {
   z-index: 2;
   position: relative;
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
 </style>

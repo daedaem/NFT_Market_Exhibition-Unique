@@ -125,19 +125,6 @@ export default {
       this.items = getItems.data;
       console.log(this.items);
     },
-    async getItemsAll() {
-      const getItems = await axios({
-        method: "GET",
-        url: `${SERVER_URL}/api/nft/items`,
-        headers: {
-          // Authorization: token,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
-        },
-      });
-      this.items = getItems.data;
-      console.log(this.items);
-    },
   },
   created: function () {
     this.getItemsAll();
