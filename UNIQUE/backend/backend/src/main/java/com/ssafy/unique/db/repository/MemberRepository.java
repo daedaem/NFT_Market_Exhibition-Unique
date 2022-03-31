@@ -19,4 +19,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@Transactional
 	@Query(value = " update member set member_address = ? where member_seq = ?", nativeQuery = true)
 	Integer updateMemberAddressByMemberSeq(String memberAddress, Long memberSeq);
+	
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query(value = " update member set profile_image_url = ? where member_seq = ?", nativeQuery = true)
+	Integer updateProfileImageUrlByMemberSeq(String profileImageUrl, Long memberSeq);
 }

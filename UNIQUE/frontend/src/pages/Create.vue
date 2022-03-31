@@ -311,9 +311,7 @@ const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
-let web3 = new Web3(
-  new Web3.providers.HttpProvider("https://j6e205.p.ssafy.io:8545")
-);
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -432,11 +430,7 @@ export default {
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
-          data: {
-            tokenId: newtokenId,
-            ownerAddress: "kbjid17",
-            metadataUri: IPFSresult,
-          },
+          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
           headers: {
             // Authorization: token,
             Authorization:
