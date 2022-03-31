@@ -5,7 +5,6 @@ import com.ssafy.unique.api.request.NftReq;
 import com.ssafy.unique.api.service.NftService;
 import com.ssafy.unique.db.entity.Nft;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jdk.nashorn.internal.runtime.RewriteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

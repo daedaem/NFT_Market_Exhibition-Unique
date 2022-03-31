@@ -11,6 +11,7 @@ public class MemberRes {
 	
 	private Long memberSeq;
 	private String memberId;
+	private boolean authority;
 //	private String memberEmail;
 //	private String memberName;
 //	private String memberNickname;
