@@ -111,6 +111,14 @@ let SectionData = {
         },
       ],
     },
+    breadcrumbListExhibition: {
+      title: "Exhibition",
+      navList: [
+        {
+          title: "Exhibition",
+        },
+      ],
+    },
     breadcrumbListSix: {
       title: "Enter Linda Dounia's Cyber Baat World",
       navList: [

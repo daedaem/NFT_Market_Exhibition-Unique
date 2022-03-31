@@ -2,7 +2,7 @@
  * PJT Ⅰ - 과제 3 테스트 코드 작성
  * @dev NFT mint, transfer, and compare URI
  */
-const NftCreator = artifacts.require("SsafyNFTs");
+const NftCreator = artifacts.require("SsafyNFT");
 
 contract("NftCreator", (accounts) => {
   it("NFT mint, transfer, and compare URI", async () => {

@@ -31,7 +31,7 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["1377"].address;
+const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
@@ -47,6 +47,5 @@ export default {
       SectionData,
     };
   },
-  mounted
 };
 </script>

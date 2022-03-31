@@ -45,7 +45,7 @@ import getAddressFrom from "../utils/AddressExtractor";
 import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 const abi = ABIS.abi;
-const CA = SsafyNFT.networks["1377"].address;
+const CA = SsafyNFT.networks["1337"].address;
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
