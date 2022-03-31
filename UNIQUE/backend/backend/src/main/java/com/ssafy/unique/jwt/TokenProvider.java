@@ -37,7 +37,7 @@ public class TokenProvider implements InitializingBean {
 		// 실제로는 secret를 주입받아야 하고, 해당 내용을 공유되지 않도록 git ignore로 관리해야 할것
 		// 토큰의 유효시간 역시 마찬가지로 관리해줘야 한다
 		this.secret = Base64.getEncoder().encodeToString("com-ssafy-homesns-ugauga-team-spring-boot-spring-security-very-very-hard-help-me-please".getBytes());
-		this.tokenValidityInMilliseconds = 60 * 60 * 24 * 1000;
+		this.tokenValidityInMilliseconds = 60 * 60 * 24 * 10 * 1000;
 	}
 
 	// InitializingBean를 implements 하고, afterPropertiesSet 을 Override 한다

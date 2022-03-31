@@ -44,6 +44,29 @@ import HowItWork from "./components/section/HowItWork.vue";
 import Footer from "./pages/Footer.vue";
 import FooterSection from "./components/section/FooterSection.vue";
 
+// explore
+import ExploreSectionTwo from "./components/section/ExploreSectionTwo.vue";
+import TopCreators from "./components/section/TopCreators.vue";
+import Creators from "./components/common/Creators.vue";
+import Collections from "./components/section/Collections.vue";
+import CollectionSlider from "./components/common/CollectionSlider.vue";
+
+import ExploreSection from "./components/section/ExploreSection.vue";
+
+//마켓상세페이지
+// import RelatedProduct from "./components/section/RelatedProduct.vue";
+
+//
+import HeaderDashboard from "./components/common/HeaderDashboard.vue";
+import AuthorHero from "./components/section/AuthorHero.vue";
+import ProfileSection from "./components/section/ProfileSection.vue";
+import AuthorSidebar from "./components/common/AuthorSidebar.vue";
+import UserSidebar from "./components/common/UserSidebar.vue";
+import AccountSection from "./components/section/AccountSection.vue";
+
+import LoginSection from "./components/section/LoginSection.vue";
+import RegisterSection from "./components/section/RegisterSection.vue";
+
 app.component("HeaderMain", HeaderMain);
 app.component("LogoLink", LogoLink);
 app.component("ButtonLink", ButtonLink);
@@ -61,4 +84,24 @@ app.component("HowItWork", HowItWork);
 app.component("Footer", Footer);
 app.component("FooterSection", FooterSection);
 
+// explore
+app.component("ExploreSectionTwo", ExploreSectionTwo);
+app.component("TopCreators", TopCreators);
+app.component("Creators", Creators);
+app.component("Collections", Collections);
+app.component("CollectionSlider", CollectionSlider);
+app.component("ExploreSection", ExploreSection);
+// 마켓상세페이지
+// app.component("RelatedProduct", RelatedProduct);
+
 app.use(router).mount("#app");
+
+app.component("HeaderDashboard", HeaderDashboard);
+app.component("AuthorHero", AuthorHero);
+app.component("ProfileSection", ProfileSection);
+app.component("AuthorSidebar", AuthorSidebar);
+app.component("UserSidebar", UserSidebar);
+app.component("AccountSection", AccountSection);
+
+app.component("LoginSection", LoginSection);
+app.component("RegisterSection", RegisterSection);
