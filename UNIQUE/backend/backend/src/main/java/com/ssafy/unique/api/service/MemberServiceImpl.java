@@ -80,7 +80,7 @@ public class MemberServiceImpl implements MemberService{
 				System.out.println(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 				// file save
 				userProfileImage.transferTo(destFile);
-
+				
 
 				// insert profile image
 				profileImageRepository.save(ProfileImage.builder()
