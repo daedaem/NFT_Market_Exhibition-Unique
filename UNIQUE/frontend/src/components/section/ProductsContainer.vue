@@ -1,6 +1,6 @@
 <template>
   <div class="row g-gs">
-    <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in items" :key="product">
+    <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in marketItems" :key="product">
       <Products :product="product"></Products>
     </div>
   </div>
@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      items: null,
+      marketItems: null,
       SectionData,
     };
   },
@@ -34,8 +34,8 @@ export default {
             "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
         },
       });
-      this.items = getItems.data;
-      console.log(this.items);
+      this.marketItems = getItems.data;
+      // console.log(this.marketItems);
     },
   },
   created: function () {
