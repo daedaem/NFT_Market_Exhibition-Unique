@@ -1,9 +1,9 @@
 package com.ssafy.unique.api.response;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ssafy.unique.db.entity.Market;
-import com.ssafy.unique.db.entity.Nft;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +13,8 @@ import lombok.Setter;
 public class MarketResultRes {
 
 	private int result;
-	private Market market;
-	private Nft nft;
+	private Optional<Market> market;
 	
 	private List<Market> marketList;
-	private List<Nft> nftList;
 	
 }

@@ -79,7 +79,8 @@ public class IPFSServiceImpl implements IPFSService {
 				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 				System.out.println(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 				
-				
+				// 파일 url
+				String fileUrl = uploadFolder + File.separator + savingFileName;
 
 				
 				
@@ -130,6 +131,7 @@ public class IPFSServiceImpl implements IPFSService {
 						.nftName(nftReq.getNftName())
 						.nftType(nftReq.getNftType())
 						.nftDescription(nftReq.getNftDescription())
+						.fileUrl(fileUrl)
 						.build()
 				);
 				
@@ -138,7 +140,6 @@ public class IPFSServiceImpl implements IPFSService {
 				// 파일 저장 => 해당 코드가 앞에 존재하면 getBytes()에서 에러 발생
 				file.transferTo(destFile);
 				// FILE_LIST DB에 파일 기록 => NFT_SEQ의 값이 정해지고 나서 진행해야함
-				String fileUrl = uploadFolder + File.separator + savingFileName;
 				fileRepository.save(FileList.builder()
 						.nftSeq(nft.getNftSeq())
 						.fileName(fileName)
