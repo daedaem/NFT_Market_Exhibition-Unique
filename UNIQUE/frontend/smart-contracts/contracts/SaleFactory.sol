@@ -199,13 +199,13 @@ contract Sale {
         // 구매자 호출
 
         erc20Contract.transferFrom(msg.sender, seller, purchasePrice);
-        
+
         // 5-3) NFT 소유권을 구매자에게 이전
         // NFT 소유권 승인 APPROVE
         //
         // erc721Constract.approve(msg.sender, tokenId);
         erc721Constract.safeTransferFrom(seller, msg.sender, tokenId);
-        
+
         // 5-4) 컨트랙트의 거래 상태와 구매자 정보를 업데이트 한다.
         // 거래상태 끝남
         _end();
