@@ -22,7 +22,7 @@
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 // Import component data. You can change the data in the store to reflect in all component
-import axios from "axios";
+// import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
@@ -31,7 +31,7 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["1377"].address;
+const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
@@ -47,6 +47,5 @@ export default {
       SectionData,
     };
   },
-  mounted
 };
 </script>
