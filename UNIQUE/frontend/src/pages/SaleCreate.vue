@@ -194,6 +194,8 @@ export default {
       const myAccount = temp[0];
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
+        // 싸피토큰 확인
+        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
       }
     },
   },
