@@ -1,5 +1,6 @@
 package com.ssafy.unique.api.controller;
 
+import com.ssafy.unique.api.response.NftResultRes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -139,4 +140,21 @@ public class MarketController {
 			return new ResponseEntity<ResultRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
+	@GetMapping(value = "/record/{nftSeq}")
+	public ResponseEntity<MarketResultRes> marketNftTradeRecord(@PathVariable Long nftSeq) {
+
+		MarketResultRes res = marketService.marketNftTradeRecord(nftSeq);
+//		MarketResultRes res_2 = marketService.marketNftCurrentTrade(nftSeq);
+
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<MarketResultRes>(res, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<MarketResultRes>(res, HttpStatus.NOT_FOUND);
+		}
+	}
+
+
 }
