@@ -74,8 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/members/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll() // swagger-ui 접속
                 .antMatchers("/v3/**").permitAll() //swagger 설정 참조
+                .antMatchers("/nft/**").permitAll() // nft 관련 데이터 사용
                 .anyRequest().authenticated()
-                
                 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

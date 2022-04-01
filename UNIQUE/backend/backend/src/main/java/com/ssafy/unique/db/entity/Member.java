@@ -33,4 +33,11 @@ public class Member {
 
 	@Column(name = "MEMBER_ADDRESS")
 	private String memberAddress;
+	
+	@Column(name = "PROFILE_IMAGE_URL")
+	private String profileImageUrl;
+	
+	@Column(name = "AUTHORITY")
+	private boolean authority;
+	
 }

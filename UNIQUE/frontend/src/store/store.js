@@ -111,6 +111,14 @@ let SectionData = {
         },
       ],
     },
+    breadcrumbListExhibition: {
+      title: "Exhibition",
+      navList: [
+        {
+          title: "Exhibition",
+        },
+      ],
+    },
     breadcrumbListSix: {
       title: "Enter Linda Dounia's Cyber Baat World",
       navList: [
@@ -187,7 +195,7 @@ let SectionData = {
   // Header data
   headerData: {
     // 헤더 목록 리스트
-    btnText: "Connect Wallet",
+    btnText: "MyPage",
     inputPlaceholderText: "Search item here...",
     menuList: {
       title: "Home",
@@ -1240,8 +1248,10 @@ let SectionData = {
     metaText: "Not for sale",
     metaTextTwo: "500 editions",
     metaTextThree: "Highest bid 0.072 ETH",
-    btnText: "Place a Bid",
-    btnTextTwo: "Share",
+    btnTextOne: "sell",
+    btnTextTwo: "Place a Bid",
+    btnTextThree: "Share",
+
     itemDetailTabNav: [
       {
         id: 1,

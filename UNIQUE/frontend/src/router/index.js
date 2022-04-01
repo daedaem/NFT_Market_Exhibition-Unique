@@ -7,7 +7,7 @@ const routes = [
     component: () => import("../pages/Home.vue"),
   },
   {
-    path: "/product-details-:id",
+    path: "/detail/:id",
     name: "ProductDetail",
     component: () => import("../pages/ProductDetail.vue"),
     props: true,
@@ -29,9 +29,19 @@ const routes = [
     component: () => import("../pages/Create.vue"),
   },
   {
+    path: "/salecreate/:id",
+    name: "SaleCreate",
+    component: () => import("../pages/SaleCreate.vue"),
+  },
+  {
     path: "/privateGallery",
     name: "PrivateGallery",
     component: () => import("../pages/PrivateGallery.vue"),
+  },
+  {
+    path: "/exhibition",
+    name: "Exhibition",
+    component: () => import("../pages/Exhibition.vue"),
   },
   {
     path: "/blog-detail-:id",
@@ -39,7 +49,7 @@ const routes = [
     component: () => import("../pages/PrivateGalleryDetail.vue"),
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "profile",
     component: () => import("../pages/Profile.vue"),
   },
@@ -57,6 +67,12 @@ const routes = [
     path: "/register",
     name: "Register",
     component: () => import("../pages/Register.vue"),
+  },
+
+  {
+    path: "/test",
+    name: "Test",
+    component: () => import("../pages/Test.vue"),
   },
   // {
   //   path: "/privateGallery",
