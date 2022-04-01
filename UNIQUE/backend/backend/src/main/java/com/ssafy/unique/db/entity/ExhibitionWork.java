@@ -18,26 +18,19 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class ExhibitionWork {
 	
 	@Id
-	@Column(name = "MEMBER_SEQ")
+	@Column(name = "WORK_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long memberSeq;
+	private Long workId;
 	
-	@Column(name = "MEMBER_ID")
-	private String memberId;
+	@Column(name = "EXHIBITION_ID")
+	private Long exhibitionId;
 	
-	@Column(name = "MEMBER_PASSWORD")
-	private String memberPassword;
-
-	@Column(name = "MEMBER_ADDRESS")
-	private String memberAddress;
+	@Column(name = "NFT_SEQ")
+	private Long nftSeq;
 	
-	@Column(name = "PROFILE_IMAGE_URL")
-	private String profileImageUrl;
-	
-	@Column(name = "AUTHORITY")
-	private boolean authority;
-	
+	@Column(name = "WORK_COMMENT")
+	private String workComment;
 }

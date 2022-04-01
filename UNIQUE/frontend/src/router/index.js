@@ -29,6 +29,11 @@ const routes = [
     component: () => import("../pages/Create.vue"),
   },
   {
+    path: "/salecreate/:id",
+    name: "SaleCreate",
+    component: () => import("../pages/SaleCreate.vue"),
+  },
+  {
     path: "/privateGallery",
     name: "PrivateGallery",
     component: () => import("../pages/PrivateGallery.vue"),
@@ -44,7 +49,7 @@ const routes = [
     component: () => import("../pages/PrivateGalleryDetail.vue"),
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     name: "profile",
     component: () => import("../pages/Profile.vue"),
   },

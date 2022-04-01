@@ -5,6 +5,14 @@
       <!-- Header main -->
       <HeaderMain></HeaderMain>
     </header>
+    <div style="max-width: 1200px; margin: auto">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
+        <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
+        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id }, data: {} }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <!-- sell버튼 끝-->
+      </div>
+    </div>
+    <div class="d-flex flex-column"></div>
     <section class="item-detail-section section-space">
       <div class="container">
         <div class="row">
@@ -79,7 +87,9 @@
           <!-- end col -->
           <div class="col-lg-6">
             <div class="item-detail-content mt-4 mt-lg-0">
-              <h1 class="item-detail-title mb-2">{{ title }}</h1>
+              <div class="d-flex flex-row">
+                <h1 class="item-detail-title mb-2">{{ title }}</h1>
+              </div>
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
                 <span class="item-detail-text-meta">{{ metaText }}</span>
                 <span class="dot-separeted"></span>
@@ -127,7 +137,7 @@
                   </li>
                   <!-- <li class="flex-grow-1">
                     <div class="dropdown">
-                      <a href="#" class="btn bg-dark-dim d-block" data-bs-toggle="dropdown">{{ SectionData.itemDetailData.btnTextTwo }}</a>
+                      <a href="#" class="btn bg-dark-dim d-block" data-bs-toggle="dropdown">{{ SectionData.itemDetailData.btnTextThree }}</a>
                       <div class="dropdown-menu card-generic p-2 keep-open w-100 mt-1">
                         <router-link :to="icon.path" class="dropdown-item card-generic-item" v-for="(icon, i) in SectionData.socialShareList" :key="i"
                           ><em class="ni me-2" :class="icon.btnClass"></em>{{ icon.title }}</router-link

@@ -68,7 +68,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	// 로그인과 동시에 현재 로그인한 사용자의 정보를 받아온다
 	public MemberRes getMemberInfo(String memberId) {
 		Member member = memberRepository.findByMemberId(memberId);
-		MemberRes memberRes = MemberRes.builder().memberSeq(member.getMemberSeq()).memberId(member.getMemberId()).build();
+		MemberRes memberRes = MemberRes.builder()
+				.memberSeq(member.getMemberSeq())
+				.memberId(member.getMemberId())
+				.authority(member.isAuthority())
+				.build();
 		
 		return memberRes;
 	}

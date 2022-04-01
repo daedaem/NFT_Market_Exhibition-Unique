@@ -22,7 +22,7 @@
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 // Import component data. You can change the data in the store to reflect in all component
-import axios from "axios";
+// import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";

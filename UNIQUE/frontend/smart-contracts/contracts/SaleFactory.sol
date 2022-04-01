@@ -185,7 +185,7 @@ contract Sale {
         // 해당 Sale의 판매 시점이 유효한 경우
         // 끝난시간보다 현재시각이 아직 남았어야하고
         // 현재시간보다 판매시점이 전이어야함
-        require(saleEndTime - block.timestamp >= 0, "seconde error");
+        require(saleEndTime - block.timestamp >= 0);
         // require(block.timestamp >= saleStartTime);
         // 구매 희망자가 Sale 컨트랙트에게 구매 희망자의 ERC-20 토큰을 송금할 수 있는 권한을 허용
         // 5-1)은 일단 입찰기능이 없어서 우리는 해결안해도 됨

@@ -1,7 +1,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from './store'
+import store from "./store";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+
 // import Vue from 'vue'
 
 // Vue.config.productionTip = false
@@ -26,6 +29,9 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 app.component("v-select", vSelect);
+app.component("Datepicker", Datepicker);
+
+// app.mount("#app");
 
 // clipboard
 import VueClipboard from "vue3-clipboard";
