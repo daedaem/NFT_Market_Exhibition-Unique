@@ -1248,8 +1248,10 @@ let SectionData = {
     metaText: "Not for sale",
     metaTextTwo: "500 editions",
     metaTextThree: "Highest bid 0.072 ETH",
-    btnText: "Place a Bid",
-    btnTextTwo: "Share",
+    btnTextOne: "sell",
+    btnTextTwo: "Place a Bid",
+    btnTextThree: "Share",
+
     itemDetailTabNav: [
       {
         id: 1,
