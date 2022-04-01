@@ -2,6 +2,7 @@ package com.ssafy.unique.api.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -189,6 +190,39 @@ public class MarketServiceImpl implements MarketService {
 		
 		return res;
 	}
-	
-	
+
+	//거래 이력을 던짐
+	@Override
+	public MarketResultRes marketNftTradeRecord(Long nftSeq) {
+		MarketResultRes res = new MarketResultRes();
+		try {
+			Market market = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
+			List<Market> list = marketRepository.findRecordByNftSeq(nftSeq);
+			if(list == null) {
+				throw new Exception();
+			}
+			res.setResult(SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(FAIL);
+		}
+		return res;
+	}
+
+	@Override
+	public MarketResultRes marketNftCurrentTrade(Long nftSeq) {
+		MarketResultRes res = new MarketResultRes();
+		try {
+			Market market = marketRepository.findCurrentMarketByNftSeq(nftSeq);
+			if(market == null) {
+				throw new Exception();
+			}
+		}  catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(FAIL);
+		}
+		return res;
+	}
+
+
 }

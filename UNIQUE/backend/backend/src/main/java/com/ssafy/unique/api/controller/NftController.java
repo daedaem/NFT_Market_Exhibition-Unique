@@ -2,11 +2,13 @@ package com.ssafy.unique.api.controller;
 
 
 import com.ssafy.unique.api.request.NftReq;
+import com.ssafy.unique.api.response.NftResultRes;
 import com.ssafy.unique.api.service.NftService;
 import com.ssafy.unique.db.entity.Nft;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class NftController {
     public NftController(NftService nftService) {
         this.nftService = nftService;
     }
-
+    private static final int SUCCESS = 1;
     @GetMapping("/items")
     ResponseEntity<List<Nft>> NftList() {
         List<Nft> list = nftService.nftList();
@@ -61,6 +63,19 @@ public class NftController {
         else {
             return new ResponseEntity<List<Nft>>(list,HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/details/seq/{nftSeq}")
+    ResponseEntity<NftResultRes> nftListByNftSeq(@PathVariable Long nftSeq) {
+        NftResultRes res = nftService.findByNftSeq(nftSeq);
+
+        if(res.getResult() == SUCCESS) {
+            return new ResponseEntity<NftResultRes>(res, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
 }

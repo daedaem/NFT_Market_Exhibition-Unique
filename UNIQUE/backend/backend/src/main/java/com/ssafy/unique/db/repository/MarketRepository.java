@@ -2,6 +2,7 @@ package com.ssafy.unique.db.repository;
 
 import java.util.List;
 
+import com.ssafy.unique.db.entity.Nft;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -117,4 +118,13 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	@Transactional
 	@Query(value = " update market set ended = ?, canceled = ? where market_id = ?", nativeQuery = true)
 	Integer updateEndedAndCanceledById(boolean ended, boolean canceled, Long marketId);
+
+
+	// Nft의 과거~현재 거래 이력을 확인
+	@Query(value = " select * from market where nft_seq = ?", nativeQuery = true)
+	List<Market> findRecordByNftSeq(Long nftSeq);
+
+	// NFT의 현재 거래현황만 확인
+	@Query(value = "select * from market where nft_seq = ? order by start_time desc limit 1", nativeQuery = true)
+	Market findCurrentMarketByNftSeq(Long nftSeq);
 }
