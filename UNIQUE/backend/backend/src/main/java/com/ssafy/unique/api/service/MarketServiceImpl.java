@@ -45,21 +45,25 @@ public class MarketServiceImpl implements MarketService {
 				// Type가 all인 경우
 				if (marketParamReq.getType().length() == 3) {
 					res.setMarketList(marketRepository.findTypeAllWithLimitOffset(marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeAllMarketWork());
 				}
 				// Type가 audio, image, video인 경우
 				else {
 					res.setMarketList(marketRepository.findTypeOtherWithLimitOffset(marketParamReq.getType(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeOtherMarketWork(marketParamReq.getType()));
 				}
 			}
 			// SearchWord가 있는 경우
 			else {
 				// Type가 all인 경우
 				if (marketParamReq.getType().length() == 3) {
-					res.setMarketList(marketRepository.findTypeAllWithLimitOffsetSearchWord(marketParamReq.getSearchWord(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setMarketList(marketRepository.findTypeAllWithLimitOffsetSearchWord(marketParamReq.getSearchWord().trim(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeAllMarketWorkWithSearchWord(marketParamReq.getSearchWord().trim()));
 				}
 				// Type가 audio, image, video인 경우
 				else {
-					res.setMarketList(marketRepository.findTypeOtherWithLimitOffsetSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setMarketList(marketRepository.findTypeOtherWithLimitOffsetSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord().trim(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeOtherMarketWorkWithSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord().trim()));
 				}
 			}
 			
@@ -77,8 +81,12 @@ public class MarketServiceImpl implements MarketService {
 		
 		MarketResultRes res = new MarketResultRes();
 		try {
-			res.setMarket(marketRepository.findById(marketId));
-
+			// 현재 보고있는 NFT의 판매 등록 정보
+			Market market = marketRepository.findById(marketId).get();
+			res.setMarket(market);
+			// 현재 보고있는 NFT에 대한 과거 거래이력
+			res.setMarketList(marketRepository.findTransactionHistoryById(market.getNft().getNftSeq()));
+			
 			res.setResult(SUCCESS);
 		} catch(Exception e) {
 			e.printStackTrace();
