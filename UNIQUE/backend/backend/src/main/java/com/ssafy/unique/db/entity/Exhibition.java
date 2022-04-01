@@ -32,11 +32,14 @@ public class Exhibition {
 	@Column(name = "MEMBER_SEQ")
 	private Long memberSeq;
 	
-	@Column(name = "EXHIBITION_TYPE")
-	private char exhibitionType;
+	@Column(name = "EXHIBITION_TITLE")
+	private String exhibitionTitle;
 	
-	@Column(name = "EXHIBITION_COMMENT")
-	private String exhibitionComment;
+	@Column(name = "EXHIBITION_TYPE")
+	private String exhibitionType;
+	
+	@Column(name = "EXHIBITION_DESCRIPTION")
+	private String exhibitionDescription;
 	
 	@CreationTimestamp
 	@Column(name = "REG_Dt")
