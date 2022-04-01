@@ -12,7 +12,7 @@
           <div class="col-lg-8">
             <div class="section-head-sm">
               <!-- <router-link :to="SectionData.createData.path" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> {{ SectionData.createData.btnText }}</router-link> -->
-              <router-link :to="{ name: 'Home' }" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> {{ SectionData.createData.btnText }}</router-link>
+              <router-link :to="{ name: 'Home' }" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> Home </router-link>
               <h1 class="mt-2">{{ SectionData.createData.title }}</h1>
             </div>
           </div>
@@ -80,31 +80,7 @@
               <!-- end tab-content -->
               <!-- </div> -->
               <!-- end form-item -->
-              <div class="form-item mb-3">
-                <div class="switch-wrap">
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="me-2">
-                      <h5 class="mb-1">Unlock once purchased</h5>
-                      <p class="form-text">Content will be unlocked after successful transaction</p>
-                    </div>
-                    <div class="form-check form-switch form-switch-s1">
-                      <input class="form-check-input checkbox-switcher" data-target="switch-content-unlock" type="checkbox" />
-                    </div>
-                    <!-- end form-check -->
-                  </div>
-                  <!-- end d-flex -->
-                  <div class="switch-content-unlock mt-4" id="switch-content-unlock">
-                    <input type="text" name="text" class="form-control form-control-s1" placeholder="Access key, code to redeem or link to a file..." />
-                  </div>
-                </div>
-                <!-- end switch-wrap -->
-              </div>
-              <!-- end form-item -->
-              <div class="form-item mb-4">
-                <h5 class="mb-1">Choose collection</h5>
-                <p class="form-text mb-3">This is the collection where your item will appear.</p>
-                <!-- <v-select class="generic-select" v-model="selected" :options="options"></v-select> -->
-              </div>
+
               <!-- end form-item -->
               <div class="form-item mb-4">
                 <div class="mb-4">
@@ -114,11 +90,6 @@
                 <div class="mb-4">
                   <label class="mb-2 form-label">Description</label>
                   <textarea name="message" class="form-control form-control-s1" v-model="form.nftDescription" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label class="mb-2 form-label">Royalties</label>
-                  <input type="text" class="form-control form-control-s1" placeholder="e.g 10%" />
-                  <p class="form-text mt-1">Suggested: 0, 10%, 20%, 30%. Maximum is 70%</p>
                 </div>
               </div>
               <!-- end form-item -->
@@ -203,8 +174,8 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
@@ -212,7 +183,7 @@ const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -284,12 +255,12 @@ export default {
         data.append("file", this.form.file);
         const createIPFS = await axios({
           method: "POST",
-          url: `${SERVER_URL}/file`,
+          url: `${SERVER_URL}/api/file`,
           data: data,
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
             "Content-Type": "multipart/form-data",
           },
         });
@@ -312,12 +283,12 @@ export default {
         // 아래 세가지
         const createNFTtoBack = await axios({
           method: "PUT",
-          url: `${SERVER_URL}/file/update`,
+          url: `${SERVER_URL}/api/file/update`,
           data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
           },
         });
         console.log(createNFTtoBack);

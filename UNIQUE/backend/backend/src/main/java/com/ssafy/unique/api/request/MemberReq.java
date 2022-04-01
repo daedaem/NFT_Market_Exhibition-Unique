@@ -14,4 +14,6 @@ public class MemberReq {
 	
 	@NotNull
 	private String memberPassword;
+	
+	private String memberBio;
 }

@@ -5,13 +5,21 @@
       <!-- Header main -->
       <HeaderMain></HeaderMain>
     </header>
+    <div style="max-width: 1200px; margin: auto">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
+        <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
+        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id }, data: {} }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <!-- sell버튼 끝-->
+      </div>
+    </div>
+    <div class="d-flex flex-column"></div>
     <section class="item-detail-section section-space">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 pe-xl-5">
             <div class="item-detail-content">
               <div class="item-detail-img-container mb-4">
-                <img :src="imgLg" alt="" class="w-100 rounded-3" />
+                <img :src=imgLg />
               </div>
               <!-- end item-detail-img-container -->
               <div class="item-detail-tab">
@@ -23,7 +31,7 @@
                 <div class="tab-content mt-3" id="myTabContent">
                   <div class="tab-pane fade show active" id="owners" role="tabpanel" aria-labelledby="owners-tab">
                     <div class="item-detail-tab-wrap">
-                      <div class="card-media card-media-s2 mb-3" v-for="item in SectionData.itemDetailData.itemDetailOwnerList" :key="item.id">
+                      <div class="card-media card-media-s2 mb-3" v-for="item in ownerlist" :key="item.id">
                         <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
                           <img :src="item.avatar" alt="avatar" />
                         </router-link>
@@ -39,7 +47,7 @@
                     <!-- end item-detail-tab-wrap -->
                   </div>
                   <!-- end tab-pane -->
-                  <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab">
+                  <!-- <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab">
                     <div class="item-detail-tab-wrap">
                       <div class="card-media card-media-s2 mb-3" v-for="item in SectionData.itemDetailData.itemDetailBidsList" :key="item.id">
                         <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
@@ -50,14 +58,14 @@
                           <p class="small">{{ item.date }}</p>
                         </div>
                       </div>
-                      <!-- end card -->
+                      end card
                     </div>
-                    <!-- end item-detail-tab-wrap -->
-                  </div>
+                    end item-detail-tab-wrap
+                  </div> -->
                   <!-- end tab-pane -->
                   <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
                     <div class="item-detail-tab-wrap">
-                      <div class="card-media card-media-s2 mb-3" v-for="item in SectionData.itemDetailData.itemDetailHistoryList" :key="item.id">
+                      <div class="card-media card-media-s2 mb-3" v-for="item in itemDetailHistoryList" :key="item.id">
                         <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
                           <img :src="item.avatar" alt="avatar" />
                         </router-link>
@@ -79,7 +87,9 @@
           <!-- end col -->
           <div class="col-lg-6">
             <div class="item-detail-content mt-4 mt-lg-0">
-              <h1 class="item-detail-title mb-2">{{ title }}</h1>
+              <div class="d-flex flex-row">
+                <h1 class="item-detail-title mb-2">{{ title }}</h1>
+              </div>
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
                 <span class="item-detail-text-meta">{{ metaText }}</span>
                 <span class="dot-separeted"></span>
@@ -90,7 +100,7 @@
               <p class="item-detail-text mb-4">{{ content }}</p>
               <div class="item-credits">
                 <div class="row g-4">
-                  <div class="col-xl-6" v-for="item in SectionData.itemDetailData.itemDetailList" :key="item.id">
+                  <div class="col-xl-6" v-for="item in itemDetailList" :key="item.id">
                     <div class="card-media card-media-s1">
                       <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
                         <img :src="item.avatar" alt="avatar" />
@@ -103,7 +113,7 @@
                     <!-- end card -->
                   </div>
                   <!-- end col-->
-                  <div class="col-xl-12" v-for="item in SectionData.itemDetailData.itemDetailListTwo" :key="item.id">
+                  <!-- <div class="col-xl-12" v-for="item in SectionData.itemDetailData.itemDetailListTwo" :key="item.id">
                     <div class="card-media card-media-s1">
                       <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
                         <img :src="item.avatar" alt="avatar" />
@@ -113,8 +123,8 @@
                         <span class="fw-medium small">{{ item.subTitle }}</span>
                       </div>
                     </div>
-                    <!-- end card -->
-                  </div>
+                    end card
+                  </div> -->
                   <!-- end col-->
                 </div>
                 <!-- end row -->
@@ -123,18 +133,18 @@
               <div class="item-detail-btns mt-4">
                 <ul class="btns-group d-flex">
                   <li class="flex-grow-1">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">{{ SectionData.itemDetailData.btnText }}</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a>
                   </li>
-                  <li class="flex-grow-1">
+                  <!-- <li class="flex-grow-1">
                     <div class="dropdown">
-                      <a href="#" class="btn bg-dark-dim d-block" data-bs-toggle="dropdown">{{ SectionData.itemDetailData.btnTextTwo }}</a>
+                      <a href="#" class="btn bg-dark-dim d-block" data-bs-toggle="dropdown">{{ SectionData.itemDetailData.btnTextThree }}</a>
                       <div class="dropdown-menu card-generic p-2 keep-open w-100 mt-1">
                         <router-link :to="icon.path" class="dropdown-item card-generic-item" v-for="(icon, i) in SectionData.socialShareList" :key="i"
                           ><em class="ni me-2" :class="icon.btnClass"></em>{{ icon.title }}</router-link
                         >
                       </div>
                     </div>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
               <!-- end item-detail-btns -->
@@ -201,25 +211,75 @@ export default {
     return {
       SectionData,
       id: this.$route.params.id,
-      title: "",
-      imgLg: "",
-      metaText: "",
-      metaTextTwo: "",
-      metaTextThree: "",
-      content: "",
+      title: "3번 데이터",
+      imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
+      // imgLg: "@/images/favicon.png",
+      metaText: "Not for sale",
+      metaTextTwo: "500 editions",
+      metaTextThree: "500 editions",
+      content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
+      ownerlist : [
+        {
+          id: 1,
+          title: "French Montana",
+          subTitle: "450 editions not for sale",
+          avatar: require("@/images/thumb/avatar-4.jpg"),
+          path: "/author",
+        },
+      ],
+      itemDetailHistoryList: [
+      {
+        id: 1,
+        title: "Listed 1 edition for 0.35 ETH",
+        subTitle: "by Medicom 21 hours ago",
+        avatar: require("@/images/thumb/avatar-4.jpg"),
+        path: "/author",
+      },
+      {
+        id: 2,
+        title: "Purchased 1 edition for 0.1 ETH",
+        subTitle: "by Medicom 21 hours ago",
+        avatar: require("@/images/thumb/avatar-5.jpg"),
+        path: "/author",
+      },
+      {
+        id: 3,
+        title: "Purchased 1 edition for 0.1 ETH",
+        subTitle: "by French Montana 23/09/2021",
+        avatar: require("@/images/thumb/avatar-6.jpg"),
+        path: "/author",
+      },
+      ],
+      itemDetailList: [
+      {
+        id: 1,
+        title: "@nathan_walls",
+        subTitle: "Creator",
+        avatar: require("@/images/thumb/avatar.jpg"),
+        path: "/author",
+      },
+      {
+        id: 2,
+        title: "@kamran_ahmed",
+        subTitle: "Collection",
+        avatar: require("@/images/thumb/avatar-2.jpg"),
+        path: "/author",
+      },
+    ],
     };
   },
-  mounted() {
-    SectionData.productData.products.forEach((element) => {
-      if (this.id == element.id) {
-        this.imgLg = element.imgLg;
-        this.title = element.title;
-        this.metaText = element.metaText;
-        this.metaTextTwo = element.metaTextTwo;
-        this.metaTextThree = element.metaTextThree;
-        this.content = element.content;
-      }
-    });
-  },
+  // methods: {
+  //   async getItmesByAddress(address) {
+  //     const getItems = await axios({
+  //       method: "GET",
+  //       url: `${SERVER_URL}/api/nft/details/${this.$route.params.id}`,
+  //       headers: {
+  //         // Authorization: token,
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+  //       },
+  //     });
+  //   },
+  // }
 };
 </script>

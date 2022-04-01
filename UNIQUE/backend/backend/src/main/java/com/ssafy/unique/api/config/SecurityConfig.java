@@ -68,14 +68,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 
                 // 토큰이 없는 상태에서 할 수 있는 행동에 대해서 열어준다
+                // (04.01) 개발 후에는 Swagger,login, register 빼고 막아놓자.
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/members/**").permitAll()
+                .antMatchers("/members/login").permitAll()
+                .antMatchers("/members/register").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll() // swagger-ui 접속
                 .antMatchers("/v3/**").permitAll() //swagger 설정 참조
+                .antMatchers("/nft/**").permitAll() // nft 관련 데이터 사용
+                .antMatchers("/market/**").permitAll()
                 .anyRequest().authenticated()
-                
                 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

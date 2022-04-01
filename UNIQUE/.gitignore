@@ -133,12 +133,12 @@ dist
 .pnp.*
 
 ### SolidityTruffle ###
-# depedencies
+depedencies
 node_modules
 
 # testing
 
-# production
+# # production
 build
 build_webpack
 
@@ -164,6 +164,6 @@ package-lock.json
 docs/_book
 
 # TODO: where does this rule come from?
-test/
+# test/
 
 # End of https://www.toptal.com/developers/gitignore/api/vue,solidity,soliditytruffle

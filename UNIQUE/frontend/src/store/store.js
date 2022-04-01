@@ -111,6 +111,14 @@ let SectionData = {
         },
       ],
     },
+    breadcrumbListExhibition: {
+      title: "Exhibition",
+      navList: [
+        {
+          title: "Exhibition",
+        },
+      ],
+    },
     breadcrumbListSix: {
       title: "Enter Linda Dounia's Cyber Baat World",
       navList: [
@@ -187,7 +195,7 @@ let SectionData = {
   // Header data
   headerData: {
     // 헤더 목록 리스트
-    btnText: "Connect Wallet",
+    btnText: "MyPage",
     inputPlaceholderText: "Search item here...",
     menuList: {
       title: "Home",
@@ -278,7 +286,7 @@ let SectionData = {
         priceTwo: 1.32,
         metaText: "Not for sale",
         metaTextTwo: "500 editions",
-        metaTextThree: 'Highest bid <span class="text-primary fw-semibold">0.072 ETH</span>',
+        metaTextThree: "500 editions",
         avatar: require("@/images/thumb/avatar.jpg"),
         userName: "@zenicon_studio",
         followersText: "1.3k Followers",
@@ -1240,8 +1248,10 @@ let SectionData = {
     metaText: "Not for sale",
     metaTextTwo: "500 editions",
     metaTextThree: "Highest bid 0.072 ETH",
-    btnText: "Place a Bid",
-    btnTextTwo: "Share",
+    btnTextOne: "sell",
+    btnTextTwo: "Place a Bid",
+    btnTextThree: "Share",
+
     itemDetailTabNav: [
       {
         id: 1,
@@ -1252,12 +1262,6 @@ let SectionData = {
       },
       {
         id: 2,
-        title: "Bids",
-        slug: "bids-tab",
-        bsTarget: "#bids",
-      },
-      {
-        id: 3,
         title: "History",
         slug: "history-tab",
         bsTarget: "#history",
