@@ -10,21 +10,21 @@
                             <h2 class="mb-2" v-html=" SectionData.registerData.title"></h2>
                             <p>{{ SectionData.registerData.subTitle }}</p>
                         </div>
-                        <form action="#">
-                            <div class="form-floating mb-4">
+                        
+                            <!-- <div class="form-floating mb-4">
                                 <input type="text" class="form-control" id="fullName" placeholder="Name">
                                 <label for="fullName">Full name</label>
-                            </div><!-- end form-floating -->
+                            </div> -->
                             <div class="form-floating mb-4">
-                                <input type="text" class="form-control" id="userName" placeholder="Username">
+                                <input type="text" class="form-control" id="userName" placeholder="Username" v-model="credentials.memberId" autocomplete="off">
                                 <label for="userName">Username</label>
                             </div><!-- end form-floating -->
-                            <div class="form-floating mb-4">
+                            <!-- <div class="form-floating mb-4">
                                 <input type="email" class="form-control" id="emailAddress" placeholder="name@example.com">
                                 <label for="emailAddress">Email address</label>
-                            </div><!-- end form-floating -->
+                            </div>end form-floating -->
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control password" id="password" placeholder="Password">
+                                <input type="password" class="form-control password" id="password" placeholder="Password" v-model="credentials.memberPassword" @keyup.enter="signup(credentials)" autocomplete="off">
                                 <label for="password">Password</label>
                                 <a href="password" class="password-toggle" title="Toggle show/hide pasword">
                                     <em class="password-shown ni ni-eye-off"></em>
@@ -32,13 +32,13 @@
                                 </a>
                             </div><!-- end form-floating -->
                             <p class="mb-4 form-text" >{{ SectionData.registerData.termText }}</p>
-                            <button class="btn btn-dark w-100" type="submit">{{ SectionData.registerData.btnText }}</button>
+                            <button class="btn btn-dark w-100" type="submit" @click="signup(credentials)">{{ SectionData.registerData.btnText }}</button>
                             <span class="d-block my-4">— or sign up with —</span>
                             <ul class="btns-group d-flex">
                                 <li class="flex-grow-1" v-for="(list, i) in SectionData.registerData.btns" :key="i"><router-link :to="list.path" class="btn d-block" :class="list.btnClass"><em class="ni" :class="list.icon"></em> {{ list.title }} </router-link></li>
                             </ul>
                             <p class="mt-3 form-text">{{ SectionData.registerData.haveAccountText }} <router-link :to="SectionData.registerData.btnTextLink" class="btn-link">{{ SectionData.registerData.btnTextTwo }}</router-link></p>
-                        </form>
+                        
                     </div><!-- end col-lg-6 -->
                 </div><!-- end row -->
             </div><!-- end container -->
@@ -48,12 +48,22 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 import SectionData from '@/store/store.js'
+import { mapActions } from 'vuex'
 export default {
   name: 'RegisterSection',
   data () {
     return {
-      SectionData
+      SectionData,
+      credentials: {
+          memberId: null,
+          memberPassword: null,
+      }
     }
+  },
+  methods: {
+    ...mapActions([
+      'signup',
+    ])
   },
   mounted () {
     /*  ======== Show/Hide passoword ======== */

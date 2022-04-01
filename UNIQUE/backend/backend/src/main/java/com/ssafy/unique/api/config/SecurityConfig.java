@@ -80,7 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/market/**").permitAll()
                 .anyRequest().authenticated()
                 
-                
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
