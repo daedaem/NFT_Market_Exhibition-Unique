@@ -1,15 +1,15 @@
 <template>
   <div class="card card-full">
     <div class="card-image">
-      <img :src="product.img" class="card-img-top" alt="art image" />
+      <img src="@/images/thumb/nft-full.0609d1e0.jpg" class="card-img-top" alt="art image" />
     </div>
     <div class="card-body p-4">
-      <h5 class="card-title text-truncate mb-0">{{ product.title }}</h5>
+      <h5 class="card-title text-truncate mb-0">{{ product.nftName }}</h5>
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
-          <router-link :to="product.authorLink" class="custom-tooltip author-link">{{ product.author }}</router-link>
-          <div class="card-generic custom-tooltip-dropdown">
+          <router-link to="Home" class="custom-tooltip author-link">{{ product.nftAuthorName }}</router-link>
+          <!-- <div class="card-generic custom-tooltip-dropdown">
             <div class="author-action d-flex flex-wrap align-items-center mb-3">
               <div class="flex-shrink-0 avatar">
                 <img :src="product.avatar" alt="avatar" />
@@ -29,9 +29,8 @@
                 </router-link>
               </div>
             </div>
-            <!-- end follow-wrap  -->
             <router-link :to="product.authorLink" class="btn btn-sm bg-dark-dim">Follow</router-link>
-          </div>
+          </div> -->
           <!-- end dropdown-menu -->
         </div>
         <!-- end custom-tooltip-wrap -->
@@ -40,18 +39,18 @@
       <div class="card-price-wrap d-flex align-items-center justify-content-sm-between mb-3">
         <div class="me-5 me-sm-2">
           <span class="card-price-title">Price</span>
-          <span class="card-price-number">&dollar;{{ product.price }}</span>
+          <span class="card-price-number">&dollar;11</span>
         </div>
         <div class="text-sm-end">
-          <span class="card-price-title">Current bid</span>
-          <span class="card-price-number">{{ product.priceTwo }} ETH</span>
+          <span class="card-price-title">NFT Type</span>
+          <span class="card-price-number">{{ product.nftType }}</span>
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span class="btn btn-sm btn-dark">Place Bid</span>
+      <span class="btn btn-sm btn-dark">Purchase</span>
     </div>
     <!-- end card-body -->
-    <router-link
+    <!-- <router-link
       class="details"
       :to="{
         name: 'ProductDetail',
@@ -69,7 +68,7 @@
         },
       }"
     >
-    </router-link>
+    </router-link> -->
   </div>
   <!-- end card -->
 </template>
@@ -115,5 +114,9 @@ export default {
 .card-price-wrap {
   z-index: 2;
   position: relative;
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
 </style>

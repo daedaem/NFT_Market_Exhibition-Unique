@@ -9,7 +9,7 @@
                 </div>
             </div><!-- end filter-box -->
             <div class="row g-gs">
-              <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in filteredData" :key="product.id">
+              <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in items" :key="product">
                 <Products :product="product"></Products>
               </div><!-- end col -->
             </div><!-- end end  -->
@@ -19,8 +19,10 @@
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import SectionData from '@/store/store.js'
 import Products from '@/components/section/Products'
+import axios from "axios";
 
 export default {
   name: 'ExploreSection',
@@ -29,6 +31,7 @@ export default {
   },
   data () {
     return {
+      items:null,
       SectionData,
       filterMenu: [
         {
@@ -93,6 +96,19 @@ export default {
       this.filterMenu.find(menu => menu.id === id).class = 'active';
       this.previous_active_id = id;
     },
+    async getItemsAll() {
+      const getItems = await axios({
+        method: "GET",
+        url: `${SERVER_URL}/api/nft/items`,
+        headers: {
+          // Authorization: token,
+          Authorization:
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+        },
+      });
+      this.items = getItems.data
+      console.log(this.items);
+    },
   },
   computed: {
       filteredData () {
@@ -102,8 +118,10 @@ export default {
         return opts.includes(data.category)
       })
     },
-  }
-  
+  },
+  created: function() {
+    this.getItemsAll()
+  },
 }
 </script>
 

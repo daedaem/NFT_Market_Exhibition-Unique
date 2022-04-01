@@ -7,7 +7,7 @@ const routes = [
     component: () => import("../pages/Home.vue"),
   },
   {
-    path: "/product-details-:id",
+    path: "/details/:id",
     name: "ProductDetail",
     component: () => import("../pages/ProductDetail.vue"),
     props: true,
@@ -34,6 +34,11 @@ const routes = [
     component: () => import("../pages/PrivateGallery.vue"),
   },
   {
+    path: "/exhibition",
+    name: "Exhibition",
+    component: () => import("../pages/Exhibition.vue"),
+  },
+  {
     path: "/blog-detail-:id",
     name: "PrivateGalleryDetail",
     component: () => import("../pages/PrivateGalleryDetail.vue"),
@@ -57,6 +62,12 @@ const routes = [
     path: "/register",
     name: "Register",
     component: () => import("../pages/Register.vue"),
+  },
+
+  {
+    path: "/test",
+    name: "Test",
+    component: () => import("../pages/Test.vue"),
   },
   // {
   //   path: "/privateGallery",
