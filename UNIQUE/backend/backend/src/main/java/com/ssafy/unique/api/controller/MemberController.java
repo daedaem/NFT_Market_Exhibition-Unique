@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.LoginReq;
+import com.ssafy.unique.api.request.MemberBioReq;
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.request.WalletRegisterReq;
 import com.ssafy.unique.api.response.MemberRes;
@@ -173,6 +174,26 @@ public class MemberController {
 			return new ResponseEntity<PopularRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	@Operation(description = "회원의 자기소개 수정")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@PutMapping("/bio")
+	public ResponseEntity<ResultRes> updateMemberBio(@RequestBody MemberBioReq memberBioReq) {
+		
+		ResultRes res = memberService.updateMemberBio(memberBioReq) ;
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	
 }
 

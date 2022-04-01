@@ -31,4 +31,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@Query(value= " select * from member where member_seq in ( select * from ( select nft_author_seq from nft group by nft_author_seq order by count(*) desc limit 4) as tmp) ", nativeQuery = true)
 	List<Member> findPopularAuthor();
 	
+	@Query(value= " update member set member_bio = ? where member_seq = ? " , nativeQuery = true)
+	Integer updateMemberBioById(String memberBio, Long memberSeq);
+	
 }

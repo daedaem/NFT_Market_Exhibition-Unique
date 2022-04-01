@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.ssafy.unique.api.request.MemberBioReq;
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.response.MemberResultRes;
 import com.ssafy.unique.api.response.PopularRes;
@@ -61,6 +62,7 @@ public class MemberServiceImpl implements MemberService{
 			Member member = memberRepository.save(Member.builder()
 					.memberId(memberReq.getMemberId())
 					.memberPassword(memberReq.getMemberPassword())
+					.memberBio(memberReq.getMemberBio())
 					.build()
 					);
 			System.out.println(member.getMemberSeq());
@@ -244,6 +246,26 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public ResultRes updateMemberBio(MemberBioReq memberBioReq) {
+
+		ResultRes res = new ResultRes();
+		
+		// Security Context에서 MEMBER_SEQ를 구한다
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Long memberSeq = Long.parseLong(authentication.getName());
+		
+		try {
+			memberRepository.updateMemberBioById(memberBioReq.getMemberBio(), memberSeq);
+			res.setResult(SUCCESS);
+		} catch(Exception e) {
+			e.printStackTrace();
+			res.setResult(FAIL);
+		}
+		
+		return res;
 	}
 
 }

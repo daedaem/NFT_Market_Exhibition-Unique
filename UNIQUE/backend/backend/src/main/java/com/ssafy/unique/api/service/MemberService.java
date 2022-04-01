@@ -2,6 +2,7 @@ package com.ssafy.unique.api.service;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.ssafy.unique.api.request.MemberBioReq;
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.response.MemberResultRes;
 import com.ssafy.unique.api.response.PopularRes;
@@ -12,6 +13,7 @@ public interface MemberService {
 	public ResultRes memberWalletRegister(String wallet);
 	public ResultRes profileImageUpdate( MultipartHttpServletRequest request );
 	public PopularRes popularAuthorSearch();
+	public ResultRes updateMemberBio(MemberBioReq memberBioReq);
 //	public MemberResultRes memberMypageSearch();
 	
 //	public MemberResultRes passwordCheck(MemberRes memberRes);
