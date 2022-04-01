@@ -13,6 +13,7 @@ import com.ssafy.unique.db.entity.Market;
 @Repository
 public interface MarketRepository extends JpaRepository<Market, Long> {
 	
+	
 	@Query(value =   " select * "
 					+  " from market "
 					+ " where ended = false "
@@ -20,6 +21,13 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 					+ " limit ? "
 					+" offset ? ", nativeQuery = true)
 	List<Market> findTypeAllWithLimitOffset(int limit, int offset);
+	
+	@Query(value = " select count(*) from market where ended = false and canceled = false ", nativeQuery = true)
+	Integer countTypeAllMarketWork();
+	
+	
+	
+	
 	
 	@Query(value =  " select * "
 			       +  " from market "
@@ -31,6 +39,19 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			       + " limit ? "
 			       +" offset ? ", nativeQuery = true)
 	List<Market> findTypeAllWithLimitOffsetSearchWord(String searchWord, int limit, int offset);
+	
+	@Query(value =  " select count(*) "
+		           +  " from market "
+		           +  " join nft "
+		           +    " on market.nft_seq = nft.nft_seq "
+		           + " where ended = false "
+		           +   " and canceled = false "
+		           +   " and nft_name like ?% ", nativeQuery = true)
+	Integer countTypeAllMarketWorkWithSearchWord(String searchWord);
+	
+	
+	
+	
 	
 	@Query(value =  " select * "
 			      +   " from market "
@@ -44,6 +65,19 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	List<Market> findTypeOtherWithLimitOffset(String type, int limit, int offset);
 	
 	@Query(value =  " select * "
+		          +   " from market "
+		          +   " join nft "
+		          +     " on market.nft_seq = nft.nft_seq "
+		          +  " where ended = false "
+		          +    " and canceled = false "
+		          +    " and nft_type like ?% " , nativeQuery = true)	
+	Integer countTypeOtherMarketWork(String type);
+	
+	
+	
+	
+	
+	@Query(value =  " select count(*) "
 			      +   " from market "
 			      +   " join nft "
 			      +     " on market.nft_seq = nft.nft_seq "
@@ -54,6 +88,23 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			      +  " limit ? "
 			      + " offset ?  ", nativeQuery = true)
 	List<Market> findTypeOtherWithLimitOffsetSearchWord(String type, String searchWord, int limit, int offset);
+	
+	@Query(value =  " select count(*) "
+		      +   " from market "
+		      +   " join nft "
+		      +     " on market.nft_seq = nft.nft_seq "
+		      +  " where ended = false "
+		      +    " and canceled = false "
+		      +    " and nft_type like ?% "
+		      +    " and nft_name like ?% ", nativeQuery = true)
+	Integer countTypeOtherMarketWorkWithSearchWord(String type, String searchWord);
+	
+	
+	
+	
+	@Query(value = " select * from market where nft_seq = ? and ended = true ", nativeQuery = true)
+	List<Market> findTransactionHistoryById(Long nft_seq);
+	
 	
 	
 	

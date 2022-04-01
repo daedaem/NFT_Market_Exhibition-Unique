@@ -1,6 +1,8 @@
 package com.ssafy.unique.api.service;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -15,10 +17,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.PopularRes;
 import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.db.entity.Member;
+import com.ssafy.unique.db.entity.Nft;
 import com.ssafy.unique.db.entity.ProfileImage;
 import com.ssafy.unique.db.repository.MemberRepository;
+import com.ssafy.unique.db.repository.NftRepository;
 import com.ssafy.unique.db.repository.ProfileImageRepository;
 
 @Service
@@ -27,11 +32,13 @@ public class MemberServiceImpl implements MemberService{
 	private final PasswordEncoder passwordEncoder;
 	private final MemberRepository memberRepository;
 	private final ProfileImageRepository profileImageRepository;
+	private final NftRepository nftRepository;
 
-	public MemberServiceImpl(PasswordEncoder passwordEncoder, MemberRepository memberRepository, ProfileImageRepository profileImageRepository) {
+	public MemberServiceImpl(PasswordEncoder passwordEncoder, MemberRepository memberRepository, ProfileImageRepository profileImageRepository, NftRepository nftRepository) {
 		this.passwordEncoder = passwordEncoder;
 		this.memberRepository = memberRepository;
 		this.profileImageRepository = profileImageRepository;
+		this.nftRepository = nftRepository;
 	}
 
 	private static final int SUCCESS = 1;
@@ -210,6 +217,33 @@ public class MemberServiceImpl implements MemberService{
 			return res;
 		}
 
+	}
+
+	@Override
+	public PopularRes popularAuthorSearch() {
+		
+		PopularRes res = new PopularRes();
+		
+		try {
+			// 먼저 member의 List를 구한다 -> 4명의 인원을 고르고, 그 순서는 작업물이 가장 많은 순서다
+			List<Member> memberList = memberRepository.findPopularAuthor();
+			
+			// 각 리스트에 있는 member를 사용해서, 해당 member가 가장 최근에 create한 NFT를 각각 구한다 -> 4개의 NFT가 List 안에 저장될 것
+			// for 구문을 사용해서 멤버 리스트 안의 멤버를 각각 조회해서 가장 최근의 작품을 찾는다. desc를 nft_Seq에 사용
+			List<Nft> nftList = new ArrayList<>();
+			for (int i = 0; i < memberList.size(); i++) {
+				nftList.add(nftRepository.findRecentWorkById(memberList.get(i).getMemberSeq());
+			}
+			
+			res.setMemberList(memberList);
+			res.setNftList(nftList);
+			
+			res.setResult(SUCCESS);
+		} catch(Exception e) {
+			res.setResult(FAIL);
+		}
+		
+		return res;
 	}
 
 }

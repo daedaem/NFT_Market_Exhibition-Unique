@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,7 @@ import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.request.WalletRegisterReq;
 import com.ssafy.unique.api.response.MemberRes;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.PopularRes;
 import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.api.service.CustomUserDetailsService;
 import com.ssafy.unique.api.service.MemberService;
@@ -153,6 +155,25 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+	@Operation(description = "가장 작품 숫자가 많은 작가 4명을 반환. 각 작가의 최신 NFT 정보 반환")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@GetMapping("/popular")
+	public ResponseEntity<PopularRes> popularAuthorSearch() {
+		
+		PopularRes res = memberService.popularAuthorSearch();
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<PopularRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<PopularRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }
 
 
