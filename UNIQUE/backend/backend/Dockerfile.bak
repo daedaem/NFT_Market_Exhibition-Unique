@@ -12,8 +12,10 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 
+ARG JAR_FILE=target/*.jar 
+
 # jar 파일 경로는 직접 입력해주세요.
-COPY build/libs/backend-0.0.1-SNAPSHOT.jar app.jar
+COPY ${JAR_FILE} app.jar
 
 
 # 배포용 properties 실행 명령어

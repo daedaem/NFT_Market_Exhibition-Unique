@@ -156,16 +156,5 @@ public class MarketController {
 		}
 	}
 
-	@GetMapping(value = "/record/current/{nftSeq}")
-	public ResponseEntity<MarketResultRes> marketNftCurrentTrade(@PathVariable Long nftSeq) {
 
-		MarketResultRes res = marketService.marketNftCurrentTrade(nftSeq);
-
-		if(res.getResult() == SUCCESS) {
-			return new ResponseEntity<MarketResultRes>(res, HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<MarketResultRes>(res, HttpStatus.NOT_FOUND);
-		}
-	}
 }

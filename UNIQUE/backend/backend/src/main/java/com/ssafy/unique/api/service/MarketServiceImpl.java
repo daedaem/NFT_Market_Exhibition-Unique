@@ -196,11 +196,13 @@ public class MarketServiceImpl implements MarketService {
 	public MarketResultRes marketNftTradeRecord(Long nftSeq) {
 		MarketResultRes res = new MarketResultRes();
 		try {
-			Market market = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
+			Market Currentmarket = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
 			List<Market> list = marketRepository.findRecordByNftSeq(nftSeq);
 			if(list == null) {
 				throw new Exception();
 			}
+			res.setMarket(Currentmarket);
+			res.setMarketList(list);
 			res.setResult(SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,20 +211,7 @@ public class MarketServiceImpl implements MarketService {
 		return res;
 	}
 
-	@Override
-	public MarketResultRes marketNftCurrentTrade(Long nftSeq) {
-		MarketResultRes res = new MarketResultRes();
-		try {
-			Market market = marketRepository.findCurrentMarketByNftSeq(nftSeq);
-			if(market == null) {
-				throw new Exception();
-			}
-		}  catch (Exception e) {
-			e.printStackTrace();
-			res.setResult(FAIL);
-		}
-		return res;
-	}
+
 
 
 }

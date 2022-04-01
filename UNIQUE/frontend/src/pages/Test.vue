@@ -42,8 +42,8 @@ import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
-import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 const abi = ABIS.abi;
 const CA = SsafyNFT.networks["1337"].address;
 

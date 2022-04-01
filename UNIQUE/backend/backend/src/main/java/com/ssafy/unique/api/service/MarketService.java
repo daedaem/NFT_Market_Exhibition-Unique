@@ -13,5 +13,5 @@ public interface MarketService {
 	public ResultRes marketPurchase(MarketUpdateReq marketUpdateReq);
 	public ResultRes marketCancel(MarketUpdateReq marketUpdateReq);
 	public MarketResultRes marketNftTradeRecord(Long nftSeq);
-	public MarketResultRes marketNftCurrentTrade(Long nftSeq);
+
 }

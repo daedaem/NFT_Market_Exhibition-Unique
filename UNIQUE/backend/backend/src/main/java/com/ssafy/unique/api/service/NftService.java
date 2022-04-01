@@ -9,12 +9,12 @@ import java.util.List;
 public interface NftService {
 
     //NftSeq, nft
-    List<Nft> nftList();
+    NftResultRes nftList();
 
 
-    List<Nft> nftListByNftOwnerAddress(String address);
+    NftResultRes nftListByNftOwnerAddress(String address);
 
-    List<Nft> findAllByNftTokenId(Long nftTokenId);
+    NftResultRes findAllByNftTokenId(Long nftTokenId);
 
     NftResultRes findByNftSeq(Long nftSeq);
 }

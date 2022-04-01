@@ -32,47 +32,47 @@ public class NftController {
     }
     private static final int SUCCESS = 1;
     @GetMapping("/items")
-    ResponseEntity<List<Nft>> NftList() {
-        List<Nft> list = nftService.nftList();
+    ResponseEntity<NftResultRes> NftList() {
+        NftResultRes res = nftService.nftList();
 
-        if(list != null) {
-            return new ResponseEntity<List<Nft>>(list, HttpStatus.OK);
+
+        if(res != null) {
+            return new ResponseEntity<NftResultRes>(res, HttpStatus.OK);
         }else {
-            return new ResponseEntity<List<Nft>>(list,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/items/{address}")
-    ResponseEntity<List<Nft>> NftListByAddress(@PathVariable String address) {
-        List<Nft> list = nftService.nftListByNftOwnerAddress(address);
-        if(list != null) {
-            System.out.println(list);
-            return new ResponseEntity<List<Nft>>(list,HttpStatus.OK);
+    ResponseEntity<NftResultRes> NftListByAddress(@PathVariable String address) {
+        NftResultRes res = nftService.nftListByNftOwnerAddress(address);
+        if(res != null) {
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<List<Nft>>(list,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
+        }
+    }
+    // 궁금증 : TokenId로 NFT 조회하는 기능을 쓸 필요가 있나...?
+    @GetMapping("/detail/token/{tokenId}")
+    ResponseEntity<NftResultRes> NftListByTokenId(@PathVariable Long tokenId) {
+        NftResultRes res = nftService.findAllByNftTokenId(tokenId);
+        if(res != null) {
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("/details/{tokenId}")
-    ResponseEntity<List<Nft>> NftListByTokenId(@PathVariable Long tokenId) {
-        List<Nft> list = nftService.findAllByNftTokenId(tokenId);
-        if(list != null) {
-            return new ResponseEntity<List<Nft>>(list,HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<List<Nft>>(list,HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/details/seq/{nftSeq}")
-    ResponseEntity<NftResultRes> nftListByNftSeq(@PathVariable Long nftSeq) {
-        NftResultRes res = nftService.findByNftSeq(nftSeq);
+    @GetMapping("/{nftSeq}")
+                    ResponseEntity<NftResultRes> nftListByNftSeq(@PathVariable Long nftSeq) {
+                NftResultRes res = nftService.findByNftSeq(nftSeq);
 
         if(res.getResult() == SUCCESS) {
-            return new ResponseEntity<NftResultRes>(res, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<NftResultRes>(res, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
         }
 
 
