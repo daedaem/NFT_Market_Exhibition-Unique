@@ -133,7 +133,7 @@ dist
 .pnp.*
 
 ### SolidityTruffle ###
-# depedencies
+depedencies
 node_modules
 
 # testing
