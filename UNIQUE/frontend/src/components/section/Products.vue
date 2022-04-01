@@ -1,6 +1,6 @@
 <template>
   <div class="card card-full">
-    <div class="card-image" style="height:180px; overflow:hidden;">
+    <div class="card-image">
       <img src="@/images/thumb/nft-full.0609d1e0.jpg" class="card-img-top" alt="art image" />
     </div>
     <div class="card-body p-4">
@@ -114,5 +114,9 @@ export default {
 .card-price-wrap {
   z-index: 2;
   position: relative;
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
 </style>

@@ -286,7 +286,7 @@ let SectionData = {
         priceTwo: 1.32,
         metaText: "Not for sale",
         metaTextTwo: "500 editions",
-        metaTextThree: 'Highest bid <span class="text-primary fw-semibold">0.072 ETH</span>',
+        metaTextThree: "500 editions",
         avatar: require("@/images/thumb/avatar.jpg"),
         userName: "@zenicon_studio",
         followersText: "1.3k Followers",
@@ -1260,12 +1260,6 @@ let SectionData = {
       },
       {
         id: 2,
-        title: "Bids",
-        slug: "bids-tab",
-        bsTarget: "#bids",
-      },
-      {
-        id: 3,
         title: "History",
         slug: "history-tab",
         bsTarget: "#history",
