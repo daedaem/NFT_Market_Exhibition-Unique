@@ -1,12 +1,12 @@
 <template>
   <div class="card card-full">
-    <div class="card-image">
+    <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
       <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
       {{ product.nft.nftWorkUri }}
     </div>
     <div class="card-body p-4">
-      <h5 class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
-      <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5>
+      <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
+      <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
@@ -79,6 +79,19 @@ import { createPopper } from "@popperjs/core";
 export default {
   name: "Products",
   props: ["product"],
+  methods: {
+    moveToDetail(productId) {
+      console.log(productId);
+      this.$router.push({
+        name: "ProductDetail",
+        params: {
+          id: productId,
+          //       id: this.newtokenId,
+          //       //
+        },
+      });
+    },
+  },
   mounted() {
     /*============= Custom Tooltips =============== */
     function customTooltip(selector, active) {
