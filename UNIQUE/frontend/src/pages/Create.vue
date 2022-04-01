@@ -12,7 +12,10 @@
           <div class="col-lg-8">
             <div class="section-head-sm">
               <!-- <router-link :to="SectionData.createData.path" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> {{ SectionData.createData.btnText }}</router-link> -->
-              <router-link :to="{ name: 'Home' }" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> {{ SectionData.createData.btnText }}</router-link>
+              <router-link :to="{ name: 'Home' }" class="btn-link fw-semibold"
+                ><em class="ni ni-arrow-left"></em>
+                {{ SectionData.createData.btnText }}</router-link
+              >
               <h1 class="mt-2">{{ SectionData.createData.title }}</h1>
             </div>
           </div>
@@ -22,9 +25,21 @@
               <div class="form-item mb-4">
                 <h5 class="mb-3">Upload file</h5>
                 <div class="file-upload-wrap">
-                  <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
-                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFile" hidden />
-                  <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
+                  <p class="file-name mb-4" id="file-name">
+                    PNG, GIF, WEBP, MP4 or MP3. Max 100mb.
+                  </p>
+                  <input
+                    id="file-upload"
+                    class="file-upload-input"
+                    data-target="file-name"
+                    type="file"
+                    enctype="multipart/form-data"
+                    @change="selectFile"
+                    hidden
+                  />
+                  <label for="file-upload" class="input-label btn btn-dark"
+                    >Choose File</label
+                  >
                 </div>
               </div>
               <!-- end form-item -->
@@ -82,19 +97,35 @@
               <!-- end form-item -->
               <div class="form-item mb-3">
                 <div class="switch-wrap">
-                  <div class="d-flex align-items-center justify-content-between">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
                     <div class="me-2">
                       <h5 class="mb-1">Unlock once purchased</h5>
-                      <p class="form-text">Content will be unlocked after successful transaction</p>
+                      <p class="form-text">
+                        Content will be unlocked after successful transaction
+                      </p>
                     </div>
                     <div class="form-check form-switch form-switch-s1">
-                      <input class="form-check-input checkbox-switcher" data-target="switch-content-unlock" type="checkbox" />
+                      <input
+                        class="form-check-input checkbox-switcher"
+                        data-target="switch-content-unlock"
+                        type="checkbox"
+                      />
                     </div>
                     <!-- end form-check -->
                   </div>
                   <!-- end d-flex -->
-                  <div class="switch-content-unlock mt-4" id="switch-content-unlock">
-                    <input type="text" name="text" class="form-control form-control-s1" placeholder="Access key, code to redeem or link to a file..." />
+                  <div
+                    class="switch-content-unlock mt-4"
+                    id="switch-content-unlock"
+                  >
+                    <input
+                      type="text"
+                      name="text"
+                      class="form-control form-control-s1"
+                      placeholder="Access key, code to redeem or link to a file..."
+                    />
                   </div>
                 </div>
                 <!-- end switch-wrap -->
@@ -102,28 +133,53 @@
               <!-- end form-item -->
               <div class="form-item mb-4">
                 <h5 class="mb-1">Choose collection</h5>
-                <p class="form-text mb-3">This is the collection where your item will appear.</p>
+                <p class="form-text mb-3">
+                  This is the collection where your item will appear.
+                </p>
                 <!-- <v-select class="generic-select" v-model="selected" :options="options"></v-select> -->
               </div>
               <!-- end form-item -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
-                  <input type="text" class="form-control form-control-s1" v-model="form.nftName" placeholder="e. g. Redeemable T-Shirt with logo" />
+                  <input
+                    type="text"
+                    class="form-control form-control-s1"
+                    v-model="form.nftName"
+                    placeholder="e. g. Redeemable T-Shirt with logo"
+                  />
                 </div>
                 <div class="mb-4">
                   <label class="mb-2 form-label">Description</label>
-                  <textarea name="message" class="form-control form-control-s1" v-model="form.nftDescription" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
+                  <textarea
+                    name="message"
+                    class="form-control form-control-s1"
+                    v-model="form.nftDescription"
+                    placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"
+                  ></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="mb-2 form-label">Royalties</label>
-                  <input type="text" class="form-control form-control-s1" placeholder="e.g 10%" />
-                  <p class="form-text mt-1">Suggested: 0, 10%, 20%, 30%. Maximum is 70%</p>
+                  <input
+                    type="text"
+                    class="form-control form-control-s1"
+                    placeholder="e.g 10%"
+                  />
+                  <p class="form-text mt-1">
+                    Suggested: 0, 10%, 20%, 30%. Maximum is 70%
+                  </p>
                 </div>
               </div>
               <!-- end form-item -->
 
-              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
+              <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#createNftModal"
+                class="btn btn-dark d-block"
+              >
+                Create Item
+              </button>
 
               <!-- 
               <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
@@ -139,12 +195,22 @@
     <!-- Footer  -->
     <Footer classname="bg-dark on-dark"></Footer>
     <!-- first Modal -->
-    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="createNftModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">{{ SectionData.createNftModal.title }}</h4>
-            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="btn-close icon-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
               <em class="ni ni-cross"></em>
             </button>
           </div>
@@ -152,10 +218,24 @@
           <div class="modal-body">
             <p class="mb-3" v-html="SectionData.createNftModal.content"></p>
             <div class="mb-3">
-              <label class="form-label">{{ SectionData.createNftModal.labelText }}</label>
-              <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
+              <label class="form-label">{{
+                SectionData.createNftModal.labelText
+              }}</label>
+              <input
+                type="text"
+                class="form-control form-control-s1"
+                v-model="authorPrivateKey"
+                placeholder="please typing your Private Key"
+              />
             </div>
-            <button class="btn btn-dark d-block" @click="submitCreateNFT" data-bs-target="#createNftModal2" data-bs-toggle="modal">Confirm</button>
+            <button
+              class="btn btn-dark d-block"
+              @click="submitCreateNFT"
+              data-bs-target="#createNftModal2"
+              data-bs-toggle="modal"
+            >
+              Confirm
+            </button>
             <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="submitCreateNFT"></a> -->
           </div>
           <!-- end modal-body -->
@@ -166,21 +246,40 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div
+      class="modal fade"
+      id="createNftModal2"
+      tabindex="-1"
+      aria-hidden="true"
+      v-if="authorPrivateKey"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
+            <h4 class="modal-title d-flex justify-content-center">
+              You created {{}}
+            </h4>
 
-            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="btn-close icon-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
               <em class="ni ni-cross"></em>
             </button>
-            <p class="d-flex justify-content-center">Wow! You just create your NFT</p>
+            <p class="d-flex justify-content-center">
+              Wow! You just create your NFT
+            </p>
           </div>
           <!-- end second modal-header -->
           <div class="modal-body d-flex flex-column">
             <div class="mb-3 d-flex justify-content-center">
-              <img src="../images/thumb/nft-full.jpg" class="justify-content-center" alt="" />
+              <img
+                src="../images/thumb/nft-full.jpg"
+                class="justify-content-center"
+                alt=""
+              />
               <!-- <img src=`${}` alt="" /> -->
             </div>
             <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="submitCreateNFT"></a> -->
@@ -203,8 +302,8 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
@@ -224,7 +323,15 @@ export default {
       // myAccount: null,
       SectionData,
       selected: "Select Collection",
-      options: ["Select Collection", "Abstraction", "Patternlicious", "Skecthify", "Cartoonism", "Virtuland", "Papercut"],
+      options: [
+        "Select Collection",
+        "Abstraction",
+        "Patternlicious",
+        "Skecthify",
+        "Cartoonism",
+        "Virtuland",
+        "Papercut",
+      ],
       // d
       form: {
         nftWorkUri: null,
@@ -289,7 +396,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
             "Content-Type": "multipart/form-data",
           },
         });
@@ -297,18 +404,28 @@ export default {
         console.log(IPFSresult, "ipfs결과");
         const ssafyToken1 = await new web3.eth.Contract(abi, CA);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: myAccount });
+        const results = await ssafyToken1.methods
+          .current()
+          .call({ from: myAccount });
         // console.log(results);
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+        const response = await ssafyToken1.methods
+          .create(myAccount, IPFSresult)
+          .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
         // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
         const newtokenId = response.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
         console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
-        const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
+        const ownerof = await ssafyToken1.methods
+          .ownerOf(newtokenId)
+          .call()
+          .then(console.log);
         // 해당 토큰의 uri 주소
-        const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
+        const tokenurls = await ssafyToken1.methods
+          .tokenURI(newtokenId)
+          .call()
+          .then(console.log);
         // 아래 세가지
         const createNFTtoBack = await axios({
           method: "PUT",
@@ -317,7 +434,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0ODc4MDgzMX0.CEFASNbzeHivF75lnL7B_1Nv3OivjJGhrkTRNAGJGEqbV7xv5XVMQFdWxvw4WPjLwRHZXWwIucBV69Um-f8_dw",
+              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
           },
         });
         console.log(createNFTtoBack);
@@ -414,8 +531,12 @@ export default {
             var extTxt = (target.value = ext);
 
             if (!allowedExtensions.includes(fileExtension)) {
-              alert(extTxt + " file type not allowed, Please upload jpg, png, gif, webp, mp4 or mp3 file");
-              target.innerHTML = "Please upload jpg, png, gif, webp, mp4 or mp3 file";
+              alert(
+                extTxt +
+                  " file type not allowed, Please upload jpg, png, gif, webp, mp4 or mp3 file"
+              );
+              target.innerHTML =
+                "Please upload jpg, png, gif, webp, mp4 or mp3 file";
             } else {
               target.innerHTML = item.files[0].name;
             }

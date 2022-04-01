@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.LoginReq;
+import com.ssafy.unique.api.request.MemberBioReq;
 import com.ssafy.unique.api.request.MemberReq;
 import com.ssafy.unique.api.request.WalletRegisterReq;
 import com.ssafy.unique.api.response.MemberRes;
 import com.ssafy.unique.api.response.MemberResultRes;
+import com.ssafy.unique.api.response.PopularRes;
 import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.api.service.CustomUserDetailsService;
 import com.ssafy.unique.api.service.MemberService;
@@ -109,6 +112,7 @@ public class MemberController {
 	public ResponseEntity<MemberResultRes> memberRegister(@ModelAttribute MemberReq memberReq, MultipartHttpServletRequest request) {
 		
 		MemberResultRes memberResultRes = memberService.memberRegister(memberReq, request);
+
 		
 		if (memberResultRes.getResult() == SUCCESS) {
 			return new ResponseEntity<MemberResultRes>(memberResultRes, HttpStatus.OK);
@@ -135,6 +139,61 @@ public class MemberController {
 		}
 		
 	}
+	
+	@Operation(description = "프로필 이미지 업데이트")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@PostMapping("/profileImage")
+	public ResponseEntity<ResultRes> profileImageUpdate(MultipartHttpServletRequest request) {
+		ResultRes res = memberService.profileImageUpdate(request);
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	@Operation(description = "가장 작품 숫자가 많은 작가 4명을 반환. 각 작가의 최신 NFT 정보 반환")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@GetMapping("/popular")
+	public ResponseEntity<PopularRes> popularAuthorSearch() {
+		
+		PopularRes res = memberService.popularAuthorSearch();
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<PopularRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<PopularRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@Operation(description = "회원의 자기소개 수정")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@PutMapping("/bio")
+	public ResponseEntity<ResultRes> updateMemberBio(@RequestBody MemberBioReq memberBioReq) {
+		
+		ResultRes res = memberService.updateMemberBio(memberBioReq) ;
+		
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResultRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	
 }
 
