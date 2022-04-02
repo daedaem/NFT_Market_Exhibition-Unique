@@ -5,8 +5,8 @@ import "./access/Ownable.sol";
 import "./token/ERC20/ERC20.sol";
 import "./token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-// import "./utils/Counters.sol";
 
+// import "./utils/Counters.sol";
 
 /**
  * PJT Ⅲ - Req.1-SC1 SaleFactory 구현
@@ -27,11 +27,13 @@ contract SaleFactory is Ownable {
         address indexed _owner,
         uint256 _workId
     );
+
     constructor() {
         admin = msg.sender;
     }
+
     /**
-     * @dev 반드시 구현해야하는 함수입니다. 
+     * @dev 반드시 구현해야하는 함수입니다.
      */
     function createSale(
         uint256 itemId,
@@ -45,19 +47,19 @@ contract SaleFactory is Ownable {
         // TODO
         // 계약 내에서 다른 새로운 계약 생성을 위해서
         // 4-1).
-        Sale sale = new Sale (
+        Sale sale = new Sale(
             // 매개변수로는 밑에 Sale 컨트랙트의 constructor 생성자 매개변수 입력
             // 위에서 입력한 값 그대로
             admin,
             msg.sender,
             itemId,
             // minPrice,
-            // 
+            //
             currencyAddress,
             purchasePrice,
             startTime,
-            endTime,  
-            // 
+            endTime,
+            //
             nftAddress
             // _workId.current(),
             // address(this)
@@ -65,7 +67,7 @@ contract SaleFactory is Ownable {
         // setApprovalForAll(address(this), true);
         // ERC721.setApprovalForAll(address(sale), true);
         // erc721Constract.setApprovalForAll(msg.sender, address(sale), true);
-        
+
         // 4-2). 등록된 세일들에 대한 내용들을 sales리스트에 추가한다.
         // sales[_workId.current()] = address(this);
         sales.push(address(sale));
@@ -75,7 +77,6 @@ contract SaleFactory is Ownable {
         _workId.increment();
 
         return address(sale);
-
     }
 
     function allSales() public view returns (address[] memory) {
@@ -108,8 +109,7 @@ contract Sale {
     address public nftAddress;
     bool public ended;
     uint256 public workId;
-    address public saleFactoryAddress;
-    
+
     // 현재 최고 입찰 상태
     // address public highestBidder;
     // uint256 public highestBid;
@@ -129,9 +129,7 @@ contract Sale {
         uint256 _purchasePrice,
         uint256 startTime,
         uint256 endTime,
-        address _nftAddress
-        // uint256 _workId,
-        // address _saleFactoryAddress
+        address _nftAddress // uint256 _workId, // address _saleFactoryAddress
     ) {
         // require(_minPrice > 0);
         admin = _admin;
@@ -149,13 +147,12 @@ contract Sale {
         // workId = _workId;
         // saleFactoryAddress = _saleFactoryAddress;
         // salefactory = SaleFactory(_saleFactoryAddress);
-        
+
         //스마트컨트랙트에게 NFT토큰 전송권한 부여
         // erc721Constract.approve(address(this), tokenId);
         // 소유권을 스마트컨트랙트에게 줘버리자.
         // erc721Constract.transferFrom(seller, address(this), tokenId);
     }
-
 
     // function bid(uint256 bid_amount) public onlyAfterStart onlyUserPermissioned {
     //     // TODO
@@ -176,12 +173,15 @@ contract Sale {
     // }
 
     // modifier onlyAfterStart 사용
-    function purchase() public onlyAfterStart  {
-    // function purchase() public onlyAfterStart onlyUserPermissioned payable {
-        // TODO 
+    function purchase() public onlyAfterStart {
+        // function purchase() public onlyAfterStart onlyUserPermissioned payable {
+        // TODO
         // 5- 제약사항들
         // 판매자가 아닌 경우 호출가능
-        require(msg.sender != seller, "Sale: You couldn't purchase this item because you are a seller.");
+        require(
+            msg.sender != seller,
+            "Sale: You couldn't purchase this item because you are a seller."
+        );
         // 해당 Sale의 판매 시점이 유효한 경우
         // 끝난시간보다 현재시각이 아직 남았어야하고
         // 현재시간보다 판매시점이 전이어야함
@@ -192,28 +192,30 @@ contract Sale {
         // 5-2) 구매자의 ERC-20 토큰을 즉시 구매가만큼 판매자에게 송금한다.
         // 얼마 보낼 수 있는지 체킹해야하는거 아닌가
         uint256 nowpayable = _getCurrencyAmount();
-        require(purchasePrice > nowpayable);
+        require(purchasePrice <= nowpayable);
 
         // 함수 호출자의 계좌로 부터 seller가 bid_amount만큼 인출 허용하도록
         // erc20Contract.approve(address(this), purchasePrice);
-        erc20Contract.transfer(seller, purchasePrice);
+        // 구매자 호출
+
+        erc20Contract.transferFrom(msg.sender, seller, purchasePrice);
+
         // 5-3) NFT 소유권을 구매자에게 이전
         // NFT 소유권 승인 APPROVE
-        // 
+        //
         // erc721Constract.approve(msg.sender, tokenId);
-        erc721Constract.safeTransferFrom(address(this), msg.sender, tokenId);
-        
+        erc721Constract.safeTransferFrom(seller, msg.sender, tokenId);
+
         // 5-4) 컨트랙트의 거래 상태와 구매자 정보를 업데이트 한다.
         // 거래상태 끝남
         _end();
         // 구매자 정보
         // buyer = msg.sender;
         emit SaleEnded(msg.sender, purchasePrice);
-
     }
 
     // function confirmItem() public {
-    // //     // TODO 
+    // //     // TODO
     //     require(saleEndTime <= block.timestamp, "Sale: The auction is not ended yet.");
     //     require(msg.sender == highestBidder, "Sale: You're are not a highest bidder.");
 
@@ -225,16 +227,22 @@ contract Sale {
     //     _end();
     //     buyer = msg.sender;
     // }
-    
+
     // // 아마도 환불은 없을듯 입찰이 없어서
     // modifier onlyseller 사용
     function cancelSales() public onlySeller {
-    //     // TODO
+        //     // TODO
         // 7 제약사항
         // 철회시점이 유효한 경우
-        require(saleEndTime - block.timestamp > 0, "Sale: Sale is already ended.");
+        require(
+            saleEndTime - block.timestamp > 0,
+            "Sale: Sale is already ended."
+        );
         // 호출자가  판매자 혹은 관리자인 경우
-        require(msg.sender == seller || msg.sender == admin, "Sale: You are not seller or administrator.");
+        require(
+            msg.sender == seller || msg.sender == admin,
+            "Sale: You are not seller or administrator."
+        );
         // 7-1) 환불을 진행한다.
         // erc20Contract.transferFrom(seller, highestBidder, highestBid);
         //  7-2) 소유권을 판매자에게 되돌려 준다.
@@ -251,7 +259,7 @@ contract Sale {
     }
 
     // function delete() public {
-        // require(msg.sender == owner, "")
+    // require(msg.sender == owner, "")
     // }
 
     function getTimeLeft() public view returns (int256) {
@@ -299,7 +307,7 @@ contract Sale {
         return erc20Contract.balanceOf(msg.sender);
     }
 
-    // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다. 
+    // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다.
     modifier onlySeller() {
         require(msg.sender == seller, "Sale: You are not seller.");
         // 함수가 실행되는 곳 _;
@@ -313,7 +321,7 @@ contract Sale {
         );
         _;
     }
-    
+
     // modifier onlyUserPermissioned() {
     //     require(buyer !=address(0), "Sale: This Buyer is not found.");
     //     // require(erc20Contract.approve(seller, purchasePrice), "Sale:This Contract is not allowed");

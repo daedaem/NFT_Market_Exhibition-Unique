@@ -20,9 +20,22 @@
 </template>
 
 <script>
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 // Import component data. You can change the data in the store to reflect in all component
+// import axios from "axios";
+import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
+import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+
+const abi = ABIS.abi;
+// console.log(abi);
+const CA = SsafyNFT.networks["5777"].address;
+// console.log(CA);
+
+// 네트워크 연결
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
 export default {
   name: "Explore",

@@ -5,6 +5,7 @@ pragma solidity ^0.8.4;
 
 import "./token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+
 // import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 
 /**
@@ -56,29 +57,38 @@ contract SsafyNFT is ERC721 {
         // TODO
     }
 
-//  참고 https://blog.logrocket.com/create-nft-minter-moralis-solidity-next-js/
+    //  참고 https://blog.logrocket.com/create-nft-minter-moralis-solidity-next-js/
 
-// https://www.youtube.com/watch?v=TYezN5r228U
+    // https://www.youtube.com/watch?v=TYezN5r228U
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
         // TODO
         return tokenURIs[tokenId];
     }
+
     function current() public view returns (uint256) {
         // return _tokenIds;
         // _tokenIds = Counters._value;
         uint256 tokenid = _tokenIds.current();
         return tokenid;
     }
-    
-    function create(address to, string memory _tokenURI) public returns (uint256) {
+
+    function create(address to, string memory _tokenURI)
+        public
+        returns (uint256)
+    {
         // TODO
         // 현재까지 생성된 NFT 토큰 ID에서 하나 올린다.
-        _tokenIds.increment(); 
+        _tokenIds.increment();
 
         // 현재 만들고 있는 NFT로 새 ID할당
         uint256 newItemid = _tokenIds.current();
-        
+
         // 받을 사람 주소와 새 NFT의 ID값으로 생성
         _mint(to, newItemid);
 
@@ -91,7 +101,7 @@ contract SsafyNFT is ERC721 {
         return newItemid;
     }
 
-    function getContractAddress(uint256 _newItemid) public view returns(address){
-        return contractAddress[_newItemid];
-    }
+    // function getContractAddress(uint256 _newItemid) public view returns(address){
+    //     return contractAddress[_newItemid];
+    // }
 }
