@@ -51,7 +51,7 @@
     </section>
     <!-- create-section -->
     <!-- Footer  -->
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
     <!-- first Modal -->
     <!-- 등록하려는 아이템의 제목, 설명, 파일이 모두 있을 때 다음 모달로 -->
     <div v-if="this.form.nftDescription && this.form.nftName && this.form.file" class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">

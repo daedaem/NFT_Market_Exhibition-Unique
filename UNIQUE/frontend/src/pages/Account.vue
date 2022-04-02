@@ -1,36 +1,48 @@
 <template>
   <div class="page-wrap">
-        <!-- header  -->
-        <header class="header-section has-header-main bg-pattern-3">
-          <!-- Header main -->
-          <HeaderDashboard></HeaderDashboard>
-          <!-- hero -->
-          <AuthorHero avatarSize="avatar-3" :coverimg="SectionData.authorPersonalData.coverImg" :img="SectionData.authorPersonalData.img" :title="SectionData.authorPersonalData.title" :username="SectionData.authorPersonalData.userName" :btntext="SectionData.authorPersonalData.btnTextTwo" :btnlink="SectionData.authorPersonalData.btnLinkTwo"></AuthorHero>
-        </header>
-        <!-- account section -->
-        <section class="user-panel-section section-space">
-            <div class="container">
-                <div class="row">
-                    <!-- user sidebar -->
-                    <UserSidebar :title="SectionData.accountSidebarData.title" :lists="SectionData.accountSidebarData.navList" :navs="SectionData.editProfileData.editProfileTabNavMobile"></UserSidebar>
-                    <AccountSection></AccountSection>
-                </div><!-- end row -->
-            </div><!-- end container -->
-        </section><!-- end user-panel-section -->
-        <!-- Footer  -->
-        <Footer classname="bg-dark on-dark"></Footer>
-  </div><!-- end page-wrap -->
+    <!-- header  -->
+    <header class="header-section has-header-main bg-pattern-3">
+      <!-- Header main -->
+      <HeaderDashboard></HeaderDashboard>
+      <!-- hero -->
+      <AuthorHero
+        avatarSize="avatar-3"
+        :coverimg="SectionData.authorPersonalData.coverImg"
+        :img="SectionData.authorPersonalData.img"
+        :title="SectionData.authorPersonalData.title"
+        :username="SectionData.authorPersonalData.userName"
+        :btntext="SectionData.authorPersonalData.btnTextTwo"
+        :btnlink="SectionData.authorPersonalData.btnLinkTwo"
+      ></AuthorHero>
+    </header>
+    <!-- account section -->
+    <section class="user-panel-section section-space">
+      <div class="container">
+        <div class="row">
+          <!-- user sidebar -->
+          <UserSidebar :title="SectionData.accountSidebarData.title" :lists="SectionData.accountSidebarData.navList" :navs="SectionData.editProfileData.editProfileTabNavMobile"></UserSidebar>
+          <AccountSection></AccountSection>
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- end user-panel-section -->
+    <!-- Footer  -->
+    <footer classname="bg-black on-dark"></footer>
+  </div>
+  <!-- end page-wrap -->
 </template>
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
-import SectionData from '@/store/store.js'
+import SectionData from "@/store/store.js";
 export default {
-  name: 'Account',
-  data () {
+  name: "Account",
+  data() {
     return {
-      SectionData
-    }
-  }
-}
+      SectionData,
+    };
+  },
+};
 </script>

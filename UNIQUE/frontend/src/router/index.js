@@ -49,6 +49,11 @@ const routes = [
     component: () => import("../pages/Exhibition.vue"),
   },
   {
+    path: "/exhibition/:id",
+    name: "ExhibitionDetail",
+    component: () => import("../pages/ExhibitionDetail.vue"),
+  },
+  {
     path: "/blog-detail-:id",
     name: "PrivateGalleryDetail",
     component: () => import("../pages/PrivateGalleryDetail.vue"),

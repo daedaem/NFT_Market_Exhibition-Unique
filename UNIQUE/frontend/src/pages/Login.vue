@@ -9,7 +9,7 @@
     <loginSection></loginSection>
     <!-- Blog  -->
     <vue-metamask userMessage="msg" @onComplete="onComplete"></vue-metamask>
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
   </div>
   <!-- end page-wrap -->
 </template>
@@ -29,10 +29,10 @@ export default {
       msg: "This is demo net work",
     };
   },
-  methods:{
-    onComplete(data){
-        console.log('data:', data);
-    }
+  methods: {
+    onComplete(data) {
+      console.log("data:", data);
+    },
   },
 };
 </script>

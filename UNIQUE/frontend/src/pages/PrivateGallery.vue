@@ -71,7 +71,7 @@
       <!-- .container -->
     </section>
     <!-- end blog-section -->
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
   </div>
   <!-- end page-wrap -->
 </template>

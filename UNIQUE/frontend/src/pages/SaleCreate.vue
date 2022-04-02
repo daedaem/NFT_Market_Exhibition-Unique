@@ -84,7 +84,7 @@
     </section>
     <!-- create-section -->
     <!-- Footer  -->
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
     <!-- first Modal -->
     <!-- 가격과 duraition을 지정해야만 프라이빗키를 입력하는 모달이 뜸 -->
 

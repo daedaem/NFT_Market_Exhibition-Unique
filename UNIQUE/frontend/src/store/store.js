@@ -12,6 +12,7 @@ let SectionData = {
       path: "/home",
     },
   ],
+  ExhibitionsCards: {},
   // Hero data
   heroData: {
     time: "2022-5-30 23:30:00",
@@ -219,7 +220,6 @@ let SectionData = {
           id: 2,
           title: "Private Gallery",
           path: "/privateGallery",
-          badge: "New", // ??
           badgeClass: "badge text-primary bg-primary-50",
         },
       ],

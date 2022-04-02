@@ -50,7 +50,8 @@
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span class="btn btn-sm btn-dark">Purchase</span>
+      <!-- <span class="btn btn-sm btn-dark">Purchase</span> -->
+      <Purchase :product="product"></Purchase>
     </div>
     <!-- end card-body -->
     <!-- <router-link
@@ -77,12 +78,16 @@
 </template>
 <script>
 import { createPopper } from "@popperjs/core";
+import Purchase from "@/components/common/Purchase";
 export default {
   name: "Products",
+  components: {
+    Purchase,
+  },
   props: ["product"],
   methods: {
     moveToDetail(productId) {
-      // console.log(productId);
+      console.log(productId);
       this.$router.push({
         name: "ProductDetail",
         params: {
