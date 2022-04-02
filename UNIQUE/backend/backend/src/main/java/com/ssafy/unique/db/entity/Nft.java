@@ -76,5 +76,7 @@ public class Nft {
 	
 	@Column(name = "FILE_URL")
 	private String fileUrl;
-	
+
+	@Column(name = "NFT_ONSALE")
+	private Boolean onsale;
 }
