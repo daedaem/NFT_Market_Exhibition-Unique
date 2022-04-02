@@ -2,7 +2,8 @@
   <div class="card card-full">
     <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
       <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
-      {{ product.nft.nftWorkUri }}
+      <!-- {{ product.nft.nftWorkUri }} -->
+      {{ product.nft.fileUrl }}
     </div>
     <div class="card-body p-4">
       <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
@@ -81,7 +82,7 @@ export default {
   props: ["product"],
   methods: {
     moveToDetail(productId) {
-      console.log(productId);
+      // console.log(productId);
       this.$router.push({
         name: "ProductDetail",
         params: {

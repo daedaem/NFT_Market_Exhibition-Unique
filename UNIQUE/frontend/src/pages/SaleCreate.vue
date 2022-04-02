@@ -87,6 +87,7 @@
     <Footer classname="bg-dark on-dark"></Footer>
     <!-- first Modal -->
     <!-- 가격과 duraition을 지정해야만 프라이빗키를 입력하는 모달이 뜸 -->
+
     <div v-if="this.date && this.form.price" class="modal fade" id="saleCreateNftModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -127,11 +128,19 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SsafyToken from "../../smart-contracts/build/contracts/SsafyToken.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import SaleFactory from "../../smart-contracts/build/contracts/SaleFactory.json";
+import Sale from "../../smart-contracts/build/contracts/Sale.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-const abi = ABIS.abi;
-const CA = SsafyNFT.networks["1337"].address;
+let TOKEN_ABI = SsafyToken.abi;
+let TOKEN_CA = SsafyToken.networks["1337"].address;
+let NFT_ABI = SsafyNFT.abi;
+let NFT_CA = SsafyNFT.networks["1337"].address;
+let SALE_FACTORY_ABI = SaleFactory.abi;
+let SALE_FACTORY_CA = SaleFactory.networks["1337"].address;
+let SALE_ABI = Sale.abi;
+// let SALE_CA = Sale.networks["1337"].address;
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
@@ -147,7 +156,9 @@ export default {
       const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
       date.value = [startDate, endDate];
     });
-
+    // const getItemDetail= () => {
+    //   axios.get
+    // }
     // date값이 변할 때마다 실행되는 함수
     watch(date, () => {
       if (date.value) {
@@ -176,9 +187,11 @@ export default {
   },
   methods: {
     checkInputData() {
-      console.log(this.date[0], this.date[1], this.form.price);
-      if (!this.date || !this.form.price) {
+      console.log(this.date, this.form.price);
+      if (this.date.length < 2 || !this.form.price) {
         alert("Please Input information for sales registration");
+        this.date = ref();
+        this.form.price = null;
       } else {
         console.log("통과");
       }
@@ -195,7 +208,29 @@ export default {
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
         // 싸피토큰 확인
-        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+        // const tokenContract = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+        // 컨트랙트한테 권한 부여
+        // 구매입장
+        // tokenContract.methods.approve("createsaleCA에", "가격, {from: 구매자}");
+
+        // salefactory 계약 인스턴스 호출
+        const saleFactoryContract = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
+        // createsale 메소드 호출
+        const saleContractInstance = await saleFactoryContract.methods.createSale(this.$route.params.id, this.form.price, startTime, endTime, TOKEN_CA, "현재 NFTADDRESS");
+        // 호출 후 CA 저장 후 백엔드에 보내기
+        const saleCA = saleContractInstance.logs[0].args._saleContract;
+        // 백엔드에 해당 sale contract adress 저장해야함
+
+        // 해당 ssafy 토큰 컨트랙트의 권한 승인 부여
+        // 1. 해당 nft contract adress백엔드에서 호출해오기
+        // 2.권한 부여
+        const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        const resultOfRegisterApprove = await NFTContractInstance.methods.approve(saleCA, 토큰아이디);
+        console.log(resultOfRegisterApprove);
+      }
+      // 프라이빗 키와 다르다면
+      else {
+        alert("Please check your private key");
       }
     },
   },
@@ -257,8 +292,8 @@ export default {
 .container > container-imagebox {
   max-width: 400px;
 }
-.card-img-top {
-}
+/* .card-img-top {
+} */
 .card-image {
   border-bottom: 2px solid #ddd;
 }

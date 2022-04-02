@@ -94,7 +94,7 @@
               </div>
               <!-- end form-item -->
 
-              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block" @click="checkInputData">Create Item</button>
 
               <!-- 
               <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
@@ -110,7 +110,8 @@
     <!-- Footer  -->
     <Footer classname="bg-dark on-dark"></Footer>
     <!-- first Modal -->
-    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+    <!-- 등록하려는 아이템의 제목, 설명, 파일이 모두 있을 때 다음 모달로 -->
+    <div v-if="this.form.nftDescription && this.form.nftName && this.form.file" class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -213,8 +214,15 @@ export default {
   },
   methods: {
     selectFile(data) {
-      this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
+    },
+    checkInputData() {
+      // console.log(this.date[0], this.date[1], this.form.price);
+      if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
+        alert("Please Input information for Create your item");
+      } else {
+        console.log("통과");
+      }
     },
     async submitCreateNFT() {
       /**

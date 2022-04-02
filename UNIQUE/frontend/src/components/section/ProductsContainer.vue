@@ -36,7 +36,7 @@ export default {
         params: { limit: 8, offset: 0, type: "all", searchWord: "" },
       });
       this.nftMarketItems = newnftMarketItems.data.marketList;
-      console.log(this.nftmarketItems);
+      // console.log(this.nftmarketItems);
     },
   },
   created: function () {
