@@ -9,12 +9,7 @@
     </header>
     <section>
       <MainCarousel></MainCarousel>
-      <!-- <Exhibition-cards v-for="(card, index) in Cards" :key="index" class="mb-5"></Exhibition-cards> -->
-      <Exhibition-cards></Exhibition-cards>
-
-      <Exhibition-cards></Exhibition-cards>
-      <Exhibition-cards></Exhibition-cards>
-      <Exhibition-cards></Exhibition-cards>
+      <Exhibition-cards v-for="(card, index) in EXHIBITION_CARDS" :EXHIBITION_CARDS="card" @click="moveToDetail(card)" :key="index" class="mb-5"></Exhibition-cards>
     </section>
     <!-- Blog  -->
     <!-- 전시회 카드들 start -->
@@ -33,6 +28,7 @@ import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
 import MainCarousel from "@/components/section/MainCarousel.vue";
 import ExhibitionCards from "@/components/section/ExhibitionCards.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Exhibition",
@@ -44,7 +40,23 @@ export default {
   data() {
     return {
       SectionData,
+      EXHIBITION_CARDS: this.$store.state.ExhibitionsCards,
     };
+  },
+  methods: {
+    moveToDetail(card) {
+      this.$router.push({
+        name: "ExhibitionDetail",
+        params: {
+          // id:1
+          id: card.id,
+          //
+        },
+      });
+    },
+  },
+  computed: {
+    ...mapState(["ExhibitionsCards"]),
   },
 };
 </script>

@@ -12,7 +12,6 @@ let SectionData = {
       path: "/home",
     },
   ],
-  ExhibitionsCards: {},
   // Hero data
   heroData: {
     time: "2022-5-30 23:30:00",

@@ -317,7 +317,7 @@ hr {
 
 .bg-gradient-2 {
   background: #fcf5ff !important;
-  background: linear-gradient(to bottom, #fcf5ff 0%, #ffffff 100%) !important;
+  background: linear-gradient(to bottom, #ffffff 100%) !important;
 }
 
 .bg-gray {

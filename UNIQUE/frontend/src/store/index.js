@@ -13,6 +13,37 @@ export default createStore({
     authToken: localStorage.getItem("jwt"),
     username: null,
     myAddress: null,
+    ExhibitionsCards: [
+      {
+        id: 1,
+        dateDay: 2,
+        dateMonth: "April",
+        cardImage: "https://cdn.pixabay.com/photo/2020/06/18/09/10/city-5312660__340.jpg",
+        title: "Let's Go To Mars!",
+        content:
+          "Curabitur aliquet quam id dui posuere blandit. Pellentesque in ipsum id orci porta dapibus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus suscipit tortor eget felis porttitor volutpat.<br/>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.<br/>Proin eget tortor risus. Donec rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.",
+        creators: "Curabitur aliquet quam id dui posuere blandit. Donec rutrum congue leo eget malesuada.",
+        curators: "sapien massa, ziskp ejsep",
+      },
+      {
+        id: 2,
+        dateDay: 5,
+        dateMonth: "February",
+        cardImage: "https://cdn.pixabay.com/photo/2022/03/01/02/51/galaxy-7040416__480.png",
+        title: "For Ukraine Artist Support the Cause",
+        creators: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. ",
+        curators: "Curabitur aliquet, quam id dui, posuere blandit.",
+      },
+      {
+        id: 3,
+        dateDay: 31,
+        dateMonth: "January",
+        cardImage: "https://cdn.pixabay.com/photo/2020/03/08/15/25/cover-painting-4912734__340.jpg",
+        title: "This Week's Unique Steals:",
+        creators: "Praesent sapien massa, convallis a pellentesque nec.",
+        curators: "Sed porttitor lectus nibh.",
+      },
+    ],
   },
   mutations: {
     SET_TOKEN: function (state, token) {
@@ -32,6 +63,9 @@ export default createStore({
       console.log(state.myAddress.address, typeof state.myAddress.address);
       return newAddress.address;
     },
+    EXHIBITION_CARDS: function (state, cards) {
+      state.ExhibitionsCards = cards;
+    },
   },
   actions: {
     // async registerWeb3({ commit }) {
@@ -44,6 +78,10 @@ export default createStore({
     //     console.log("error in action registerWeb3", err);
     //   }
     // },
+    EXHIBITION_CARDS: function ({ commit }) {
+      commit("EXHIBITION_CARDS");
+      // router.push({ name: "Login" });
+    },
     login: function ({ commit }, credentials) {
       axios({
         method: "post",
