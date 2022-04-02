@@ -33,5 +33,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	@Query(value= " update member set member_bio = ? where member_seq = ? " , nativeQuery = true)
 	Integer updateMemberBioById(String memberBio, Long memberSeq);
+
+
+	//MemberSeq로 member 정보를 가져옴
+	Member findByMemberSeq(Long memberSeq);
 	
 }

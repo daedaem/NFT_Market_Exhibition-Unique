@@ -131,7 +131,7 @@ import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
-const CA = SsafyNFT.networks["1337"].address;
+const CA = SsafyNFT.networks["5777"].address;
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
