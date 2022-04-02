@@ -231,6 +231,7 @@ export default {
       // 프라이빗 키와 다르다면
       else {
         alert("Please check your private key");
+        this.authorPrivateKey = null;
       }
     },
   },

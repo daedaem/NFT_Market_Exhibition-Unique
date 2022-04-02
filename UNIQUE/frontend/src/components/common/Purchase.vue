@@ -1,0 +1,130 @@
+<template>
+  <div>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
+    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Complete checkout</h4>
+            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
+              <em class="ni ni-cross"></em>
+            </button>
+          </div>
+          <!-- end modal-header -->
+          <div class="modal-body">
+            <p class="mb-3"></p>
+            <div class="mb-3">
+              <!-- <label class="form-label">잔액조회</label> -->
+              <!-- <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" /> -->
+            </div>
+            <div class="mb-3">
+              <label class="form-label">아아</label>
+              <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">개인키 입력</label>
+              <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
+            </div>
+            <button class="btn btn-dark d-block" @click="purchaseNFT" data-bs-target="#createNftModal2" data-bs-toggle="modal">Confirm</button>
+            <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="purchaseNFT"></a> -->
+          </div>
+          <!-- end modal-body -->
+        </div>
+        <!-- end modal-content -->
+      </div>
+      <!-- end modal-dialog -->
+    </div>
+    <!-- end firstmodal -->
+    <!-- start second modal -->
+    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header d-flex flex-column">
+            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
+
+            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
+              <em class="ni ni-cross"></em>
+            </button>
+            <p class="d-flex justify-content-center">Wow! You just create your NFT</p>
+          </div>
+          <!-- end second modal-header -->
+          <div class="modal-body d-flex flex-column">
+            <div class="mb-3 d-flex justify-content-center">
+              <img src="" class="justify-content-center" alt="" />
+              <!-- <img src=`${}` alt="" /> -->
+            </div>
+            <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="purchaseNFT"></a> -->
+          </div>
+          <!-- end second modal-body -->
+        </div>
+        <!-- end second modal-content -->
+      </div>
+      <!-- end second modal-dialog -->
+    </div>
+  </div>
+</template>
+
+<script>
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
+import axios from "axios";
+import Web3 from "web3";
+import SectionData from "@/store/store.js";
+import getAddressFrom from "../../utils/AddressExtractor";
+// import ABI from "../../common/ABI";
+import SsafyToken from "../../../smart-contracts/build/contracts/SsafyToken.json";
+import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
+import SaleFactory from "../../../smart-contracts/build/contracts/SaleFactory.json";
+import Sale from "../../../smart-contracts/build/contracts/Sale.json";
+let TOKEN_ABI = SsafyToken.abi;
+let TOKEN_CA = SsafyToken.networks["1337"].address;
+let NFT_ABI = SsafyNFT.abi;
+let NFT_CA = SsafyNFT.networks["1337"].address;
+let SALE_FACTORY_ABI = SaleFactory.abi;
+let SALE_FACTORY_CA = SaleFactory.networks["1337"].address;
+let SALE_ABI = Sale.abi;
+// 네트워크 연결
+let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+
+export default {
+  name: "Purchase",
+  data: { authorPrivateKey: null },
+  methods: {
+    async purchaseNFT() {
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const temp = await web3.eth.getAccounts();
+      const myAccount = temp[0];
+      if (checkPubKey === myAccount) {
+        // 싸피토큰컨트랙트 인스턴스
+        const tokenContract = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+        // 내 토큰 잔액확인
+        const myTokenBalance = await tokenContract.methods.balanceOf("내계좌");
+        // 만약 계좌잔액이 현재 구매가 보다 작다면 실행 안됨
+        if (myTokenBalance > "이 아이템 가격") {
+          const resultOfTransferToken = await tokenContract.methods.approve("createsale CA에", "작품가격");
+          //
+          // 현재 이아이템 거래 컨트랙트한테 토큰 권한 부여
+          // 구매입장
+          tokenContract.methods.approve("createsale CA에", "가격, {from: 구매자}");
+          // purchase함수 호출을 위한 컨트랙트 인스턴스 생성
+          const createSaleInstance = await new web3.eth.Contract(SALE_ABI, "createsale CA");
+          const transactionResult = await createSaleInstance.methods.purchase();
+          console.log(transactionResult, "전송결과는?");
+        } else {
+          alert("please, check your account's balance");
+          // 새로고침
+          this.$router.go();
+        }
+        // 내 계좌에서 컨트랙트에다가 토큰 전송 권한 부여
+      }
+      // 프라이빗키가 일치하지 않으면
+      else {
+        alert("Please, check your private key");
+        this.authorPrivateKey = null;
+      }
+    },
+  },
+};
+</script>
+
+<style></style>

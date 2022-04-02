@@ -28,60 +28,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-              <!-- <div class="form-item mb-4"> -->
-              <!-- <h5 class="mb-3">Select Method</h5> -->
-              <!-- <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
-                  <li class="nav-item col-4 col-sm-4 col-lg-3" role="presentation" v-for="list in SectionData.selectMethodTabNav" :key="list.id">
-                    <button class="nav-link" :class="list.isActive" :id="list.slug" data-bs-toggle="tab" :data-bs-target="list.bsTarget" type="button">
-                      <em class="ni nav-link-icon" :class="list.icon"></em>
-                      <span class="nav-link-title mt-1 d-block">{{ list.title }}</span>
-                    </button>
-                  </li>
-                </ul> -->
-              <!-- <div class="tab-content mt-4" id="myTabContent">
-                  <div class="tab-pane fade show active" id="fixed-price" role="tabpanel" aria-labelledby="fixed-price-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Price</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter a price for item" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                      <div class="row mt-3">
-                        <div class="col-lg-6">
-                          <label class="mb-2 form-label">Starting date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- <div class="col-lg-6">
-                          <label class="mb-2 form-label">Expiration date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- </div> -->
-              <!-- end row -->
-              <!-- </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- </div> -->
-              <!-- end tab-content -->
-              <!-- </div> -->
-              <!-- end form-item -->
-
-              <!-- end form-item -->
+              <!-- 작품 제목 및 설명 입력  -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
@@ -93,11 +40,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-
               <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block" @click="checkInputData">Create Item</button>
-
-              <!-- 
-              <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
             </form>
           </div>
           <!-- endn col -->
@@ -175,13 +118,10 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-const abi = ABIS.abi;
-// console.log(abi);
-const CA = SsafyNFT.networks["1337"].address;
-// console.log(CA);
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+const NFT_ABI = SsafyNFT.abi;
+const NFT_CA = SsafyNFT.networks["1337"].address;
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
@@ -274,7 +214,7 @@ export default {
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
         console.log(IPFSresult, "ipfs결과");
-        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+        const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
         // 1번째 방법 state 변경 안시키는 call함수 호출
         const results = await ssafyToken1.methods.current().call({ from: myAccount });
         // console.log(results);
@@ -322,6 +262,7 @@ export default {
         //   });
         // });
       } else {
+        alert("Please, check your private key");
         this.authorPrivateKey = null;
       }
       // 위에 3번 전 과정
@@ -361,14 +302,14 @@ export default {
     // }
     // loadMyAccount();
     // async function hello() {
-    //   const result = await new Web3.eth.Contract(abi, CA);
+    //   const result = await new Web3.eth.Contract(abi, NFT_CA);
     //   console.log(result);
     //   return result;
     // }
     // hello().then((res) => console.log(res, "뒤"));
 
     // async function hello2() {
-    //   const results = await Web3.eth.Contract(ABI, CA);
+    //   const results = await Web3.eth.Contract(ABI, NFT_CA);
     //   console.log(results);
     //   return results;
     // }
