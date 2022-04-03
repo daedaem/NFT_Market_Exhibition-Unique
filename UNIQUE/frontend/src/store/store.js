@@ -219,7 +219,6 @@ let SectionData = {
           id: 2,
           title: "Private Gallery",
           path: "/privateGallery",
-          badge: "New", // ??
           badgeClass: "badge text-primary bg-primary-50",
         },
       ],

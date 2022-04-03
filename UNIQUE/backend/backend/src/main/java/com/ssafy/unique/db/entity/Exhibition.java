@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -29,14 +31,18 @@ public class Exhibition {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long exhibitionId;
 	
-	@Column(name = "MEMBER_SEQ")
-	private Long memberSeq;
+	@ManyToOne(targetEntity=Member.class)
+	@JoinColumn(name = "MEMBER_SEQ")
+	private Member member;
+	
+	@Column(name = "EXHIBITION_TITLE")
+	private String exhibitionTitle;
 	
 	@Column(name = "EXHIBITION_TYPE")
-	private char exhibitionType;
+	private String exhibitionType;
 	
-	@Column(name = "EXHIBITION_COMMENT")
-	private String exhibitionComment;
+	@Column(name = "EXHIBITION_DESCRIPTION")
+	private String exhibitionDescription;
 	
 	@CreationTimestamp
 	@Column(name = "REG_Dt")

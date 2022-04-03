@@ -46,7 +46,8 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 const abi = ABIS.abi;
 const CA = SsafyNFT.networks["1337"].address;
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
+// let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
+web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
 export default {
   name: "Test",

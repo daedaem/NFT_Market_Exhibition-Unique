@@ -28,60 +28,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-              <!-- <div class="form-item mb-4"> -->
-              <!-- <h5 class="mb-3">Select Method</h5> -->
-              <!-- <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
-                  <li class="nav-item col-4 col-sm-4 col-lg-3" role="presentation" v-for="list in SectionData.selectMethodTabNav" :key="list.id">
-                    <button class="nav-link" :class="list.isActive" :id="list.slug" data-bs-toggle="tab" :data-bs-target="list.bsTarget" type="button">
-                      <em class="ni nav-link-icon" :class="list.icon"></em>
-                      <span class="nav-link-title mt-1 d-block">{{ list.title }}</span>
-                    </button>
-                  </li>
-                </ul> -->
-              <!-- <div class="tab-content mt-4" id="myTabContent">
-                  <div class="tab-pane fade show active" id="fixed-price" role="tabpanel" aria-labelledby="fixed-price-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Price</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter a price for item" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                      <div class="row mt-3">
-                        <div class="col-lg-6">
-                          <label class="mb-2 form-label">Starting date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- <div class="col-lg-6">
-                          <label class="mb-2 form-label">Expiration date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- </div> -->
-              <!-- end row -->
-              <!-- </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- </div> -->
-              <!-- end tab-content -->
-              <!-- </div> -->
-              <!-- end form-item -->
-
-              <!-- end form-item -->
+              <!-- 작품 제목 및 설명 입력  -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
@@ -93,11 +40,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-
-              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
-
-              <!-- 
-              <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
+              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block" @click="checkInputData">Create Item</button>
             </form>
           </div>
           <!-- endn col -->
@@ -108,9 +51,10 @@
     </section>
     <!-- create-section -->
     <!-- Footer  -->
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
     <!-- first Modal -->
-    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+    <!-- 등록하려는 아이템의 제목, 설명, 파일이 모두 있을 때 다음 모달로 -->
+    <div v-if="this.form.nftDescription && this.form.nftName && this.form.file" class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -137,7 +81,7 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey && checkInputData === true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
@@ -174,16 +118,18 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-const abi = ABIS.abi;
-// console.log(abi);
-const CA = SsafyNFT.networks["1337"].address;
-// console.log(CA);
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import { mapState } from "vuex";
+
+const NFT_ABI = SsafyNFT.abi;
+const NFT_CA = SsafyNFT.networks["1337"].address;
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+// let Web3 = require("web3");
+// let web3 = new Web3();
+// web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -213,8 +159,20 @@ export default {
   },
   methods: {
     selectFile(data) {
-      this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
+    },
+    checkInputData() {
+      // console.log(authToken);
+      console.log(this.$store.state.myAddress);
+      // console.log(myAddress);
+      // console.log(this.myAddress);
+      // log(NFT_CA);myAddress
+      // console.log(this.date[0], this.date[1], this.form.price);
+      if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
+        alert("Please Input information for Create your item");
+      } else {
+        console.log("통과");
+      }
     },
     async submitCreateNFT() {
       /**
@@ -233,11 +191,16 @@ export default {
       // url:해시된, nft:이름, 작성자 일련번호
       // console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
-      // console.log(checkPubKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // 내계좌 조회 1.
-      const temp = await web3.eth.getAccounts();
-      const myAccount = temp[0];
+      // 로컬확인시
+      // const temp = await web3.eth.getAccounts();
+      // console.log(temp);
+      // const myAccount = temp[0];
+      // console.log(myAccount);
+      // 서버 배포 후
+      const myAccount = this.$store.state.myAddress;
+
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
       // web3.eth.accounts.wallet.add(sender);
@@ -247,7 +210,7 @@ export default {
 
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-        // console.log("일치합니다.");
+        console.log("일치합니다.");
         let data = new FormData();
         data.append("nftAuthorName", this.form.nftAuthorName);
         data.append("nftName", this.form.nftName);
@@ -259,40 +222,41 @@ export default {
           data: data,
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.$store.state.authToken,
             "Content-Type": "multipart/form-data",
           },
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
         console.log(IPFSresult, "ipfs결과");
-        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+        const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        // console.log(myAccount);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: myAccount });
+        const results = await ssafyToken1.methods.current().call({ from: this.$store.state.myAddress });
         // console.log(results);
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
-        // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
+        const response = await ssafyToken1.methods.create(this.$store.state.myAddress, IPFSresult).send({ from: this.$store.state.myAddress, gas: 6000000, gasPrice: "20000000000" });
+        // console.log(response, "1");
+
         const newtokenId = response.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
-        console.log(newtokenId, "이거토큰아이디임");
+        // console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
         const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
         const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
+        // nft에 대한 정보 백엔드에 업로드
+        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
-          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
+          data: { tokenId: newtokenId, ownerAddress: myAccount, metadataUri: IPFSresult, contractAddress: NFT_CA },
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.$store.state.authToken,
           },
         });
-        console.log(createNFTtoBack);
-        console.log(this.newtokenId, "나오나");
+        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
 
         // ownerof, newtokenId, IPFSresult
 
@@ -314,7 +278,9 @@ export default {
         //   });
         // });
       } else {
+        // alert("Please, check your private key");
         this.authorPrivateKey = null;
+        // this.$router.go();
       }
       // 위에 3번 전 과정
       // console.log(this.form);
@@ -339,6 +305,10 @@ export default {
     //   console.log(vote);
     // },
   },
+  computed: {
+    ...mapState(["myAddress"]),
+    ...mapState(["authToken"]),
+  },
   mounted() {
     // async function loadMyAccount() {
     //   await web3.eth.getAccounts().then((res) => (this.myAccount = res[0]));
@@ -353,14 +323,14 @@ export default {
     // }
     // loadMyAccount();
     // async function hello() {
-    //   const result = await new Web3.eth.Contract(abi, CA);
+    //   const result = await new Web3.eth.Contract(abi, NFT_CA);
     //   console.log(result);
     //   return result;
     // }
     // hello().then((res) => console.log(res, "뒤"));
 
     // async function hello2() {
-    //   const results = await Web3.eth.Contract(ABI, CA);
+    //   const results = await Web3.eth.Contract(ABI, NFT_CA);
     //   console.log(results);
     //   return results;
     // }
@@ -413,7 +383,6 @@ export default {
         });
       }
     }
-
     checkboxSwitcher(".checkbox-switcher");
   },
 };

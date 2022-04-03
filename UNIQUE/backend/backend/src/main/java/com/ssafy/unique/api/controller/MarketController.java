@@ -1,5 +1,6 @@
 package com.ssafy.unique.api.controller;
 
+import com.ssafy.unique.api.response.NftResultRes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,20 +34,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping(value = "/market")
 public class MarketController {
 
-	private final IPFSService ipfsService;
-	private final MarketService marketService;
-	
-	public MarketController(IPFSService _ipfsService, MarketService _marketService) {
-		this.ipfsService = _ipfsService;
-		this.marketService = _marketService;
-	}
+					private final IPFSService ipfsService;
+					private final MarketService marketService;
 
-	private static final int SUCCESS = 1;
-	
-	
-	
-	@Operation(description = "마켓에 있는 상품 전체조회")
-	@ApiResponses(value = {
+					public MarketController(IPFSService _ipfsService, MarketService _marketService) {
+			this.ipfsService = _ipfsService;
+			this.marketService = _marketService;
+			}
+
+			private static final int SUCCESS = 1;
+
+
+
+			@Operation(description = "마켓에 있는 상품 전체조회")
+			@ApiResponses(value = {
 			@ApiResponse(responseCode = "200",description = "성공"),
 			@ApiResponse(responseCode = "401",description = "회원 정보가 등록되어 있지 않아 사용 불가능. 로그인 후 사용"),
 			@ApiResponse(responseCode = "500",description = "실패"),
@@ -139,4 +140,21 @@ public class MarketController {
 			return new ResponseEntity<ResultRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+
+	@GetMapping(value = "/record/{nftSeq}")
+	public ResponseEntity<MarketResultRes> marketNftTradeRecord(@PathVariable Long nftSeq) {
+
+		MarketResultRes res = marketService.marketNftTradeRecord(nftSeq);
+//		MarketResultRes res_2 = marketService.marketNftCurrentTrade(nftSeq);
+
+		if(res.getResult() == SUCCESS) {
+			return new ResponseEntity<MarketResultRes>(res, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<MarketResultRes>(res, HttpStatus.NOT_FOUND);
+		}
+	}
+
+
 }

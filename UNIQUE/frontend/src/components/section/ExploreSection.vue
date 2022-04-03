@@ -11,12 +11,10 @@
       <!-- end filter-box -->
       <div class="row g-gs">
         <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product.id">
-          <Products :product="product"></Products>
+          <Products class="button" :product="product"></Products>
         </div>
-
         <!-- end col -->
       </div>
-
       <!-- end end  -->
     </div>
     <div class="text-center mt-4 mt-md-5">
@@ -25,7 +23,6 @@
     <!-- .container -->
     <!-- <pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></pagination> -->
   </section>
-
   <!-- end explore-section -->
 </template>
 
@@ -65,14 +62,15 @@ export default {
     };
   },
   methods: {
-    setPage() {},
     setTab(tab, id) {
       // 선택된 category 즉 tab의 길이가 3개면 all
       if (tab.options.length > 1) {
         this.selectedTab = "all";
+        // console.log(this.selectedTab);
         // 아니면 카테고리만
       } else {
         this.selectedTab = tab.options[0].category;
+        // console.log(this.selectedTab);
       }
 
       // 선택한 카테고리 필터 나오게
@@ -94,7 +92,7 @@ export default {
           Authorization:
             "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
         },
-        params: { limit: 100, offset: 0, type: this.selectedTab, searchWord: "" },
+        params: { limit: 16, offset: 0, type: this.selectedTab, searchWord: "" },
         // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
       });
       this.total = newnftMarketItems.data.marketList.length;
@@ -112,7 +110,7 @@ export default {
     // 맨 처음에 아이템들 가져오기
     this.getItemsAll();
   },
-  watch: {},
+  // watch: {},
   computed: {
     // 마켓아이템스에 아이템이 담겨져 있지 않으면 담아오고
     displayedRecords() {

@@ -2,6 +2,7 @@ package com.ssafy.unique.api.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,21 +46,25 @@ public class MarketServiceImpl implements MarketService {
 				// Type가 all인 경우
 				if (marketParamReq.getType().length() == 3) {
 					res.setMarketList(marketRepository.findTypeAllWithLimitOffset(marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeAllMarketWork());
 				}
 				// Type가 audio, image, video인 경우
 				else {
 					res.setMarketList(marketRepository.findTypeOtherWithLimitOffset(marketParamReq.getType(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeOtherMarketWork(marketParamReq.getType()));
 				}
 			}
 			// SearchWord가 있는 경우
 			else {
 				// Type가 all인 경우
 				if (marketParamReq.getType().length() == 3) {
-					res.setMarketList(marketRepository.findTypeAllWithLimitOffsetSearchWord(marketParamReq.getSearchWord(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setMarketList(marketRepository.findTypeAllWithLimitOffsetSearchWord(marketParamReq.getSearchWord().trim(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeAllMarketWorkWithSearchWord(marketParamReq.getSearchWord().trim()));
 				}
 				// Type가 audio, image, video인 경우
 				else {
-					res.setMarketList(marketRepository.findTypeOtherWithLimitOffsetSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setMarketList(marketRepository.findTypeOtherWithLimitOffsetSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord().trim(), marketParamReq.getLimit(), marketParamReq.getOffset()));
+					res.setCount(marketRepository.countTypeOtherMarketWorkWithSearchWord(marketParamReq.getType(), marketParamReq.getSearchWord().trim()));
 				}
 			}
 			
@@ -77,8 +82,15 @@ public class MarketServiceImpl implements MarketService {
 		
 		MarketResultRes res = new MarketResultRes();
 		try {
-			res.setMarket(marketRepository.findById(marketId));
-
+			// 현재 보고있는 NFT의 판매 등록 정보
+			Market market = marketRepository.findById(marketId).get();
+			res.setMarket(market);
+			res.setProfileInfo(memberRepository.findProfileImage(market.getBuyer()));
+			// 현재 보고있는 NFT에 대한 과거 거래이력
+			res.setMarketList(marketRepository.findTransactionHistoryById(market.getNft().getNftSeq()));
+			System.out.println(memberRepository.findProfileImage(market.getBuyer()));
+			System.out.println((market.getBuyer()));
+			
 			res.setResult(SUCCESS);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -181,6 +193,29 @@ public class MarketServiceImpl implements MarketService {
 		
 		return res;
 	}
-	
-	
+
+	//거래 이력을 던짐
+	@Override
+	public MarketResultRes marketNftTradeRecord(Long nftSeq) {
+		MarketResultRes res = new MarketResultRes();
+		try {
+			Market currentMarket = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
+			List<Market> list = marketRepository.findRecordByNftSeq(nftSeq);
+
+			if(list == null) {
+				throw new Exception();
+			}
+			res.setMarket(currentMarket);
+			res.setMarketList(list);
+			res.setResult(SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(FAIL);
+		}
+		return res;
+	}
+
+
+
+
 }

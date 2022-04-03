@@ -5,7 +5,8 @@ import router from "@/router/index.js";
 import Web3 from "web3";
 // import getWeb3 from "../utils/getWeb3;";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default createStore({
   plugins: [createPersistedState()],
@@ -13,6 +14,46 @@ export default createStore({
     authToken: localStorage.getItem("jwt"),
     username: null,
     myAddress: null,
+    ExhibitionsCards: [
+      {
+        id: 1,
+        dateDay: 2,
+        dateMonth: "April",
+        cardImage: "https://cdn.pixabay.com/photo/2020/06/18/09/10/city-5312660__340.jpg",
+        title: "Let's Go To Mars!",
+        content:
+          "Curabitur aliquet quam id dui posuere blandit. Pellentesque in ipsum id orci porta dapibus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus suscipit tortor eget felis porttitor volutpat.<br/>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus nibh.<br/>Proin eget tortor risus. Donec rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.",
+        creators: "Curabitur aliquet quam id dui posuere blandit. Donec rutrum congue leo eget malesuada.",
+        curators: "sapien massa, ziskp ejsep",
+      },
+      {
+        id: 2,
+        dateDay: 5,
+        dateMonth: "February",
+        cardImage: "https://cdn.pixabay.com/photo/2022/03/01/02/51/galaxy-7040416__480.png",
+        title: "For Ukraine Artist Support the Cause",
+        creators: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. ",
+        curators: "Curabitur aliquet, quam id dui, posuere blandit.",
+      },
+      // {
+      //   id: 3,
+      //   dateDay: 31,
+      //   dateMonth: "January",
+      //   cardImage: "https://cdn.pixabay.com/photo/2020/03/08/15/25/cover-painting-4912734__340.jpg",
+      //   title: "This Week's Unique Steals:",
+      //   creators: "Praesent sapien massa, convallis a pellentesque nec.",
+      //   curators: "Sed porttitor lectus nibh.",
+      // },
+      {
+        id: 4,
+        dateDay: 14,
+        dateMonth: "January",
+        cardImage: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Picasso_-_P%C3%AAche_de_nuit_%C3%A0_Antibes_%28Q110152500%29.jpg",
+        title: "Are you okay?",
+        creators: "Vestibulum ante ipsum, luctus et ultrices ",
+        curators: "primis faucibus",
+      },
+    ],
   },
   mutations: {
     SET_TOKEN: function (state, token) {
@@ -32,6 +73,13 @@ export default createStore({
       console.log(state.myAddress.address, typeof state.myAddress.address);
       return newAddress.address;
     },
+    SET_ADDRESS: function (state, myAddress) {
+      state.myAddress = myAddress;
+    },
+
+    EXHIBITION_CARDS: function (state, cards) {
+      state.ExhibitionsCards = cards;
+    },
   },
   actions: {
     // async registerWeb3({ commit }) {
@@ -44,6 +92,10 @@ export default createStore({
     //     console.log("error in action registerWeb3", err);
     //   }
     // },
+    EXHIBITION_CARDS: function ({ commit }) {
+      commit("EXHIBITION_CARDS");
+      // router.push({ name: "Login" });
+    },
     login: function ({ commit }, credentials) {
       axios({
         method: "post",
@@ -51,10 +103,12 @@ export default createStore({
         data: credentials,
       })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           commit("SET_TOKEN", res.headers.authorization);
           commit("SET_USERNAME", credentials);
+          commit("SET_ADDRESS", res.data.memberAddress);
           console.log(this.getters.isLogin);
+          // console.log(res.data);
           router.push({ name: "Home" });
         })
         .catch(() => {

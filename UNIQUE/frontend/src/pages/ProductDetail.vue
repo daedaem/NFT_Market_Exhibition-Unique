@@ -19,7 +19,7 @@
           <div class="col-lg-6 pe-xl-5">
             <div class="item-detail-content">
               <div class="item-detail-img-container mb-4">
-                <img :src=imgLg />
+                <img :src="imgLg" />
               </div>
               <!-- end item-detail-img-container -->
               <div class="item-detail-tab">
@@ -134,6 +134,7 @@
                 <ul class="btns-group d-flex">
                   <li class="flex-grow-1">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a>
+                    <!-- <Purchase :product="product"></Purchase> -->
                   </li>
                   <!-- <li class="flex-grow-1">
                     <div class="dropdown">
@@ -204,9 +205,11 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 import SectionData from "@/store/store.js";
+// import Purchase from "@/components/common/Purchase";
 
 export default {
   name: "ProductDetail",
+  props: ["product"],
   data() {
     return {
       SectionData,
@@ -218,7 +221,7 @@ export default {
       metaTextTwo: "500 editions",
       metaTextThree: "500 editions",
       content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
-      ownerlist : [
+      ownerlist: [
         {
           id: 1,
           title: "French Montana",
@@ -228,46 +231,50 @@ export default {
         },
       ],
       itemDetailHistoryList: [
-      {
-        id: 1,
-        title: "Listed 1 edition for 0.35 ETH",
-        subTitle: "by Medicom 21 hours ago",
-        avatar: require("@/images/thumb/avatar-4.jpg"),
-        path: "/author",
-      },
-      {
-        id: 2,
-        title: "Purchased 1 edition for 0.1 ETH",
-        subTitle: "by Medicom 21 hours ago",
-        avatar: require("@/images/thumb/avatar-5.jpg"),
-        path: "/author",
-      },
-      {
-        id: 3,
-        title: "Purchased 1 edition for 0.1 ETH",
-        subTitle: "by French Montana 23/09/2021",
-        avatar: require("@/images/thumb/avatar-6.jpg"),
-        path: "/author",
-      },
+        {
+          id: 1,
+          title: "Listed 1 edition for 0.35 ETH",
+          subTitle: "by Medicom 21 hours ago",
+          avatar: require("@/images/thumb/avatar-4.jpg"),
+          path: "/author",
+        },
+        {
+          id: 2,
+          title: "Purchased 1 edition for 0.1 ETH",
+          subTitle: "by Medicom 21 hours ago",
+          avatar: require("@/images/thumb/avatar-5.jpg"),
+          path: "/author",
+        },
+        {
+          id: 3,
+          title: "Purchased 1 edition for 0.1 ETH",
+          subTitle: "by French Montana 23/09/2021",
+          avatar: require("@/images/thumb/avatar-6.jpg"),
+          path: "/author",
+        },
       ],
       itemDetailList: [
-      {
-        id: 1,
-        title: "@nathan_walls",
-        subTitle: "Creator",
-        avatar: require("@/images/thumb/avatar.jpg"),
-        path: "/author",
-      },
-      {
-        id: 2,
-        title: "@kamran_ahmed",
-        subTitle: "Collection",
-        avatar: require("@/images/thumb/avatar-2.jpg"),
-        path: "/author",
-      },
-    ],
+        {
+          id: 1,
+          title: "@nathan_walls",
+          subTitle: "Creator",
+          avatar: require("@/images/thumb/avatar.jpg"),
+          path: "/author",
+        },
+        {
+          id: 2,
+          title: "@kamran_ahmed",
+          subTitle: "Collection",
+          avatar: require("@/images/thumb/avatar-2.jpg"),
+          path: "/author",
+        },
+      ],
     };
   },
+  // components: {
+  //   Purchase,
+  // },
+  created() {},
   // methods: {
   //   async getItmesByAddress(address) {
   //     const getItems = await axios({
