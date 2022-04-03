@@ -125,7 +125,7 @@ import {mapState} from 'vuex';
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["5777"].address;
+const CA = SsafyNFT.networks["1337"].address;
 // console.log(CA);
 
 // 네트워크 연결
