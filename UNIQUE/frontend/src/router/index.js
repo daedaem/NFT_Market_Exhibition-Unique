@@ -68,17 +68,16 @@ const routes = [
     name: "Register",
     component: () => import("../pages/Register.vue"),
   },
-
   {
     path: "/test",
     name: "Test",
     component: () => import("../pages/Test.vue"),
   },
-  // {
-  //   path: "/privateGallery",
-  //   name: "PrivateGallery",
-  //   component: () => import("../pages/PrivateGallery.vue"),
-  // },
+  {
+    path: "/privateCreate",
+    name: "PrivateCreate",
+    component: () => import("../pages/PrivateCreate.vue"),
+  },
 ];
 
 const router = createRouter({

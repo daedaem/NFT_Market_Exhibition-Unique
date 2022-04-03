@@ -40,4 +40,6 @@ public class Member {
 	@Column(name = "AUTHORITY")
 	private boolean authority;
 	
+	@Column(name = "MEMBER_BIO")
+	private String memberBio;
 }

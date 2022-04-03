@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class NftResultRes {
 	private int result;
-
+	private Nft nft;
 	private List<Nft> nftList;
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +30,7 @@ public class ExhibitionWork {
 	@Column(name = "EXHIBITION_ID")
 	private Long exhibitionId;
 	
-	@Column(name = "NFT_SEQ")
-	private Long nftSeq;
-	
-	@Column(name = "WORK_COMMENT")
-	private String workComment;
+	@OneToOne(targetEntity=Nft.class)
+	@JoinColumn(name="NFT_SEQ")
+	private Nft nft;
 }

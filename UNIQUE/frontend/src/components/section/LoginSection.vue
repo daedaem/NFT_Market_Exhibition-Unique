@@ -6,7 +6,7 @@
                         <div class="section-head-sm login">
                             <h1 class="mb-1">{{ SectionData.loginData.title }}</h1>
                         </div>
-                        
+
                             <div class="form-floating mb-4">
                                 <input type="text" class="form-control" id="id" placeholder="ID" v-model="credentials.memberId" autocomplete="off">
                                 <label for="id">ID</label>

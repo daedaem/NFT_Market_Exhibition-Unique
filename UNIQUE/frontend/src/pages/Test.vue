@@ -43,10 +43,12 @@ import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import {mapState} from 'vuex';
 const abi = ABIS.abi;
 const CA = SsafyNFT.networks["1337"].address;
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
+// let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
 export default {
   name: "Test",
@@ -68,10 +70,10 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            this.authToken,
         },
       });
-      this.items = getItems.data;
+      this.items = getItems.data.nftList;
       console.log(this.items);
     },
     async getItmesByAddress(address) {
@@ -81,7 +83,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            this.authToken,
         },
       });
       this.aitems = getItems.data;
@@ -94,12 +96,17 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            this.authToken,
         },
       });
       this.exampleResult = getDetails.data[0];
       console.log(this.exampleResult);
     },
+  },
+  computed:{
+    ...mapState([
+      "authToken"
+    ]),
   },
 };
 </script>
