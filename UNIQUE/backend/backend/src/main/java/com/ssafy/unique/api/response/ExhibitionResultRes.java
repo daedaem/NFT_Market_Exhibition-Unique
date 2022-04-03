@@ -19,5 +19,4 @@ public class ExhibitionResultRes {
 	
 	private List<Exhibition> exhibitionList;
 	private List<Nft> nftList;
-	private List<Member> memberList;
 }
