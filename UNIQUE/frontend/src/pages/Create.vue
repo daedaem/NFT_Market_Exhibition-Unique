@@ -119,21 +119,17 @@ import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-<<<<<<< HEAD
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import { mapState } from "vuex";
 
 const NFT_ABI = SsafyNFT.abi;
 const NFT_CA = SsafyNFT.networks["1337"].address;
-=======
-const abi = ABIS.abi;
-// console.log(abi);
-const CA = SsafyNFT.networks["5777"].address;
-// console.log(CA);
->>>>>>> ee61ecd30bfb12cd076471ef283fe3ce26680baf
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+// let Web3 = require("web3");
+// let web3 = new Web3();
+// web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -166,8 +162,11 @@ export default {
       this.form.file = data.target.files[0];
     },
     checkInputData() {
+      // console.log(authToken);
+      console.log(this.$store.state.myAddress);
+      console.log(myAddress);
       console.log(this.myAddress);
-      // log(NFT_CA);
+      // log(NFT_CA);myAddress
       // console.log(this.date[0], this.date[1], this.form.price);
       if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
         alert("Please Input information for Create your item");
@@ -193,15 +192,16 @@ export default {
       // console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
-      // console.log(checkPubKey);
+      console.log(checkPubKey, "1");
       // 내계좌 조회 1.
       // 로컬확인시
-      const temp = await web3.eth.getAccounts();
+      // const temp = await web3.eth.getAccounts();
       // console.log(temp);
-      const myAccount = temp[0];
+      // const myAccount = temp[0];
       // console.log(myAccount);
       // 서버 배포 후
-      // const myAccount = this.myAddress.address;
+      const myAccount = this.$store.state.myAddress.address;
+      console.log(myAccount, "2");
 
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
@@ -212,7 +212,7 @@ export default {
 
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-        // console.log("일치합니다.");
+        console.log("일치합니다.");
         let data = new FormData();
         data.append("nftAuthorName", this.form.nftAuthorName);
         data.append("nftName", this.form.nftName);
@@ -224,18 +224,21 @@ export default {
           data: data,
           headers: {
             // Authorization: token,
-            Authorization: this.authToken,
+            Authorization: this.$store.state.authToken,
             "Content-Type": "multipart/form-data",
           },
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
-        // console.log(IPFSresult, "ipfs결과");
+        console.log(IPFSresult, "ipfs결과");
         const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        console.log(myAccount);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: myAccount });
+        const results = await ssafyToken1.methods.current().call({ from: this.$store.state.myAddress.address[0] });
         // console.log(results);
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+        const response = await ssafyToken1.methods
+          .create(this.$store.state.myAddress.address, IPFSresult)
+          .send({ from: this.$store.state.myAddress.address[0], gas: 6000000, gasPrice: "20000000000" });
         // console.log(response, "1");
 
         const newtokenId = response.events.Transfer.returnValues.tokenId;
@@ -247,14 +250,14 @@ export default {
         const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
         // nft에 대한 정보 백엔드에 업로드
+        console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
           data: { tokenId: newtokenId, ownerAddress: myAccount, metadataUri: IPFSresult, contractAddress: NFT_CA },
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.$store.state.authToken,
           },
         });
         console.log(createNFTtoBack);

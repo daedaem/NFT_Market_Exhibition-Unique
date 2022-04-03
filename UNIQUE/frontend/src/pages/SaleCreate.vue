@@ -122,6 +122,7 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
@@ -136,7 +137,6 @@ import Sale from "../../smart-contracts/build/contracts/Sale.json";
 import { mapState } from "vuex";
 
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-<<<<<<< HEAD
 let TOKEN_ABI = SsafyToken.abi;
 let TOKEN_CA = SsafyToken.networks["1337"].address;
 let NFT_ABI = SsafyNFT.abi;
@@ -145,13 +145,9 @@ let SALE_FACTORY_ABI = SaleFactory.abi;
 let SALE_FACTORY_CA = SaleFactory.networks["1337"].address;
 let SALE_ABI = Sale.abi;
 // let SALE_CA = Sale.networks["1337"].address;
-=======
-const abi = ABIS.abi;
-const CA = SsafyNFT.networks["5777"].address;
->>>>>>> ee61ecd30bfb12cd076471ef283fe3ce26680baf
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+let web3 = new Web3(new Web3.providers.HttpProvider(`${GANACHE_SERVER_URL}`));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 export default {

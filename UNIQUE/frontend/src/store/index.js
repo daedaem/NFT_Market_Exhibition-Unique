@@ -72,6 +72,10 @@ export default createStore({
       console.log(state.myAddress.address, typeof state.myAddress.address);
       return newAddress.address;
     },
+    SET_ADDRESS: function (state, myAddress) {
+      state.myAddress = myAddress;
+    },
+
     EXHIBITION_CARDS: function (state, cards) {
       state.ExhibitionsCards = cards;
     },
@@ -101,7 +105,9 @@ export default createStore({
           console.log(res);
           commit("SET_TOKEN", res.headers.authorization);
           commit("SET_USERNAME", credentials);
+          commit("SET_ADDRESS", res.data.myAddress);
           console.log(this.getters.isLogin);
+          // console.log(res.data);
           router.push({ name: "Home" });
         })
         .catch(() => {
