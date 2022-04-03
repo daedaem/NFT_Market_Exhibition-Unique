@@ -20,11 +20,13 @@ public interface NftRepository extends JpaRepository<Nft, Long> {
 
 	Nft findAllByNftTokenId(Long tokenId);
 
+
+//	@Query(value="select n.*, m.* from nft n join member m on n.NFT_OWNER_ADDRESS = m.MEMBER_ID where n.nft_seq = ?",nativeQuery = true)
 	Nft findByNftSeq(Long nftSeq);
 
 	@Modifying(clearAutomatically = true)
 	@Transactional
-    @Query(value = " update nft	set nft_token_id = ?, nft_contract_address like ?	where nft_owner_address like ? and nft_metadata_uri like ? ", nativeQuery = true)
+    @Query(value = " update nft	set nft_token_id = ?, nft_contract_address = ?	where nft_owner_address like ? and nft_metadata_uri like ? ", nativeQuery = true)
 	Integer updateNftByNftTokenIdAndNftOwnerAddress(Long nftTokenId, String nftContractAddress, String nftOwnerAddress, String nftMetadataUri);
 	
 	@Modifying(clearAutomatically = true)

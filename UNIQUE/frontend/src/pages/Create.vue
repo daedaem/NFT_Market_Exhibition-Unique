@@ -119,11 +119,18 @@ import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
+<<<<<<< HEAD
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import { mapState } from "vuex";
 
 const NFT_ABI = SsafyNFT.abi;
 const NFT_CA = SsafyNFT.networks["1337"].address;
+=======
+const abi = ABIS.abi;
+// console.log(abi);
+const CA = SsafyNFT.networks["5777"].address;
+// console.log(CA);
+>>>>>>> ee61ecd30bfb12cd076471ef283fe3ce26680baf
 
 // 네트워크 연결
 let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));

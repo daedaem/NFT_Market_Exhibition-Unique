@@ -188,11 +188,17 @@ public class IPFSServiceImpl implements IPFSService {
 		ResultRes resultRes = new ResultRes();
 
 		try {
+			// Security Context에서 nftCreatorSeq를 구한다
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Long nftSeq = Long.parseLong(authentication.getName());
+			
+			// Owner Address를 구한다
+			String ownerAddress = memberRepository.findMemberAddressByMemberSeq(nftSeq);
 
 			int result = nftRepository.updateNftByNftTokenIdAndNftOwnerAddress(
 					nftUpdateReq.getTokenId(),
 					nftUpdateReq.getContractAddress(),
-					nftUpdateReq.getOwnerAddress(),
+					ownerAddress,
 					nftUpdateReq.getMetadataUri());
 
 			if (result == SUCCESS) {
