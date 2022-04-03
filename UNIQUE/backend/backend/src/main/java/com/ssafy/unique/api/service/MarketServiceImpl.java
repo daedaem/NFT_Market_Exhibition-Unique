@@ -85,8 +85,11 @@ public class MarketServiceImpl implements MarketService {
 			// 현재 보고있는 NFT의 판매 등록 정보
 			Market market = marketRepository.findById(marketId).get();
 			res.setMarket(market);
+			res.setProfileInfo(memberRepository.findProfileImage(market.getBuyer()));
 			// 현재 보고있는 NFT에 대한 과거 거래이력
 			res.setMarketList(marketRepository.findTransactionHistoryById(market.getNft().getNftSeq()));
+			System.out.println(memberRepository.findProfileImage(market.getBuyer()));
+			System.out.println((market.getBuyer()));
 			
 			res.setResult(SUCCESS);
 		} catch(Exception e) {
@@ -196,12 +199,13 @@ public class MarketServiceImpl implements MarketService {
 	public MarketResultRes marketNftTradeRecord(Long nftSeq) {
 		MarketResultRes res = new MarketResultRes();
 		try {
-			Market Currentmarket = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
+			Market currentMarket = marketRepository.findCurrentMarketByNftSeq(nftSeq); // 한번 요청으로 기능 2가지 구현할것
 			List<Market> list = marketRepository.findRecordByNftSeq(nftSeq);
+
 			if(list == null) {
 				throw new Exception();
 			}
-			res.setMarket(Currentmarket);
+			res.setMarket(currentMarket);
 			res.setMarketList(list);
 			res.setResult(SUCCESS);
 		} catch (Exception e) {

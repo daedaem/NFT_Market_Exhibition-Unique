@@ -65,8 +65,8 @@ public class ExhibitionController {
 			@ApiResponse(responseCode = "200", description = "성공"),
 			@ApiResponse(responseCode = "500", description = "실패")
 	})
-	@GetMapping("") // @RequestBody는 지울것
-	public ResponseEntity<ExhibitionResultRes> exhibitionTotalSearch(@RequestBody ExhibitionParamReq exhibitionParamReq) {
+	@GetMapping("") 
+	public ResponseEntity<ExhibitionResultRes> exhibitionTotalSearch(ExhibitionParamReq exhibitionParamReq) {
 		System.out.println(exhibitionParamReq);
 		ExhibitionResultRes res = exhibitionService.exhibitionTotalSearch(exhibitionParamReq);
 		
