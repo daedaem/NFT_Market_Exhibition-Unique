@@ -7,6 +7,11 @@
       <!-- hero -->
       <HeroFour classname="hero-title" :title="SectionData.breadcrumbData.breadcrumbListFive.title" :lists="SectionData.breadcrumbData.breadcrumbListFive.navList"></HeroFour>
     </header>
+    <div style="max-width: 1200px; margin: auto">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
+        <router-link :to="{ name: 'PrivateCreate'}" class="btn btn-dark d-block mb-2">Create</router-link>
+      </div>
+    </div>
     <!-- Blog  -->
     <section class="section-space-b blog-section">
       <div class="container">

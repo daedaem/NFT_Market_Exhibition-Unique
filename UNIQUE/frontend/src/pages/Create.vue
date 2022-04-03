@@ -27,61 +27,6 @@
                   <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
                 </div>
               </div>
-              <!-- end form-item -->
-              <!-- <div class="form-item mb-4"> -->
-              <!-- <h5 class="mb-3">Select Method</h5> -->
-              <!-- <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
-                  <li class="nav-item col-4 col-sm-4 col-lg-3" role="presentation" v-for="list in SectionData.selectMethodTabNav" :key="list.id">
-                    <button class="nav-link" :class="list.isActive" :id="list.slug" data-bs-toggle="tab" :data-bs-target="list.bsTarget" type="button">
-                      <em class="ni nav-link-icon" :class="list.icon"></em>
-                      <span class="nav-link-title mt-1 d-block">{{ list.title }}</span>
-                    </button>
-                  </li>
-                </ul> -->
-              <!-- <div class="tab-content mt-4" id="myTabContent">
-                  <div class="tab-pane fade show active" id="fixed-price" role="tabpanel" aria-labelledby="fixed-price-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Price</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter a price for item" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                      <div class="row mt-3">
-                        <div class="col-lg-6">
-                          <label class="mb-2 form-label">Starting date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- <div class="col-lg-6">
-                          <label class="mb-2 form-label">Expiration date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- </div> -->
-              <!-- end row -->
-              <!-- </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- </div> -->
-              <!-- end tab-content -->
-              <!-- </div> -->
-              <!-- end form-item -->
-
-              <!-- end form-item -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
@@ -176,6 +121,7 @@ import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
 import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import {mapState} from 'vuex';
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 const abi = ABIS.abi;
 // console.log(abi);
@@ -260,7 +206,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+              this.autoToken,
             "Content-Type": "multipart/form-data",
           },
         });
@@ -288,7 +234,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+              this.autoToken,
           },
         });
         console.log(createNFTtoBack);
@@ -416,5 +362,10 @@ export default {
 
     checkboxSwitcher(".checkbox-switcher");
   },
+  computed: {
+    ...mapState([
+      "authToken"
+    ]),
+  }
 };
 </script>

@@ -1,4 +1,13 @@
 <template>
+  <div class="page-wrap">
+    <!-- header  -->
+    <header class="header-section has-header-main">
+      <!-- Header main -->
+      <HeaderMain></HeaderMain>
+    </header>
+    <HeroFour classname="hero-title" :title="SectionData.breadcrumbData.breadcrumbListPrivateCreate.title" :lists="SectionData.breadcrumbData.breadcrumbListPrivateCreate.navList"></HeroFour>
+    <!-- login section -->
+    <h1>{{selectedIds}}</h1>
   <section class="explore-section pt-4">
     <div class="container">
       <!-- filter -->
@@ -8,45 +17,72 @@
           <a href="#" class="btn btn-sm filter-btn" :class="tab.class" v-for="tab in filterMenu" @click.prevent="setTab(tab, tab.id)" :key="tab.id">{{ tab.title }}</a>
         </div>
       </div>
+      <div>
+        <h3>Select Items for Gallery</h3>
+        <br>
+      </div>
       <!-- end filter-box -->
       <div class="row g-gs">
-        <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product.id">
-          <Products :product="product"></Products>
+        <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product">
+          <SelectedProducts :selectedIds="selectedIds" :product="product" v-on:removeId = removeId v-on:insertId = insertId></SelectedProducts>
         </div>
         <!-- end col -->
       </div>
-
       <!-- end end  -->
-    </div>
-    <div class="text-center mt-4 mt-md-5">
-      <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
+      <div class="text-center mt-4 mt-md-5">
+        <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
+      </div>
+      <form action="#" class="form-create mb-5 mb-lg-0">
+        <div class="form-item mb-4">
+          <h3 class="mb-3">Upload representative Image</h3>
+          <div class="file-upload-wrap">
+            <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
+            <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFile" hidden />
+            <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
+          </div>
+        </div>
+        <div class="form-item mb-4">
+          <div class="mb-4">
+            <h3 class="mb-2">Title</h3>
+            <input type="text" class="form-control form-control-s1" v-model="form.galleryName" placeholder="Input your Private Gallery name" />
+          </div>
+          <div class="mb-4">
+            <h3 class="mb-2">Description</h3>
+            <textarea name="message" class="form-control form-control-s1" v-model="form.galleryDescription" placeholder="Explain your Private Gallery"></textarea>
+          </div>
+        </div>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block mb-5">Create Item</button>
+      </form>
     </div>
     <!-- .container -->
     <!-- <pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></pagination> -->
   </section>
-
-  <!-- end explore-section -->
+  <Footer classname="bg-dark on-dark"></Footer>
+  </div>
+  <!-- end page-wrap -->
 </template>
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-// import SectionData from "@/store/store.js";
+import SectionData from "@/store/store.js";
 import Pagination from "v-pagination-3";
-import Products from "@/components/section/Products";
-import axios from "axios";
+import HeroFour from "@/components/section/HeroFour.vue";
+import SelectedProducts from "@/components/section/SelectedProducts";
 import {mapState} from 'vuex';
-// import Pagination from "../common/Pagination.vue";
-
+import axios from "axios";
 export default {
-  name: "ExploreSection",
+  name: "PrivateCreate",
   components: {
-    Products,
+    HeroFour,
+    SelectedProducts,
     Pagination,
   },
   data() {
     // Pagination;
     return {
+      SectionData,
+      selectedIds: [],
       nftMarketItems: null,
       page: 1,
       currentPage: 0,
@@ -62,9 +98,25 @@ export default {
       ],
       selectedTab: "all",
       previous_active_id: 1,
+      form: {
+        galleryName: null,
+        // nftAuthorName: "해성",
+        galleryDescription: null,
+        file: null,
+      },
     };
   },
   methods: {
+    selectFile(data) {
+      this.form.galleryName = data.galleryName;
+      this.form.file = data.target.files[0];
+    },
+    insertId(Id){
+      this.selectedIds.push(Id)
+    },
+    removeId(Id){
+      this.selectedIds.splice(this.selectedIds.indexOf(Id), 1);
+    },
     setPage() {},
     setTab(tab, id) {
       // 선택된 category 즉 tab의 길이가 3개면 all
@@ -92,7 +144,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            this.authToken,
+            this.autoToken,
         },
         params: { limit: 100, offset: 0, type: this.selectedTab, searchWord: "" },
         // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
@@ -134,6 +186,31 @@ export default {
     //     return this.nftMarketItems.length;
     //   }
   },
+  mounted () {
+    function fileUpload(selector) {
+      let elem = document.querySelectorAll(selector);
+      if (elem.length > 0) {
+        elem.forEach((item) => {
+          item.addEventListener("change", function () {
+            var target = document.getElementById(item.dataset.target);
+            var allowedExtensions = ["jpg", "png", "gif", "webp", "mp4", "mp3"];
+            var fileExtension = this.value.split(".").pop();
+            var lastDot = this.value.lastIndexOf(".");
+            var ext = this.value.substring(lastDot + 1);
+            var extTxt = (target.value = ext);
+
+            if (!allowedExtensions.includes(fileExtension)) {
+              alert(extTxt + " file type not allowed, Please upload jpg, png, gif, webp, mp4 or mp3 file");
+              target.innerHTML = "Please upload jpg, png, gif, webp, mp4 or mp3 file";
+            } else {
+              target.innerHTML = item.files[0].name;
+            }
+          });
+        });
+      }
+    }
+    fileUpload(".file-upload-input");
+  }
   //   filteredData() {
   //     return this.SectionData.productData.products.filter((data) => {
   //       if (this.selectedTab === null) return true;
@@ -144,18 +221,3 @@ export default {
   // }
 };
 </script>
-
-<style lang="css" scoped>
-.details {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.author-link {
-  z-index: 2;
-  position: relative;
-}
-</style>

@@ -1,8 +1,8 @@
 <template>
   <div class="card card-full">
-    <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
-      <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
-      {{ product.nft.nftWorkUri }}
+    <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
+      <img src="http://img.khan.co.kr/news/2020/10/16/2020101601001687000138341.jpg" class="card-img-top" alt="art image" />
+      <!-- {{ product.nft.nftWorkUri }} -->
     </div>
     <div class="card-body p-4">
       <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
@@ -11,28 +11,6 @@
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
           <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
-          <!-- <div class="card-generic custom-tooltip-dropdown">
-            <div class="author-action d-flex flex-wrap align-items-center mb-3">
-              <div class="flex-shrink-0 avatar">
-                <img :src="product.avatar" alt="avatar" />
-              </div>
-              <div class="ms-2">
-                <span class="author-username">{{ product.userName }}</span>
-                <span class="author-follow-text">{{ product.followersText }}</span>
-              </div>
-            </div>
-            <h6 class="author-name mb-1">{{ product.authorName }}</h6>
-            <p class="author-desc smaller mb-3">{{ product.desc }}</p>
-            <div class="follow-wrap mb-3">
-              <h6 class="mb-1 smaller text-uppercase">Followed by</h6>
-              <div class="avatar-group">
-                <router-link :to="avatar.path" v-for="avatar in product.avatars" :key="avatar.id">
-                  <img :src="avatar.img" alt="avatar" />
-                </router-link>
-              </div>
-            </div>
-            <router-link :to="product.authorLink" class="btn btn-sm bg-dark-dim">Follow</router-link>
-          </div> -->
           <!-- end dropdown-menu -->
         </div>
         <!-- end custom-tooltip-wrap -->
@@ -49,7 +27,8 @@
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span class="btn btn-sm btn-dark">Purchase</span>
+      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.marketId)]" style="background-color: #00FF7F">Remove</span>
+      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.marketId)]">Add</span>
     </div>
     <!-- end card-body -->
     <!-- <router-link
@@ -75,10 +54,14 @@
   <!-- end card -->
 </template>
 <script>
-import { createPopper } from "@popperjs/core";
 export default {
-  name: "Products",
-  props: ["product"],
+  name: "SelectedProducts",
+  props: ["product", "selectedIds"],
+  data() {
+    return{
+      clicked: false,
+    }
+  },
   methods: {
     moveToDetail(productId) {
       console.log(productId);
@@ -86,33 +69,29 @@ export default {
         name: "ProductDetail",
         params: {
           id: productId,
+          //       id: this.newtokenId,
+          //       //
         },
       });
     },
-  },
-  mounted() {
-    /*============= Custom Tooltips =============== */
-    function customTooltip(selector, active) {
-      let elem = document.querySelectorAll(selector);
-      if (elem.length > 0) {
-        elem.forEach((item) => {
-          const parent = item.parentElement;
-          const next = item.nextElementSibling;
-          createPopper(item, next);
-          parent.addEventListener("mouseenter", function () {
-            parent.classList.add(active);
-          });
-          parent.addEventListener("mouseleave", function () {
-            parent.classList.remove(active);
-          });
-        });
+    removeId(Id) {
+      this.$emit('removeId',Id)
+    },
+    insertId(Id) {
+      this.$emit('insertId',Id)
+    },
+    isClicked() {
+      if (this.selectedIds.includes(this.product.marketId)){
+        this.clicked = true
       }
     }
+  },
+  mounted() {
 
-    customTooltip(".custom-tooltip", "active");
   },
   created: function () {
-    // console.log(this.product);
+    console.log(this.product, 'w조');
+    this.isClicked()
   },
 };
 </script>
