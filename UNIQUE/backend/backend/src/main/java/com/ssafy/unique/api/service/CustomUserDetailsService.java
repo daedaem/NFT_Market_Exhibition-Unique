@@ -71,6 +71,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		MemberRes memberRes = MemberRes.builder()
 				.memberSeq(member.getMemberSeq())
 				.memberId(member.getMemberId())
+				.memberAddress(member.getMemberAddress())
 				.authority(member.isAuthority())
 				.build();
 		
