@@ -123,6 +123,7 @@
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import Web3 from "web3";
 import SectionData from "@/store/store.js";
@@ -132,6 +133,8 @@ import SsafyToken from "../../smart-contracts/build/contracts/SsafyToken.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SaleFactory from "../../smart-contracts/build/contracts/SaleFactory.json";
 import Sale from "../../smart-contracts/build/contracts/Sale.json";
+import { mapState } from "vuex";
+
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 let TOKEN_ABI = SsafyToken.abi;
 let TOKEN_CA = SsafyToken.networks["1337"].address;
@@ -149,6 +152,25 @@ let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 export default {
   name: "SaleCreate",
   setup() {
+    const marketInfoData = ref("");
+    const route = useRoute();
+    const id = route.params.id;
+    axios({
+      method: "get",
+      url: `${SERVER_URL}/api/market/detail/${id}`,
+      headers: {
+        // Authorization: token,
+        Authorization: this.authToken,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        console.log(res.data.market);
+        marketInfoData.value = res.data.market;
+      })
+      .catch(() => {
+        alert("There is no item in our Market.");
+      });
     // 반응형 데이터 초기화
     const date = ref(); //
     onMounted(() => {
@@ -156,20 +178,26 @@ export default {
       const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
       date.value = [startDate, endDate];
     });
+
     // const getItemDetail= () => {
     //   axios.get
     // }
     // date값이 변할 때마다 실행되는 함수
-    watch(date, () => {
-      if (date.value) {
-        let startTime = date.value[0];
-        let endTime = date.value[1];
-        console.log(startTime);
-        let a = Date.parse(startTime);
-      }
-    });
+    // watch(date, () => {
+    //   if (date.value) {
+    //     let startTime = date.value[0];
+    //     let endTime = date.value[1];
+    //     console.log(startTime);
+    //     let a = Date.parse(startTime);
+    //     console.log()
+    //   }
+    // });
     return {
+      // getInfoMarketDetail,
+      marketInfoData,
       date,
+      // startTime,
+      // endTime,
       // form,
       // checkInputData,
     };
@@ -183,17 +211,21 @@ export default {
       form: { price: "" },
       authorPrivateKey: null,
       newtokenId: null,
+      // startTime: "",
+      // endTime: "",
     };
   },
   methods: {
     checkInputData() {
-      console.log(this.date, this.form.price);
+      console.log(this.myAddress);
+
+      // console.log(this.date[0]);
+      // console.log(this.date, this.form.price);
       if (this.date.length < 2 || !this.form.price) {
         alert("Please Input information for sales registration");
         this.date = ref();
         this.form.price = null;
       } else {
-        console.log("통과");
       }
       // if (!this.date.value && !this.form.price) {
       //   console.log("뭐냐");
@@ -201,10 +233,11 @@ export default {
       //   console.log("나이스");
       // }
     },
+
     async submitSaleCreateNFT() {
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
-      const temp = await web3.eth.getAccounts();
-      const myAccount = temp[0];
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
+      const myAccount = this.myAddress.address;
+      // const temp = await web3.eth.getAccounts();
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
         // 싸피토큰 확인
@@ -216,24 +249,48 @@ export default {
         // salefactory 계약 인스턴스 호출
         const saleFactoryContract = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
         // createsale 메소드 호출
-        const saleContractInstance = await saleFactoryContract.methods.createSale(this.$route.params.id, this.form.price, startTime, endTime, TOKEN_CA, "현재 NFTADDRESS");
+        const startTime = this.date[0];
+        const endTime = this.date[1];
+        // nft토큰아이디, 가격, 시작시간, 끝나는 시간, SSAFY토큰CA, 현재 NFT의 CA
+        // console.log(this.marketInfoData);
+        const saleContractInstance = await saleFactoryContract.methods
+          .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, this.marketInfoData.nft.nftTokenId)
+          .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+        // ---------------------------------------------
         // 호출 후 CA 저장 후 백엔드에 보내기
-        const saleCA = saleContractInstance.logs[0].args._saleContract;
         // 백엔드에 해당 sale contract adress 저장해야함
+        console.log(saleContractInstance);
+        // const saleCA = saleContractInstance.logs[0].args._saleContract;
+        // cosnole.log(saleCA);
+        // console.log(saleCA, "saleCA 나왔는가");
+        // await axios({
+        //   method: "post",
+        //   url: `${SERVER_URL}/api/market/register`,
+        //   data: { nftSeq: 토큰아이디, marketContractAddress: saleCA, price: this.form.price, startTime: this.date[0], endTime: this.date[1] },
+        // }).catch(() => {
+        //   alert("로그인 정보가 일치하지 않습니다.");
+        // });
 
-        // 해당 ssafy 토큰 컨트랙트의 권한 승인 부여
-        // 1. 해당 nft contract adress백엔드에서 호출해오기
-        // 2.권한 부여
-        const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-        const resultOfRegisterApprove = await NFTContractInstance.methods.approve(saleCA, 토큰아이디);
-        console.log(resultOfRegisterApprove);
+        // // 해당 ssafy 토큰 컨트랙트의 권한 승인 부여
+        // // 1. 해당 nft contract adress백엔드에서 호출해오기
+        // // 2.권한 부여
+        // const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        // const resultOfRegisterApprove = await NFTContractInstance.methods.approve(saleCA, 토큰아이디);
+        // console.log(resultOfRegisterApprove);
+        // await this.$router.go({ name: "ProductDetail", params: { id: NFT_CA } });
+        // //
       }
       // 프라이빗 키와 다르다면
       else {
-        alert("Please check your private key");
         this.authorPrivateKey = null;
+        this.$router.go();
       }
     },
+  },
+
+  computed: {
+    ...mapState(["myAddress"]),
+    ...mapState(["authToken"]),
   },
   mounted() {
     // async function loadMyAccount() {

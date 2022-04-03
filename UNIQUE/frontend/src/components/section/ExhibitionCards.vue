@@ -63,5 +63,9 @@ export default {
   max-height: 500px;
   border-top-left-radius: 0.375rem;
   border-top-right-radius: 0.375rem;
+  box-shadow: 0px 0px 20px 0px rgb(24 24 24 / 7%);
+}
+.card-body {
+  border-left: 1px solid rgb(24 24 24 / 3%);
 }
 </style>

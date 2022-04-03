@@ -81,7 +81,7 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey && checkInputData === true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
@@ -120,6 +120,8 @@ import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import { mapState } from "vuex";
+
 const NFT_ABI = SsafyNFT.abi;
 const NFT_CA = SsafyNFT.networks["1337"].address;
 
@@ -157,6 +159,8 @@ export default {
       this.form.file = data.target.files[0];
     },
     checkInputData() {
+      console.log(this.myAddress);
+      // log(NFT_CA);
       // console.log(this.date[0], this.date[1], this.form.price);
       if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
         alert("Please Input information for Create your item");
@@ -181,11 +185,17 @@ export default {
       // url:해시된, nft:이름, 작성자 일련번호
       // console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // console.log(checkPubKey);
       // 내계좌 조회 1.
+      // 로컬확인시
       const temp = await web3.eth.getAccounts();
+      // console.log(temp);
       const myAccount = temp[0];
+      // console.log(myAccount);
+      // 서버 배포 후
+      // const myAccount = this.myAddress.address;
+
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
       // web3.eth.accounts.wallet.add(sender);
@@ -207,32 +217,33 @@ export default {
           data: data,
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.authToken,
             "Content-Type": "multipart/form-data",
           },
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
-        console.log(IPFSresult, "ipfs결과");
+        // console.log(IPFSresult, "ipfs결과");
         const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
         // 1번째 방법 state 변경 안시키는 call함수 호출
         const results = await ssafyToken1.methods.current().call({ from: myAccount });
         // console.log(results);
         // 2번째 트랜잭션하는 함수 호출
         const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
-        // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
+        // console.log(response, "1");
+
         const newtokenId = response.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
-        console.log(newtokenId, "이거토큰아이디임");
+        // console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
         const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
         const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
+        // nft에 대한 정보 백엔드에 업로드
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
-          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
+          data: { tokenId: newtokenId, ownerAddress: myAccount, metadataUri: IPFSresult, contractAddress: NFT_CA },
           headers: {
             // Authorization: token,
             Authorization:
@@ -262,8 +273,9 @@ export default {
         //   });
         // });
       } else {
-        alert("Please, check your private key");
+        // alert("Please, check your private key");
         this.authorPrivateKey = null;
+        // this.$router.go();
       }
       // 위에 3번 전 과정
       // console.log(this.form);
@@ -287,6 +299,10 @@ export default {
     //   let vote = await electionContract.methods.vote(this.selectedCandidate).send({ from: process.env.VUE_APP_ETHADDRESS });
     //   console.log(vote);
     // },
+  },
+  computed: {
+    ...mapState(["myAddress"]),
+    ...mapState(["authToken"]),
   },
   mounted() {
     // async function loadMyAccount() {
@@ -362,7 +378,6 @@ export default {
         });
       }
     }
-
     checkboxSwitcher(".checkbox-switcher");
   },
 };

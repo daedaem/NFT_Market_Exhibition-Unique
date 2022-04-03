@@ -110,6 +110,7 @@ export default {
         const myTokenBalance = await tokenContract.methods.balanceOf("내계좌");
         // 만약 계좌잔액이 현재 구매가 보다 작다면 실행 안됨
         if (myTokenBalance > this.price) {
+          // 만든 세일에 대한 CA, 판매자,
           const resultOfTransferToken = await tokenContract.methods.approve(marketContractAddress, this.price);
           //
           // 현재 이아이템 거래 컨트랙트한테 토큰 권한 부여

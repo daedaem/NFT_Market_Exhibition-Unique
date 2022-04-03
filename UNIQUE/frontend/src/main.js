@@ -85,6 +85,8 @@ import RegisterSection from "./components/section/RegisterSection.vue";
 
 import Purchase from "./components/common/Purchase.vue";
 import ExhibitionCards from "./components/section/ExhibitionCards.vue";
+import ExhibitionCarousel from "./components/section/ExhibitionCarousel";
+import CarouselScreenSlider from "./components/common/CarouselScreenSlider.vue";
 
 app.component("HeaderMain", HeaderMain);
 app.component("LogoLink", LogoLink);
@@ -127,3 +129,6 @@ app.component("RegisterSection", RegisterSection);
 
 app.component("Purchase", Purchase);
 app.component("ExhibitionCards", ExhibitionCards);
+
+app.component("ExhibitionCarousel", ExhibitionCarousel);
+app.component("CarouselScreenSlider", CarouselScreenSlider);
