@@ -43,10 +43,10 @@ public class ExhibitionController {
 	
 	private static final int SUCCESS = 1;
 	
-	@Operation(description = "로그인 과정을 설명")
+	@Operation(description = "전시회 등록")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "로그인 성공"),
-			@ApiResponse(responseCode = "401", description = "유저 정보가 일치하지 않음. \b 다시 시도")
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
 	})
 	@PostMapping("/register")
 	public ResponseEntity<ResultRes> exhibitionRegister(@RequestBody ExhibitionReq exhibitionReq ) {
@@ -60,14 +60,14 @@ public class ExhibitionController {
 		}
 	}
 	
-	@Operation(description = "로그인 과정을 설명")
+	@Operation(description = "전시회 전체 조회")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "로그인 성공"),
-			@ApiResponse(responseCode = "401", description = "유저 정보가 일치하지 않음. \b 다시 시도")
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
 	})
-	@GetMapping("")
-	public ResponseEntity<ExhibitionResultRes> exhibitionTotalSearch(ExhibitionParamReq exhibitionParamReq) {
-		
+	@GetMapping("") // @RequestBody는 지울것
+	public ResponseEntity<ExhibitionResultRes> exhibitionTotalSearch(@RequestBody ExhibitionParamReq exhibitionParamReq) {
+		System.out.println(exhibitionParamReq);
 		ExhibitionResultRes res = exhibitionService.exhibitionTotalSearch(exhibitionParamReq);
 		
 		if (res.getResult() == SUCCESS) {
@@ -77,14 +77,14 @@ public class ExhibitionController {
 		}
 	}
 	
-	@Operation(description = "로그인 과정을 설명")
+	@Operation(description = "전시회 상세 조 회")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "로그인 성공"),
-			@ApiResponse(responseCode = "401", description = "유저 정보가 일치하지 않음. \b 다시 시도")
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
 	})
 	@GetMapping("/detail/{exhibitionId}")
 	public ResponseEntity<ExhibitionRes> exhibitionDetailSearch(@PathVariable("exhibitionId") Long exhibitionId) {
-		
+		System.out.println(exhibitionId);
 		ExhibitionRes res = exhibitionService.exhibitionDetailSearch(exhibitionId);
 		
 		if (res.getResult() == SUCCESS) {
