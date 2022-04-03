@@ -44,10 +44,11 @@ import getAddressFrom from "../utils/AddressExtractor";
 import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 const abi = ABIS.abi;
-const CA = SsafyNFT.networks["1337"].address;
+const CA = SsafyNFT.networks["202112031219"].address;
 
 // let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
-web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default {
   name: "Test",

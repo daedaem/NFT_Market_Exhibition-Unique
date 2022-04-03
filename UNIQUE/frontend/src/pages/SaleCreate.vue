@@ -138,16 +138,16 @@ import { mapState } from "vuex";
 
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 let TOKEN_ABI = SsafyToken.abi;
-let TOKEN_CA = SsafyToken.networks["1337"].address;
+let TOKEN_CA = "0x6c927304104cdaa5a8b3691e0ade8a3ded41a333";
 let NFT_ABI = SsafyNFT.abi;
-let NFT_CA = SsafyNFT.networks["1337"].address;
+let NFT_CA = SsafyNFT.networks["202112031219"].address;
 let SALE_FACTORY_ABI = SaleFactory.abi;
-let SALE_FACTORY_CA = SaleFactory.networks["1337"].address;
+let SALE_FACTORY_CA = SaleFactory.networks["202112031219"].address;
 let SALE_ABI = Sale.abi;
-// let SALE_CA = Sale.networks["1337"].address;
+// let SALE_CA = Sale.networks["202112031219"].address;
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider(`${GANACHE_SERVER_URL}`));
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 export default {
@@ -237,7 +237,7 @@ export default {
 
     async submitSaleCreateNFT() {
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
-      const myAccount = this.myAddress.address;
+      const myAccount = this.myAddress;
       // const temp = await web3.eth.getAccounts();
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
@@ -256,7 +256,10 @@ export default {
         // console.log(this.marketInfoData);
         const saleContractInstance = await saleFactoryContract.methods
           .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
-          .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+          .send({ from: myAccount });
+        //         const saleContractInstance = await saleFactoryContract.methods
+        // .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
+        // .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
         // ---------------------------------------------
         // 호출 후 CA 저장 후 백엔드에 보내기
         // 백엔드에 해당 sale contract adress 저장해야함

@@ -123,11 +123,12 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import { mapState } from "vuex";
 
 const NFT_ABI = SsafyNFT.abi;
-const NFT_CA = SsafyNFT.networks["1337"].address;
+const NFT_CA = "0x6c927304104cdaa5a8b3691e0ade8a3ded41a333";
+// const NFT_CA = SsafyNFT.networks["202112031219"].address;
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
-// let Web3 = require("web3");
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL)); // let Web3 = require("web3");
 // let web3 = new Web3();
 // web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");

@@ -31,12 +31,12 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 
 const abi = ABIS.abi;
 // console.log(abi);
-const CA = SsafyNFT.networks["1337"].address;
+const CA = SsafyNFT.networks["202112031219"].address;
 // console.log(CA);
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
-
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 export default {
   name: "Explore",
   components: {
