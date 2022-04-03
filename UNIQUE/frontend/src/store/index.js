@@ -5,7 +5,8 @@ import router from "@/router/index.js";
 import Web3 from "web3";
 // import getWeb3 from "../utils/getWeb3;";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default createStore({
   plugins: [createPersistedState()],
@@ -102,10 +103,10 @@ export default createStore({
         data: credentials,
       })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           commit("SET_TOKEN", res.headers.authorization);
           commit("SET_USERNAME", credentials);
-          commit("SET_ADDRESS", res.data.myAddress);
+          commit("SET_ADDRESS", res.data.memberAddress);
           console.log(this.getters.isLogin);
           // console.log(res.data);
           router.push({ name: "Home" });

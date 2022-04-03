@@ -255,12 +255,12 @@ export default {
         // nft토큰아이디, 가격, 시작시간, 끝나는 시간, SSAFY토큰CA, 현재 NFT의 CA
         // console.log(this.marketInfoData);
         const saleContractInstance = await saleFactoryContract.methods
-          .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, this.marketInfoData.nft.nftTokenId)
+          .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
           .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
         // ---------------------------------------------
         // 호출 후 CA 저장 후 백엔드에 보내기
         // 백엔드에 해당 sale contract adress 저장해야함
-        console.log(saleContractInstance);
+        console.log(saleContractInstance, "다되었는가");
         // const saleCA = saleContractInstance.logs[0].args._saleContract;
         // cosnole.log(saleCA);
         // console.log(saleCA, "saleCA 나왔는가");

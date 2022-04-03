@@ -164,8 +164,8 @@ export default {
     checkInputData() {
       // console.log(authToken);
       console.log(this.$store.state.myAddress);
-      console.log(myAddress);
-      console.log(this.myAddress);
+      // console.log(myAddress);
+      // console.log(this.myAddress);
       // log(NFT_CA);myAddress
       // console.log(this.date[0], this.date[1], this.form.price);
       if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
@@ -192,7 +192,6 @@ export default {
       // console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
-      console.log(checkPubKey, "1");
       // 내계좌 조회 1.
       // 로컬확인시
       // const temp = await web3.eth.getAccounts();
@@ -200,8 +199,7 @@ export default {
       // const myAccount = temp[0];
       // console.log(myAccount);
       // 서버 배포 후
-      const myAccount = this.$store.state.myAddress.address;
-      console.log(myAccount, "2");
+      const myAccount = this.$store.state.myAddress;
 
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
@@ -231,14 +229,12 @@ export default {
         const IPFSresult = createIPFS.data.nftMetadataUri;
         console.log(IPFSresult, "ipfs결과");
         const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-        console.log(myAccount);
+        // console.log(myAccount);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: this.$store.state.myAddress.address[0] });
+        const results = await ssafyToken1.methods.current().call({ from: this.$store.state.myAddress });
         // console.log(results);
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods
-          .create(this.$store.state.myAddress.address, IPFSresult)
-          .send({ from: this.$store.state.myAddress.address[0], gas: 6000000, gasPrice: "20000000000" });
+        const response = await ssafyToken1.methods.create(this.$store.state.myAddress, IPFSresult).send({ from: this.$store.state.myAddress, gas: 6000000, gasPrice: "20000000000" });
         // console.log(response, "1");
 
         const newtokenId = response.events.Transfer.returnValues.tokenId;
@@ -250,7 +246,7 @@ export default {
         const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
         // nft에 대한 정보 백엔드에 업로드
-        console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
+        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
@@ -260,8 +256,7 @@ export default {
             Authorization: this.$store.state.authToken,
           },
         });
-        console.log(createNFTtoBack);
-        console.log(this.newtokenId, "나오나");
+        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
 
         // ownerof, newtokenId, IPFSresult
 
