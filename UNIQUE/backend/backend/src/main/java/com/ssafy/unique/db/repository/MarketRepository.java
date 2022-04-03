@@ -125,6 +125,6 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	List<Market> findRecordByNftSeq(Long nftSeq);
 
 	// NFT의 현재 거래현황만 확인
-	@Query(value = "select * from market where nft_seq = ? order by start_time desc limit 1", nativeQuery = true)
+	@Query(value = "select market.buyer from market where nft_seq = ? order by start_time desc limit 1", nativeQuery = true)
 	Market findCurrentMarketByNftSeq(Long nftSeq);
 }

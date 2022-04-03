@@ -12,7 +12,9 @@ import jnr.a64asm.Mem;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NftServiceImpl implements NftService{
@@ -116,11 +118,18 @@ public class NftServiceImpl implements NftService{
             Member Owner = memberRepository.findByMemberSeq(nft.getNftOwnerSeq()); // nft 판매자 정보
             Member Author = memberRepository.findByMemberSeq(nft.getNftAuthorSeq()); // nft Author 정보
             List<Market> marketList = marketRepository.findRecordByNftSeq(nft.getNftSeq()); // nft 거래 내역
-
+// 매치시킨다
+// 바이어에 대한 정보 담긴 리스트
+            List<String> buyerImageList = new ArrayList<>();
+            for (Market m : marketList) {
+                buyerImageList.add(memberRepository.findProfileImage(m.getBuyer()));
+            }
+            System.out.println(buyerImageList.toString());
             res.setNft(nft);
             res.setOwnerMember(Owner);
             res.setAuthorMember(Author);
             res.setMarketList(marketList);
+            res.setBuyerList(buyerImageList);
             res.setResult(SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
