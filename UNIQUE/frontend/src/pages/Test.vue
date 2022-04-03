@@ -70,7 +70,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            this.autoToken,
+            this.authToken,
         },
       });
       this.items = getItems.data.nftList;
@@ -83,7 +83,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            this.autoToken,
+            this.authToken,
         },
       });
       this.aitems = getItems.data;
@@ -96,7 +96,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            this.autoToken,
+            this.authToken,
         },
       });
       this.exampleResult = getDetails.data[0];

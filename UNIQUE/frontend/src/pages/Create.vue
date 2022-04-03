@@ -206,7 +206,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              this.autoToken,
+              this.authToken,
             "Content-Type": "multipart/form-data",
           },
         });
@@ -234,7 +234,7 @@ export default {
           headers: {
             // Authorization: token,
             Authorization:
-              this.autoToken,
+              this.authToken,
           },
         });
         console.log(createNFTtoBack);

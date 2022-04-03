@@ -83,9 +83,12 @@
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
 import Pagination from "v-pagination-3";
+import axios from 'axios';
+import {mapState} from 'vuex';
 
 export default {
   name: "PrivateGallery",
@@ -101,12 +104,34 @@ export default {
     };
   },
   computed: {
+    ...mapState([
+      "authToken"
+    ]),
     displayedRecords() {
       const startIndex = this.perPage * (this.page - 1);
       const endIndex = startIndex + this.perPage;
       return this.SectionData.blogData.blogListThree.slice(startIndex, endIndex);
     },
   },
+  methods: {
+    getGallerys() {
+      axios({
+        method: "GET",
+        url: `${SERVER_URL}/api/exhibition`,
+        headers: {
+          Authorization:
+          this.authToken,
+        },
+        params: { limit: 100, offset: 0, type: "CUR"},
+      })
+      .then((res)=> {
+        console.log(res.data)
+      })
+    },
+  },
+  mounted (){
+    this.getGallerys()
+  }
 };
 </script>
 

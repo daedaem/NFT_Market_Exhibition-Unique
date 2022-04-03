@@ -32,7 +32,7 @@ export default {
         headers: {
           // Authorization: token,
           Authorization:
-            this.autoToken,
+            this.authToken,
         },
         params: { limit: 8, offset: 0, type: "all", searchWord: "" },
       });

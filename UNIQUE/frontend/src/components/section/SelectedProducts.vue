@@ -9,7 +9,7 @@
       <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
-        <div class="custom-tooltip-wrap">
+        <div class="">
           <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
           <!-- end dropdown-menu -->
         </div>
@@ -64,13 +64,10 @@ export default {
   },
   methods: {
     moveToDetail(productId) {
-      console.log(productId);
       this.$router.push({
         name: "ProductDetail",
         params: {
           id: productId,
-          //       id: this.newtokenId,
-          //       //
         },
       });
     },
