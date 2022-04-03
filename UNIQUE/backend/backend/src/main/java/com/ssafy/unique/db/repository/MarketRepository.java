@@ -65,7 +65,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			      + " offset ? ", nativeQuery = true)
 	List<Market> findTypeOtherWithLimitOffset(String type, int limit, int offset);
 	
-	@Query(value =  " select * "
+	@Query(value =  " select count(*) "
 		          +   " from market "
 		          +   " join nft "
 		          +     " on market.nft_seq = nft.nft_seq "
@@ -78,7 +78,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	
 	
 	
-	@Query(value =  " select count(*) "
+	@Query(value =  " select * "
 			      +   " from market "
 			      +   " join nft "
 			      +     " on market.nft_seq = nft.nft_seq "
