@@ -119,6 +119,14 @@ let SectionData = {
         },
       ],
     },
+    breadcrumbListPrivateCreate: {
+      title: "Private Gallery Create",
+      navList: [
+        {
+          title: "Private Gallery Create",
+        },
+      ],
+    },
     breadcrumbListSix: {
       title: "Enter Linda Dounia's Cyber Baat World",
       navList: [
@@ -1247,10 +1255,8 @@ let SectionData = {
     metaText: "Not for sale",
     metaTextTwo: "500 editions",
     metaTextThree: "Highest bid 0.072 ETH",
-    btnTextOne: "sell",
-    btnTextTwo: "Place a Bid",
-    btnTextThree: "Share",
-
+    btnText: "Place a Bid",
+    btnTextTwo: "Share",
     itemDetailTabNav: [
       {
         id: 1,

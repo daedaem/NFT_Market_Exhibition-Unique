@@ -291,7 +291,7 @@ export default {
     //   this.currentAddress = electionContract._address;
     //   let candidatesCount = await electionContract.methods.candidatesCount().call();
     //   this.tableData = [];
-    //   for (let i = 0; i < candidatesCount; i++) {
+    //   for (let i = 0; i <script candidatesCount; i++) {
     //     if (i != 0) {
     //       let candidates = await electionContract.methods.candidates(i).call();
     //       this.tableData.push({ id: i, name: candidates.name, votes: candidates.voteCount });
@@ -384,6 +384,9 @@ export default {
       }
     }
     checkboxSwitcher(".checkbox-switcher");
+  },
+  computed: {
+    ...mapState(["authToken"]),
   },
 };
 </script>

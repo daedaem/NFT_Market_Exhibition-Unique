@@ -1,6 +1,6 @@
 <template>
   <div class="card card-full">
-    <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
+    <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
       <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
       <!-- {{ product.nft.nftWorkUri }} -->
       {{ product.nft.fileUrl }}
@@ -92,8 +92,6 @@ export default {
         name: "ProductDetail",
         params: {
           id: productId,
-          //       id: this.newtokenId,
-          //       //
         },
       });
     },

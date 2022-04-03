@@ -205,7 +205,8 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 import SectionData from "@/store/store.js";
-// import Purchase from "@/components/common/Purchase";
+import axios from "axios";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "ProductDetail",
@@ -271,22 +272,18 @@ export default {
       ],
     };
   },
-  // components: {
-  //   Purchase,
-  // },
-  created() {},
-  // methods: {
-  //   async getItmesByAddress(address) {
-  //     const getItems = await axios({
-  //       method: "GET",
-  //       url: `${SERVER_URL}/api/nft/details/${this.$route.params.id}`,
-  //       headers: {
-  //         // Authorization: token,
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
-  //       },
-  //     });
-  //   },
-  // }
+  methods: {
+    async getItmesByAddress(address) {
+      const getItems = await axios({
+        method: "GET",
+        url: `${SERVER_URL}/api/nft/detail/${this.$route.params.id}`,
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+  },
+  created() {
+    this.getItmesByAddress();
+  },
 };
 </script>
