@@ -116,6 +116,7 @@ public class NftServiceImpl implements NftService{
             Member Owner = memberRepository.findByMemberSeq(nft.getNftOwnerSeq()); // nft 판매자 정보
             Member Author = memberRepository.findByMemberSeq(nft.getNftAuthorSeq()); // nft Author 정보
             List<Market> marketList = marketRepository.findRecordByNftSeq(nft.getNftSeq()); // nft 거래 내역
+
             res.setNft(nft);
             res.setOwnerMember(Owner);
             res.setAuthorMember(Author);
