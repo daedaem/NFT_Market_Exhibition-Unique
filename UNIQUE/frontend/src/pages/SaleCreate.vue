@@ -12,7 +12,7 @@
           <div class="row justify-content-center align-self-start">
             <div class="col-lg-8">
               <div class="section-head-sm">
-                <a :href="`/detail/${$route.params.id}`" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> Back</a>
+                <a :href="`/details/`" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> Back</a>
                 <h1 class="mt-2">List item for sale</h1>
               </div>
             </div>
@@ -29,7 +29,7 @@
                       </select>
                     </div>
                     <div class="col">
-                      <input type="price" class="form-control form-control-s1" v-model="form.price" placeholder="Amount" />
+                      <input type="price" class="form-control form-control-s1" v-model="marketData.price" placeholder="Amount" />
                     </div>
                   </div>
                 </div>
@@ -52,14 +52,15 @@
           <div class="card card-full" style="max-width: 500px; height: auto">
             <div class="card-image">
               <img src="https://images.pexels.com/photos/1328876/pexels-photo-1328876.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500g" class="card-img-top" style="height: auto" alt="art image" />
+              <!-- <img :src="`${marketInfoData.nft.ufleUrl}`" class="card-img-top" style="height: auto" alt="art image" /> -->
             </div>
             <div class="card-body p-4">
-              <h5 class="card-title text-truncate mb-0">제목</h5>
+              <h3 class="card-title text-truncate mb-0">{{ marketInfoData.nft.nftName }}</h3>
               <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
-              <div class="card-author mb-1 d-flex align-items-center">
+              <div class="card-author my-3 d-flex align-items-center">
                 <span class="me-1 card-author-by">By</span>
                 <div class="custom-tooltip-wrap">
-                  <div class="custom-tooltip author-link">작가</div>
+                  <a class="h4" :href="`/profile/${marketInfoData.nft.nftAuthorName}`">{{ marketInfoData.nft.nftAuthorName }}</a>
                   <!-- end dropdown-menu -->
                 </div>
                 <!-- end custom-tooltip-wrap -->
@@ -67,12 +68,13 @@
               <!-- end card-author -->
               <div class="card-price-wrap d-flex align-items-center justify-content-sm-between mb-3">
                 <div class="me-5 me-sm-2">
-                  <span class="card-price-title">NFT</span>
-                  <span class="card-price-number">type</span>
+                  <span class="card-price-title">Type</span>
+                  <h4 class="card-price-number">NFT</h4>
                 </div>
                 <div class="text-sm-end">
-                  <span class="card-price-title">NFT Price</span>
-                  <span class="card-price-number">&dollar; 123</span>
+                  <span class="card-price-title">Price</span>
+
+                  <h4 class="card-price-number">&#8383;&ensp;SSF {{ this.marketData.price }}</h4>
                 </div>
               </div>
               <!-- end card-price-wrap -->
@@ -88,7 +90,7 @@
     <!-- first Modal -->
     <!-- 가격과 duraition을 지정해야만 프라이빗키를 입력하는 모달이 뜸 -->
 
-    <div v-if="this.date && this.form.price" class="modal fade" id="saleCreateNftModal" tabindex="-1" aria-hidden="true">
+    <div v-if="this.date && this.marketData.price" class="modal fade" id="saleCreateNftModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -123,7 +125,7 @@
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import Web3 from "web3";
@@ -134,7 +136,7 @@ import SsafyToken from "../../smart-contracts/build/contracts/SsafyToken.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SaleFactory from "../../smart-contracts/build/contracts/SaleFactory.json";
 import Sale from "../../smart-contracts/build/contracts/Sale.json";
-import { mapState } from "vuex";
+import { mapState, useStore } from "vuex";
 
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
 let TOKEN_ABI = SsafyToken.abi;
@@ -153,21 +155,24 @@ let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 export default {
   name: "SaleCreate",
   setup() {
+    const store = useStore();
+    const authToken = computed(() => store.state.authToken);
     const marketInfoData = ref("");
     const route = useRoute();
+    // id는 nftSeq
     const id = route.params.id;
     axios({
       method: "get",
-      url: `${SERVER_URL}/api/market/detail/${id}`,
+      url: `${SERVER_URL}/api/nft/detail/${id}`,
       headers: {
         // Authorization: token,
-        Authorization: this.authToken,
-        "Content-Type": "multipart/form-data",
+        Authorization: authToken,
+        // "Content-Type": "multipart/form-data",
       },
     })
       .then((res) => {
-        console.log(res.data.market);
-        marketInfoData.value = res.data.market;
+        console.log(res.data);
+        marketInfoData.value = res.data;
       })
       .catch(() => {
         alert("There is no item in our Market.");
@@ -177,7 +182,18 @@ export default {
     onMounted(() => {
       const startDate = new Date();
       const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-      date.value = [startDate, endDate];
+      // let startTime = Date(startDate + 3240 * 10000)
+      //   .toISOString()
+      //   .replace("T", " ")
+      //   .replace(/\..*/, "");
+      // let endTime = new Date(+new Date().setDate(startDate.getDate() + 7) + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
+      let startTime = new Date(+startDate + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
+      let endTime = new Date(new Date(+startDate).setDate(startDate.getDate() + 7) + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
+      // console.log(timeis, "timeis");
+      // console.log(timeTo, "timeTo");
+      date.value = [startTime, endTime];
+      // console.log(date.value[0]);
+      // console.log(time);
     });
 
     // const getItemDetail= () => {
@@ -194,6 +210,7 @@ export default {
     //   }
     // });
     return {
+      store,
       // getInfoMarketDetail,
       marketInfoData,
       date,
@@ -209,68 +226,144 @@ export default {
       thisItemData: [],
       id: "",
       SectionData,
-      form: { price: "" },
       authorPrivateKey: null,
       newtokenId: null,
+      marketData: { nftSeq: "", marketContractAddress: null, price: "", startTime: "", endTime: "" },
       // startTime: "",
       // endTime: "",
     };
   },
   methods: {
     checkInputData() {
-      console.log(this.myAddress);
-
+      // console.log(this.myAddress);
       // console.log(this.date[0]);
-      // console.log(this.date, this.form.price);
-      if (this.date.length < 2 || !this.form.price) {
+      // console.log(this.date, this.marketData.price);
+      if (this.date.length < 2 || !this.marketData.price) {
         alert("Please Input information for sales registration");
         this.date = ref();
-        this.form.price = null;
+        this.marketData.price = null;
       } else {
+        console.log("성공");
       }
-      // if (!this.date.value && !this.form.price) {
+      // if (!this.date.value && !this.marketData.price) {
       //   console.log("뭐냐");
       // } else {
       //   console.log("나이스");
       // }
     },
-
     async submitSaleCreateNFT() {
+      // console.log("되나");
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       const myAccount = this.myAddress;
+      // console.log(myAccount, "myAccount");
       // const temp = await web3.eth.getAccounts();
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-        // 싸피토큰 확인
-        // const tokenContract = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+        // console.log("일치합니다.");
         // 컨트랙트한테 권한 부여
         // 구매입장
         // tokenContract.methods.approve("createsaleCA에", "가격, {from: 구매자}");
-
         // salefactory 계약 인스턴스 호출
-        const saleFactoryContract = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
+        const saleFactoryContractInsatnce = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
         // createsale 메소드 호출
         const startTime = this.date[0];
         const endTime = this.date[1];
         // nft토큰아이디, 가격, 시작시간, 끝나는 시간, SSAFY토큰CA, 현재 NFT의 CA
-        // console.log(this.marketInfoData);
-        const saleContractInstance = await saleFactoryContract.methods
-          .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
-          .send({ from: myAccount });
-        //         const saleContractInstance = await saleFactoryContract.methods
-        // .createSale(this.marketInfoData.nft.nftTokenId, this.form.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
+        console.log(saleFactoryContractInsatnce, "saleFactoryContractInsatnce");
+
+        const saleFactoryContractResult = await saleFactoryContractInsatnce.methods.createSale(
+          this.marketInfoData.nft.nftTokenId,
+          this.marketData.price,
+          Date.parse(startTime),
+          Date.parse(endTime),
+          TOKEN_CA,
+          NFT_CA
+        );
+        // console.log(saleFactoryContractResult, "saleFactoryContractResult");
+        // 인코드 ABI
+        const saleContractEncodedMethod = saleFactoryContractResult.encodeABI();
+        // console.log(saleContractEncodedMethod, "saleFactoryContractResult");
+
+        const gasEstimate = await saleFactoryContractResult.estimateGas({ from: myAccount });
+        // console.log(gasEstimate, "가스 측정");
+        // 트랜잭션 정의
+        const rawTx = {
+          from: myAccount,
+          // to: SALE_FACTORY_CA,
+          // SALE_FACTORY_CA
+          gas: gasEstimate,
+          data: saleContractEncodedMethod,
+        };
+        // console.log(rawTx, "rawTx");
+        // 계좌주소 얻기
+        const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        // 서명
+        const signedTx = await walletAccount.signTransaction(rawTx);
+        // console.log(signedTx, "signedTx");
+        // 서명할게 없으면 실패
+        if (signedTx == null) {
+          console.log("TransactionSignFailedException");
+        }
+        // 서명할게 있으면
+        else {
+          //
+          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+          // .on("receipt", console.log)
+          const saleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          console.log(saleCA, "컨트랙트어드레스");
+          // console.log(SALE_FACTORY_CA, "SALE_FACTORY_CA");
+          // Sale contract 열기
+
+          // sale데이터 정리
+          this.marketData.nftSeq = this.marketInfoData.nft.nftSeq;
+          this.marketData.marketContractAddress = saleCA;
+          // this.marketData.price = Number(this.marketData.price);
+          this.marketData.startTime = startTime;
+          this.marketData.endTime = endTime;
+          console.log(this.marketData.nftSeq, this.marketData.marketContractAddress.contractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
+          // 백에드에 데이터 저장
+          const NFTvalue = Number(this.marketData.price);
+          console.log(startTime, "시작");
+          console.log(endTime, typeof endTime, "끝");
+          console.log(saleCA);
+          axios({
+            method: "post",
+            url: `${SERVER_URL}/api/market/register/`,
+            headers: {
+              // Authorization: token,
+              Authorization: this.authToken,
+              // "Content-Type": "multipart/form-data",
+            },
+            data: {
+              nftSeq: this.marketInfoData.nft.nftSeq,
+              marketContractAddress: saleCA,
+              price: NFTvalue,
+              startTime: startTime,
+              endTime: endTime,
+            },
+          })
+            .then((res) => {
+              console.log(res, "백엔드에 저~장");
+            })
+            .catch(() => {
+              alert("There is no item in our Market.");
+            });
+        }
+        // .on("reciept");
+        // console.log("세일 함수 호출됨?");
+        //         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods
+        // .createSale(this.marketInfoData.nft.nftTokenId, this.marketData.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
         // .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
         // ---------------------------------------------
         // 호출 후 CA 저장 후 백엔드에 보내기
         // 백엔드에 해당 sale contract adress 저장해야함
-        console.log(saleContractInstance, "다되었는가");
-        // const saleCA = saleContractInstance.logs[0].args._saleContract;
+        // const saleCA = saleFactoryContractResult.logs[0].args._saleContract;
         // cosnole.log(saleCA);
         // console.log(saleCA, "saleCA 나왔는가");
         // await axios({
         //   method: "post",
         //   url: `${SERVER_URL}/api/market/register`,
-        //   data: { nftSeq: 토큰아이디, marketContractAddress: saleCA, price: this.form.price, startTime: this.date[0], endTime: this.date[1] },
+        //   data: { nftSeq: 토큰아이디, marketContractAddress: saleCA, price: this.marketData.price, startTime: this.date[0], endTime: this.date[1] },
         // }).catch(() => {
         //   alert("로그인 정보가 일치하지 않습니다.");
         // });
@@ -287,7 +380,7 @@ export default {
       // 프라이빗 키와 다르다면
       else {
         this.authorPrivateKey = null;
-        this.$router.go();
+        // this.$router.go();
       }
     },
   },

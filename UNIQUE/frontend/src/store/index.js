@@ -64,6 +64,9 @@ export default createStore({
       localStorage.removeItem("jwt");
       state.authToken = "";
     },
+    REMOVE_ADDRESS: function (state) {
+      state.myAddress = "";
+    },
     SET_USERNAME: function (state, credentials) {
       state.username = credentials.username;
       console.log(state.username);
@@ -73,10 +76,6 @@ export default createStore({
       console.log(state.myAddress.address, typeof state.myAddress.address);
       return newAddress.address;
     },
-    SET_ADDRESS: function (state, myAddress) {
-      state.myAddress = myAddress;
-    },
-
     EXHIBITION_CARDS: function (state, cards) {
       state.ExhibitionsCards = cards;
     },
@@ -117,12 +116,16 @@ export default createStore({
     },
     logout: function ({ commit }) {
       commit("REMOVE_TOKEN");
+      commit("REMOVE_ADDRESS");
+
       // router.push({ name: "Login" });
     },
     signup: function ({ commit }, credentials) {
       let data = new FormData();
       data.append("memberId", credentials.memberId);
       data.append("memberPassword", credentials.memberPassword);
+      // data.append("memberBio", credentials.memberBio);
+      // data.append("file", credentials.file);
       axios({
         method: "post",
         url: `${SERVER_URL}/api/members/register`,
@@ -140,13 +143,13 @@ export default createStore({
         });
     },
     async wallet({ commit }) {
-      const newAddress = await web3.eth.accounts.create();
-      console.log(newAddress, "생성되나요?");
-      const myAddress = await commit("SET_ADDRESS", newAddress);
-      // const getbalance = await web3.eth.getBalance(newAddress.address);
-      // await console.log(getbalance, "계좌 조회");
-      // await console.log(newAddress.address, "잘가나용?");
-      // await console.log(this.state.authToken, "토큰은요?");
+      let newAddress = await web3.eth.accounts.create();
+      let myAddress = await commit("SET_ADDRESS", newAddress.address);
+      let getbalance = await web3.eth.getBalance(newAddress.address);
+      await console.log(getbalance, "계좌 조회");
+      await console.log(newAddress.address, "잘가나용?");
+      await console.log(newAddress.address, "잘가나용?");
+      await console.log(this.state.authToken, "토큰은요?");
       await axios({
         method: "PUT",
         url: `${SERVER_URL}/api/members/wallet`,

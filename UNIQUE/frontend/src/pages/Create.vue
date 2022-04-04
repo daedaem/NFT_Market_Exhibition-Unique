@@ -85,7 +85,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
+            <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
 
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
@@ -173,6 +173,7 @@ export default {
         alert("Please Input information for Create your item");
       } else {
         console.log("통과");
+        return true;
       }
     },
     async submitCreateNFT() {
@@ -190,18 +191,13 @@ export default {
        * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
        */
       // url:해시된, nft:이름, 작성자 일련번호
-      // console.log(this.authorPrivateKey);
+      console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // 내계좌 조회 1.
-      // 로컬확인시
       console.log(checkPubKey, "체크퍼브키");
-      // const temp = await web3.eth.getAccounts();
-      // console.log(temp);
-      // const myAccount = temp[0];
-      // console.log(myAccount);
       // 서버 배포 후
-      const myAccount = await this.myAddress.address;
+      const myAccount = await this.myAddress;
       console.log(myAccount, "되나");
 
       // 내계좌 조회 2번
@@ -239,10 +235,10 @@ export default {
         // 2번째 트랜잭션하는 함수 호출
         const createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
         const newtokenId = await NFTcreateContractInstance.methods.current().call();
-        console.log(newtokenId, "newtokenId");
-        console.log(createNFTResponse, "createNFTResponse");
+        // console.log(newtokenId, "newtokenId");
+        // console.log(createNFTResponse, "createNFTResponse");
         const contractEncodedMethod = createNFTResponse.encodeABI();
-        console.log(contractEncodedMethod, "contractEncodedMethod");
+        // console.log(contractEncodedMethod, "contractEncodedMethod");
         // 서명
         // 원래는 서명하시겠습니까 뜨는게?!
 
@@ -264,12 +260,16 @@ export default {
         if (signedTx == null) {
           console.log("TransactionSignFailedException");
         } else {
-          let tran = web3.eth.sendSignedTransaction(signedTx.rawTransaction).on("receipt", console.log);
-          // .on("transactionHash", (txhash) => {
-          //   console.log("Tx Hash: " + txhash);
-          // })
+          let tran = await web3.eth
+            .sendSignedTransaction(signedTx.rawTransaction)
+            .on("receipt", console.log)
+            .on("transactionHash", (txhash) => {
+              console.log("Tx Hash: " + txhash);
+            });
           //   .on("confirmation", console.log);
           // console.log(tran, "tran");
+          // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
+          // console.log(resultofCreate, "컨트랙트어드레스");
         }
 
         // --------------------------

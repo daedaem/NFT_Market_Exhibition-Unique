@@ -9,7 +9,7 @@
     </header>
 
     <!-- HowItWork  -->
-    <HowItWork classname="col-lg-3" :title="SectionData.howItWorkData.title" :subtitle="SectionData.howItWorkData.content" gutterBottom="mb-3"></HowItWork>
+    <HowItWork classname="col-lg-3" :title="SectionData.howItWorkData.title" :subtitle="SectionData.howItWorkData.content" gutterBottom="mb-5"></HowItWork>
     <!-- Featured  -->
     <Featured></Featured>
     <!-- product  -->

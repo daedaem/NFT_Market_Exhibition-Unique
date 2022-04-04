@@ -16,6 +16,8 @@ export default {
   // @import url("https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap");
   // font-family: "DM Serif Display", serif;
   font-family: "DM Serif Display", serif;
+  // font-family: 'Ramaraja', serif;
+  // font-size: 40px;
   // font-family: "Ruslan Display", cursive;
 }
 </style>

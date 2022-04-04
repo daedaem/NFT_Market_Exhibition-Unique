@@ -89,8 +89,7 @@ export default {
         url: `${SERVER_URL}/api/market`,
         headers: {
           // Authorization: token,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+          Authorization: this.authoToken,
         },
         params: { limit: 16, offset: 0, type: this.selectedTab, searchWord: "" },
         // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
