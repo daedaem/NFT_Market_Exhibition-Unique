@@ -279,7 +279,7 @@ export default {
           TOKEN_CA,
           NFT_CA
         );
-        // console.log(saleFactoryContractResult, "saleFactoryContractResult");
+        console.log(saleFactoryContractResult.address, "saleFactoryContractResult");
         // 인코드 ABI
         const saleContractEncodedMethod = saleFactoryContractResult.encodeABI();
         // console.log(saleContractEncodedMethod, "saleFactoryContractResult");
@@ -294,7 +294,7 @@ export default {
           gas: gasEstimate,
           data: saleContractEncodedMethod,
         };
-        // console.log(rawTx, "rawTx");
+        console.log(rawTx, "rawTx");
         // 계좌주소 얻기
         const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
         // 서명
@@ -309,23 +309,23 @@ export default {
           //
           let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
           // .on("receipt", console.log)
-          const saleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
-          console.log(saleCA, "컨트랙트어드레스");
+          // const saleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // console.log(saleCA, "컨트랙트어드레스");
           // console.log(SALE_FACTORY_CA, "SALE_FACTORY_CA");
           // Sale contract 열기
 
           // sale데이터 정리
           this.marketData.nftSeq = this.marketInfoData.nft.nftSeq;
-          this.marketData.marketContractAddress = saleCA;
+          this.marketData.marketContractAddress = saleCA.contractAddress;
           // this.marketData.price = Number(this.marketData.price);
           this.marketData.startTime = startTime;
           this.marketData.endTime = endTime;
-          console.log(this.marketData.nftSeq, this.marketData.marketContractAddress.contractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
+          console.log(this.marketData.nftSeq, this.marketData.marketContractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
           // 백에드에 데이터 저장
           const NFTvalue = Number(this.marketData.price);
-          console.log(startTime, "시작");
-          console.log(endTime, typeof endTime, "끝");
-          console.log(saleCA);
+          // console.log(startTime, "시작");
+          // console.log(endTime, typeof endTime, "끝");
+          // console.log(typeof saleCA);
           axios({
             method: "post",
             url: `${SERVER_URL}/api/market/register/`,
@@ -336,7 +336,7 @@ export default {
             },
             data: {
               nftSeq: this.marketInfoData.nft.nftSeq,
-              marketContractAddress: saleCA,
+              marketContractAddress: this.marketData.marketContractAddress,
               price: NFTvalue,
               startTime: startTime,
               endTime: endTime,
