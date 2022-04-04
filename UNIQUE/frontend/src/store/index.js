@@ -141,11 +141,12 @@ export default createStore({
     },
     async wallet({ commit }) {
       const newAddress = await web3.eth.accounts.create();
+      console.log(newAddress, "생성되나요?");
       const myAddress = await commit("SET_ADDRESS", newAddress);
-      const getbalance = await web3.eth.getBalance(newAddress.address);
-      await console.log(getbalance, "계좌 조회");
-      await console.log(newAddress.address, "잘가나용?");
-      await console.log(this.state.authToken, "토큰은요?");
+      // const getbalance = await web3.eth.getBalance(newAddress.address);
+      // await console.log(getbalance, "계좌 조회");
+      // await console.log(newAddress.address, "잘가나용?");
+      // await console.log(this.state.authToken, "토큰은요?");
       await axios({
         method: "PUT",
         url: `${SERVER_URL}/api/members/wallet`,
