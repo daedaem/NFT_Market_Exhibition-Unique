@@ -67,14 +67,16 @@ export default createStore({
     REMOVE_ADDRESS: function (state) {
       state.myAddress = "";
     },
+    REMOVE_USERNAME: function (state) {
+      state.username = "";
+    },
     SET_USERNAME: function (state, credentials) {
-      state.username = credentials.username;
-      console.log(state.username);
+      state.username = credentials.memberId;
     },
     SET_ADDRESS: function (state, newAddress) {
       state.myAddress = newAddress;
       console.log(state.myAddress, typeof state.myAddress);
-      return newAddress.address;
+      // return newAddress.address;
     },
     EXHIBITION_CARDS: function (state, cards) {
       state.ExhibitionsCards = cards;
@@ -96,19 +98,44 @@ export default createStore({
       // router.push({ name: "Login" });
     },
     login: function ({ commit }, credentials) {
+      console.log(credentials, "credentials");
+      // if (credentials)
       axios({
         method: "post",
         url: `${SERVER_URL}/api/members/login`,
-        data: credentials,
+        data: {
+          memberId: credentials.memberId,
+          memberPassword: credentials.memberPassword,
+        },
       })
         .then((res) => {
-          // console.log(res);
-          commit("SET_TOKEN", res.headers.authorization);
-          commit("SET_USERNAME", credentials);
-          commit("SET_ADDRESS", res.data.memberAddress);
-          console.log(this.getters.isLogin);
-          // console.log(res.data);
-          router.push({ name: "Home" });
+          console.log(res, "여긴데여");
+          if (res.data.memberAddress) {
+            commit("SET_TOKEN", res.headers.authorization);
+            commit("SET_USERNAME", credentials);
+            // if (!res.data.memberAddress) {
+            //   const result = wallet();
+            //   console.log(result, " 나온건가");
+            // }
+            // 여기 없으니까 안됨
+            commit("SET_ADDRESS", res.data.memberAddress);
+            router.push({ name: "Home" });
+          } else {
+            this.dispatch("wallet");
+            commit("SET_TOKEN", res.headers.authorization);
+            commit("SET_USERNAME", credentials);
+            // if (!res.data.memberAddress) {
+            //   const result = wallet();
+            //   console.log(result, " 나온건가");
+            // }
+            // 여기 없으니까 안됨
+            // commit("SET_ADDRESS", res.data.memberAddress);
+            router.push({ name: "Home" });
+          }
+          // wallet;
+
+          // console.log(this.getters.isLogin);
+          // console.log(res.data, " 요기요");
         })
         .catch(() => {
           alert("로그인 정보가 일치하지 않습니다.");
@@ -117,6 +144,7 @@ export default createStore({
     logout: function ({ commit }) {
       commit("REMOVE_TOKEN");
       commit("REMOVE_ADDRESS");
+      commit("REMOVE_USERNAME");
 
       // router.push({ name: "Login" });
     },
@@ -126,6 +154,7 @@ export default createStore({
       data.append("memberPassword", credentials.memberPassword);
       // data.append("memberBio", credentials.memberBio);
       // data.append("file", credentials.file);
+      // console.log(credentials, "credentials");
       axios({
         method: "post",
         url: `${SERVER_URL}/api/members/register`,
@@ -134,7 +163,7 @@ export default createStore({
         },
         data: data,
       })
-        .then(() => {
+        .then((res) => {
           console.log("계좌 생성 성공");
           this.dispatch("login", credentials);
         })
@@ -143,6 +172,7 @@ export default createStore({
         });
     },
     async wallet({ commit }) {
+      console.log("실행은?");
       let newAddress = await web3.eth.accounts.create();
       let myAddress = await commit("SET_ADDRESS", newAddress.address);
       let getbalance = await web3.eth.getBalance(newAddress.address);

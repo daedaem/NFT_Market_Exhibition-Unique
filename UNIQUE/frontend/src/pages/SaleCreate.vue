@@ -279,6 +279,7 @@ export default {
           TOKEN_CA,
           NFT_CA
         );
+
         // console.log(saleFactoryContractResult.address, "saleFactoryContractResult");
         // 인코드 ABI
         const saleContractEncodedMethod = saleFactoryContractResult.encodeABI();
@@ -287,18 +288,18 @@ export default {
         const gasEstimate = await saleFactoryContractResult.estimateGas({ from: myAccount });
         // console.log(gasEstimate, "가스 측정");
         // 트랜잭션 정의
-        const rawTx = {
+        const saleCreateRawTx = {
           from: myAccount,
           // to: SALE_FACTORY_CA,
           // SALE_FACTORY_CA
           gas: gasEstimate,
           data: saleContractEncodedMethod,
         };
-        console.log(rawTx, "rawTx");
+        console.log(saleCreateRawTx, "saleCreateRawTx");
         // 계좌주소 얻기
         const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
         // 서명
-        const signedTx = await walletAccount.signTransaction(rawTx);
+        const signedTx = await walletAccount.signTransaction(saleCreateRawTx);
         // console.log(signedTx, "signedTx");
         // 서명할게 없으면 실패
         if (signedTx == null) {
@@ -323,16 +324,11 @@ export default {
           console.log(this.marketData.nftSeq, this.marketData.marketContractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
           // 백에드에 데이터 저장
           const NFTvalue = Number(this.marketData.price);
-          // console.log(startTime, "시작");
-          // console.log(endTime, typeof endTime, "끝");
-          // console.log(typeof saleCA);
           axios({
             method: "post",
             url: `${SERVER_URL}/api/market/register/`,
             headers: {
-              // Authorization: token,
               Authorization: this.authToken,
-              // "Content-Type": "multipart/form-data",
             },
             data: {
               nftSeq: this.marketInfoData.nft.nftSeq,
@@ -349,6 +345,13 @@ export default {
               alert("There is no item in our Market.");
             });
         }
+        // 토큰 맡기기 계약생성
+        const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        const NFTContractResponse = await NFTContractInstance.methods.approve(createSaleCA, this.marketInfoData.nft.nftTokenId);
+        console.log(results, "results");
+        const NFTEncodedMethod = NFTContractResponse.encodeABI();
+
+        // const NFTgasEstimate =
         // .on("reciept");
         // console.log("세일 함수 호출됨?");
         //         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods
