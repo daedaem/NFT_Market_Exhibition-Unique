@@ -67,14 +67,16 @@ export default createStore({
     REMOVE_ADDRESS: function (state) {
       state.myAddress = "";
     },
+    REMOVE_USERNAME: function (state) {
+      state.username = "";
+    },
     SET_USERNAME: function (state, credentials) {
-      state.username = credentials.username;
-      console.log(state.username);
+      state.username = credentials.memberId;
     },
     SET_ADDRESS: function (state, newAddress) {
-      state.myAddress = newAddress;
+      state.myAddress = newAddress.address;
       console.log(state.myAddress, typeof state.myAddress);
-      return newAddress.address;
+      // return newAddress.address;
     },
     EXHIBITION_CARDS: function (state, cards) {
       state.ExhibitionsCards = cards;
@@ -96,18 +98,29 @@ export default createStore({
       // router.push({ name: "Login" });
     },
     login: function ({ commit }, credentials) {
+      console.log(credentials, "credentials");
+      // if (credentials)
       axios({
         method: "post",
         url: `${SERVER_URL}/api/members/login`,
-        data: credentials,
+        data: {
+          memberId: credentials.memberId,
+          memberPassword: credentials.memberPassword,
+        },
       })
         .then((res) => {
-          // console.log(res);
+          // wallet;
+          console.log(res, "여긴데여");
           commit("SET_TOKEN", res.headers.authorization);
           commit("SET_USERNAME", credentials);
-          commit("SET_ADDRESS", res.data.memberAddress);
+          // if (!res.data.memberAddress) {
+          //   const result = wallet();
+          //   console.log(result, " 나온건가");
+          // }
+          // 여기 없으니까 안됨
+          // commit("SET_ADDRESS", res.data.memberAddress);
           console.log(this.getters.isLogin);
-          // console.log(res.data);
+          console.log(res.data, " 요기요");
           router.push({ name: "Home" });
         })
         .catch(() => {
@@ -117,6 +130,7 @@ export default createStore({
     logout: function ({ commit }) {
       commit("REMOVE_TOKEN");
       commit("REMOVE_ADDRESS");
+      commit("REMOVE_USERNAME");
 
       // router.push({ name: "Login" });
     },
@@ -126,6 +140,7 @@ export default createStore({
       data.append("memberPassword", credentials.memberPassword);
       // data.append("memberBio", credentials.memberBio);
       // data.append("file", credentials.file);
+      // console.log(credentials, "credentials");
       axios({
         method: "post",
         url: `${SERVER_URL}/api/members/register`,
@@ -134,7 +149,7 @@ export default createStore({
         },
         data: data,
       })
-        .then(() => {
+        .then((res) => {
           console.log("계좌 생성 성공");
           this.dispatch("login", credentials);
         })
