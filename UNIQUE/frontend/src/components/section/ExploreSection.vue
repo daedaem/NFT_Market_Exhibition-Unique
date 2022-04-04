@@ -33,7 +33,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import Pagination from "v-pagination-3";
 import Products from "@/components/section/Products";
 import axios from "axios";
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 // import Pagination from "../common/Pagination.vue";
 
 export default {
@@ -90,8 +90,7 @@ export default {
         url: `${SERVER_URL}/api/market`,
         headers: {
           // Authorization: token,
-          Authorization:
-            this.authToken,
+          Authorization: this.authToken,
         },
         params: { limit: 16, offset: 0, type: this.selectedTab, searchWord: "" },
         // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
@@ -113,9 +112,7 @@ export default {
   },
   // watch: {},
   computed: {
-    ...mapState([
-      "authToken"
-    ]),
+    ...mapState(["authToken"]),
     // 마켓아이템스에 아이템이 담겨져 있지 않으면 담아오고
     displayedRecords() {
       if (!this.nftMarketItems) {

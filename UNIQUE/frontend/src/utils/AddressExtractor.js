@@ -7,10 +7,10 @@ import Web3 from "web3";
  */
 
 export default function getAddressFrom(privKey) {
-  if ((privKey[0] === "0") & (privKey[1] === "x")) {
-  } else {
-    privKey = "0x" + privKey;
-  }
+  // if ((privKey[0] === "0") & (privKey[1] === "x")) {
+  // } else {
+  //   privKey = "0x" + privKey;
+  // }
   if (privKey.length === 66 && privKey.startsWith("0x")) {
     const web3 = new Web3(new Web3.providers.HttpProvider(process.env.GANACHE_SERVER_URL));
     const pubKey = web3.eth.accounts.privateKeyToAccount(privKey);

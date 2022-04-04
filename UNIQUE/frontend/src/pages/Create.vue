@@ -85,7 +85,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
+            <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
 
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
@@ -123,11 +123,12 @@ import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import { mapState } from "vuex";
 
 const NFT_ABI = SsafyNFT.abi;
-const NFT_CA = SsafyNFT.networks["1337"].address;
+// const NFT_CA = "0x6c927304104cdaa5a8b3691e0ade8a3ded41a333";
+const NFT_CA = SsafyNFT.networks["202112031219"].address;
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
-// let Web3 = require("web3");
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL)); // let Web3 = require("web3");
 // let web3 = new Web3();
 // web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
@@ -163,7 +164,7 @@ export default {
     },
     checkInputData() {
       // console.log(authToken);
-      console.log(this.$store.state.myAddress);
+      // console.log(this.$store.state.myAddress);
       // console.log(myAddress);
       // console.log(this.myAddress);
       // log(NFT_CA);myAddress
@@ -172,6 +173,7 @@ export default {
         alert("Please Input information for Create your item");
       } else {
         console.log("통과");
+        return true;
       }
     },
     async submitCreateNFT() {
@@ -189,17 +191,14 @@ export default {
        * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
        */
       // url:해시된, nft:이름, 작성자 일련번호
-      // console.log(this.authorPrivateKey);
+      console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // 내계좌 조회 1.
-      // 로컬확인시
-      // const temp = await web3.eth.getAccounts();
-      // console.log(temp);
-      // const myAccount = temp[0];
-      // console.log(myAccount);
+      console.log(checkPubKey, "체크퍼브키");
       // 서버 배포 후
-      const myAccount = this.$store.state.myAddress;
+      const myAccount = await this.myAddress;
+      console.log(myAccount, "되나");
 
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
@@ -227,26 +226,63 @@ export default {
           },
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
-        console.log(IPFSresult, "ipfs결과");
-        const ssafyToken1 = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        // console.log(IPFSresult, "ipfs결과");
+        const NFTcreateContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
         // console.log(myAccount);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: this.$store.state.myAddress });
-        // console.log(results);
+        const results = await NFTcreateContractInstance.methods.current().call({ from: myAccount });
+        // console.log(results)
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods.create(this.$store.state.myAddress, IPFSresult).send({ from: this.$store.state.myAddress, gas: 6000000, gasPrice: "20000000000" });
-        // console.log(response, "1");
+        const createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
+        const newtokenId = await NFTcreateContractInstance.methods.current().call();
+        // console.log(newtokenId, "newtokenId");
+        // console.log(createNFTResponse, "createNFTResponse");
+        const contractEncodedMethod = createNFTResponse.encodeABI();
+        // console.log(contractEncodedMethod, "contractEncodedMethod");
+        // 서명
+        // 원래는 서명하시겠습니까 뜨는게?!
 
-        const newtokenId = response.events.Transfer.returnValues.tokenId;
+        const gasEstimate = await createNFTResponse.estimateGas({ from: myAccount });
+        console.log(gasEstimate, "가스 측정");
+        const rawTx = {
+          from: myAccount,
+          to: NFT_CA,
+          gas: gasEstimate,
+          data: contractEncodedMethod,
+        };
+        console.log(rawTx, "rawTx");
+        //
+        const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        // console.log(walletAccount.methods);
+        console.log("walletAccount" + walletAccount);
+        const signedTx = await walletAccount.signTransaction(rawTx);
+        console.log(signedTx, "signedTx");
+        if (signedTx == null) {
+          console.log("TransactionSignFailedException");
+        } else {
+          let tran = await web3.eth
+            .sendSignedTransaction(signedTx.rawTransaction)
+            .on("receipt", console.log)
+            .on("transactionHash", (txhash) => {
+              console.log("Tx Hash: " + txhash);
+            });
+          //   .on("confirmation", console.log);
+          // console.log(tran, "tran");
+          // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
+          // console.log(resultofCreate, "컨트랙트어드레스");
+        }
+
+        // --------------------------
+        // const newtokenId = createNFTResponse.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
-        // console.log(newtokenId, "이거토큰아이디임");
+        console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
-        const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
+        const ownerof = await NFTcreateContractInstance.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
-        const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
+        const tokenurls = await NFTcreateContractInstance.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
         // nft에 대한 정보 백엔드에 업로드
-        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
+        console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
@@ -260,10 +296,10 @@ export default {
 
         // ownerof, newtokenId, IPFSresult
 
-        // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
+        // NFTcreateContractInstance.methods.create(myAccount, IPFSresult).then((res) => {
         //   console.log(res, "결과");
         // });
-        // console.log(ssafyToken1.methods, "방법들");
+        // console.log(NFTcreateContractInstance.methods, "방법들");
         // mintResult.methods.get().call().then(console.log);
         // const finalresult = mintResult.encodeABI();
         // .then(() => {
@@ -285,62 +321,12 @@ export default {
       // 위에 3번 전 과정
       // console.log(this.form);
     },
-    // async getValue() {
-    //   web3 = new Web3(web3.currentProvider);
-    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
-    //   this.currentAddress = electionContract._address;
-    //   let candidatesCount = await electionContract.methods.candidatesCount().call();
-    //   this.tableData = [];
-    //   for (let i = 0; i <script candidatesCount; i++) {
-    //     if (i != 0) {
-    //       let candidates = await electionContract.methods.candidates(i).call();
-    //       this.tableData.push({ id: i, name: candidates.name, votes: candidates.voteCount });
-    //     }
-    //   }
-    // },
-    // async setVote() {
-    //   web3 = new Web3(web3.currentProvider);
-    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
-    //   let vote = await electionContract.methods.vote(this.selectedCandidate).send({ from: process.env.VUE_APP_ETHADDRESS });
-    //   console.log(vote);
-    // },
   },
   computed: {
     ...mapState(["myAddress"]),
     ...mapState(["authToken"]),
   },
   mounted() {
-    // async function loadMyAccount() {
-    //   await web3.eth.getAccounts().then((res) => (this.myAccount = res[0]));
-    //   // console.log(myAccounts[0]);
-    //   await console.log(this.myAccount);
-    //   // this.myAccount = await myAccounts[0];
-
-    //   // console.log(myAccounts, "내계좌주소");
-    //   // console.log(mintResult, "결과 확인");
-    //   // 함수결과값
-    //   // 메타 url:
-    // }
-    // loadMyAccount();
-    // async function hello() {
-    //   const result = await new Web3.eth.Contract(abi, NFT_CA);
-    //   console.log(result);
-    //   return result;
-    // }
-    // hello().then((res) => console.log(res, "뒤"));
-
-    // async function hello2() {
-    //   const results = await Web3.eth.Contract(ABI, NFT_CA);
-    //   console.log(results);
-    //   return results;
-    // }
-    // hello2().then((res) => console.log(res, "뒤2"));
-
-    // 현재 작가는 해당 아이디 이후 변경예정
-    // console.log(web3.eth.getAccounts(), "요기");
-    // function getAccount() {
-    // web3.eth.getAccounts(function)}
-
     /*==============File upload =============== */
     function fileUpload(selector) {
       let elem = document.querySelectorAll(selector);
@@ -384,9 +370,6 @@ export default {
       }
     }
     checkboxSwitcher(".checkbox-switcher");
-  },
-  computed: {
-    ...mapState(["authToken"]),
   },
 };
 </script>

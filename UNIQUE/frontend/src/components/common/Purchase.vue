@@ -77,15 +77,15 @@ import SsafyNFT from "../../../smart-contracts/build/contracts/SsafyNFT.json";
 import SaleFactory from "../../../smart-contracts/build/contracts/SaleFactory.json";
 import Sale from "../../../smart-contracts/build/contracts/Sale.json";
 let TOKEN_ABI = SsafyToken.abi;
-let TOKEN_CA = SsafyToken.networks["1337"].address;
+let TOKEN_CA = "0x6c927304104cdaa5a8b3691e0ade8a3ded41a333";
 // let NFT_ABI = SsafyNFT.abi;
-// let NFT_CA = SsafyNFT.networks["1337"].address;
+// let NFT_CA = SsafyNFT.networks["202112031219"].address;
 // let SALE_FACTORY_ABI = SaleFactory.abi;
-// let SALE_FACTORY_CA = SaleFactory.networks["1337"].address;
+// let SALE_FACTORY_CA = SaleFactory.networks["202112031219"].address;
 let SALE_ABI = Sale.abi;
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
-
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 export default {
   name: "Purchase",
   data() {
@@ -99,6 +99,15 @@ export default {
   },
   props: ["product"],
   methods: {
+    async check() {
+      const ssafyToken1 = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+
+      const getbalance2 = await ssafyToken1.methods.balanceOf("0x96c6d8B4DF69AfBA140cA3057c3A16907b6a7441").call();
+
+      console.log(getbalance2, "맞나이거");
+      console.log(TOKEN_CA, "토큰");
+    },
+
     async purchaseNFT() {
       const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       const temp = await web3.eth.getAccounts();
@@ -135,7 +144,9 @@ export default {
     },
   },
   created() {
-    console.log(this.product);
+    this.check();
+    // console.log(getbalance);
+    // console.log(this.product);
     // this.marketContractAddress = this.product.marketContractAddress;
     // this.price = this.product.price;
     // this.nftOwnerAddress = this.product.nftOwnerAddress;

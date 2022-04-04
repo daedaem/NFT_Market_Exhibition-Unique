@@ -13,9 +13,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .h3 {
-  // @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
+  // @import url("https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap");
   // font-family: "DM Serif Display", serif;
   font-family: "DM Serif Display", serif;
-  font-family: "Ruslan Display", cursive;
+  // font-family: 'Ramaraja', serif;
+  // font-size: 40px;
+  // font-family: "Ruslan Display", cursive;
 }
 </style>
