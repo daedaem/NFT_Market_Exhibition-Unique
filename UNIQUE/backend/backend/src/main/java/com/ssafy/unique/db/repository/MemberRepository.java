@@ -45,4 +45,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	@Transactional
 	@Query(value= " update member set ssf = ? where member_seq = ? " , nativeQuery = true)
 	Integer updateSsfById(Long ssf, Long memberSeq);
+
+
+	Member findByMemberAddress(String memberAddress);
 }
