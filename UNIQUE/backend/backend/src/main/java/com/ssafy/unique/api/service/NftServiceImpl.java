@@ -120,9 +120,10 @@ public class NftServiceImpl implements NftService{
             List<Market> marketList = marketRepository.findRecordByNftSeq(nft.getNftSeq()); // nft 거래 내역
 // 매치시킨다
 // 바이어에 대한 정보 담긴 리스트
-            List<String> buyerImageList = new ArrayList<>();
+
+            List<Member> buyerImageList = new ArrayList<>();
             for (Market m : marketList) {
-                buyerImageList.add(memberRepository.findProfileImage(m.getBuyer()));
+                buyerImageList.add(memberRepository.findByMemberAddress(m.getBuyer()));
             }
             System.out.println(buyerImageList.toString());
             res.setNft(nft);

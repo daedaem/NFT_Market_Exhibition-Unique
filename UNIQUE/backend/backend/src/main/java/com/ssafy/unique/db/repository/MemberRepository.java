@@ -40,4 +40,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	@Query(value = "select profile_image_url from member where member_id = ?",nativeQuery = true)
 	String findProfileImage(String memberId);
+
+	Member findByMemberAddress(String memberAddress);
 }
