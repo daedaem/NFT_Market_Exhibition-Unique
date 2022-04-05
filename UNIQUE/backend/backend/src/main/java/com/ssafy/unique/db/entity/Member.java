@@ -46,4 +46,7 @@ public class Member {
 	
 	@Column(name = "MEMBER_BIO")
 	private String memberBio;
+	
+	@Column(name = "SSF")
+	private Long ssf;
 }
