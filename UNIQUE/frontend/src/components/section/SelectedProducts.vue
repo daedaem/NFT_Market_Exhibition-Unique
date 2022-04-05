@@ -1,35 +1,31 @@
 <template>
   <div class="card card-full">
-    <div>{{product.nft.nftSeq}}</div>
-    <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
+    <div class="card-image">
       <img src="http://img.khan.co.kr/news/2020/10/16/2020101601001687000138341.jpg" class="card-img-top" alt="art image" />
       <!-- {{ product.nft.nftWorkUri }} -->
     </div>
     <div class="card-body p-4">
-      <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
+      <h3 class="card-title text-truncate mb-0">{{ product.nftName }}</h3>
       <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
-        <span class="me-1 card-author-by">By</span>
-        <div class="">
-          <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
-          <!-- end dropdown-menu -->
-        </div>
+        <!-- <span class="me-1 card-author-by">Create at: </span> -->
+        <div class="me-1 card-author-by" style="">{{ newTime }}</div>
         <!-- end custom-tooltip-wrap -->
       </div>
       <!-- end card-author -->
       <div class="card-price-wrap d-flex align-items-center justify-content-sm-between mb-3">
         <div class="me-5 me-sm-2">
-          <span class="card-price-title">Price</span>
-          <span class="card-price-number">&dollar;{{ product.price }}</span>
+          <span class="card-price-title">Author</span>
+          <span class="card-price-number">{{ product.nftAuthorName }}</span>
         </div>
         <div class="text-sm-end">
           <span class="card-price-title">NFT Type</span>
-          <span class="card-price-number">{{ product.nft.nftType }}</span>
+          <span class="card-price-number">{{ product.nftType }}</span>
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.nft.nftSeq)]" style="background-color: #00FF7F">Remove</span>
-      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.nft.nftSeq)]">Add</span>
+      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.nftSeq)]" style="background-color: #00FF7F">Remove</span>
+      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.nftSeq)]">Add</span>
     </div>
     <!-- end card-body -->
     <!-- <router-link
@@ -79,10 +75,30 @@ export default {
       this.$emit('insertId',Id)
     },
     isClicked() {
-      if (this.selectedIds.includes(this.product.marketId)){
+      if (this.selectedIds.includes(this.product.nftSeq)){
         this.clicked = true
       }
-    }
+    },
+    calculatedReplyTime(res) {
+      console.log(res,'22e2e2');
+      let ReplynewTime = new Date(res);
+      var ReplynowTime = new Date();
+      const milliSeconds = ReplynowTime - ReplynewTime;
+      const seconds = milliSeconds / 1000;
+      if (seconds < 60) return ` Just now`;
+      const minutes = seconds / 60;
+      if (minutes < 60) return `${Math.floor(minutes)} min ago`;
+      const hours = minutes / 60;
+      if (hours < 24) return `${Math.floor(hours)} h age`;
+      const days = hours / 24;
+      if (days < 7) return `${Math.floor(days)} d ago`;
+      const weeks = days / 7;
+      if (weeks < 5) return `${Math.floor(weeks)} w ago`;
+      const months = days / 30;
+      if (months < 12) return `${Math.floor(months)} mon ago`;
+      const years = days / 365;
+      return `${Math.floor(years)} y ago`;
+    },
   },
   mounted() {
 
@@ -90,6 +106,7 @@ export default {
   created: function () {
     console.log(this.product, 'w조');
     this.isClicked()
+    this.newTime = this.calculatedReplyTime(this.product.regDt)
   },
 };
 </script>
