@@ -4513,7 +4513,7 @@ let SectionData = {
   // register data
   registerData: {
     img: require("@/images/thumb/remote-2.png"),
-    title: 'Sign Up to <span class="text-primary">EnftyMart!</span>',
+    title: 'Sign Up to <span class="text-primary">Unique</span>',
     subTitle: "Fill up the below fields to create an account",
     termText: "By signing up, you agree to our Terms and conditions and Privacy Policy",
     btnText: "Create an Account",

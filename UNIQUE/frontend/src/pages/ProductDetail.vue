@@ -8,7 +8,7 @@
     <div style="max-width: 1200px; margin: auto">
       <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
-        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id }, data: {} }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id },}" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
       </div>
     </div>
@@ -31,15 +31,15 @@
                 <div class="tab-content mt-3" id="myTabContent">
                   <div class="tab-pane fade show active" id="owners" role="tabpanel" aria-labelledby="owners-tab">
                     <div class="item-detail-tab-wrap">
-                      <div class="card-media card-media-s2 mb-3" v-for="item in ownerlist" :key="item.id">
-                        <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
-                          <img :src="item.avatar" alt="avatar" />
+                      <div class="card-media card-media-s2 mb-3">
+                        <router-link :to="itemDetailList[1].path" class="card-media-img flex-shrink-0 d-block">
+                          <img :src="itemDetailList[1].avatar" alt="avatar" />
                         </router-link>
                         <div class="card-media-body text-truncate">
                           <p class="fw-semibold text-truncate">
-                            <a :href="item.path" class="text-black">{{ item.title }}</a>
+                            <a :href="itemDetailList[1].path" class="text-black">{{ itemDetailList[1].title }}</a>
                           </p>
-                          <p class="small">{{ item.subTitle }}</p>
+                          <p class="small">{{ itemDetailHistoryList[0].subTitle }}</p>
                         </div>
                       </div>
                       <!-- end card -->
@@ -91,7 +91,7 @@
                 <h1 class="item-detail-title mb-2">{{ title }}</h1>
               </div>
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
-                <span class="item-detail-text-meta">{{ metaText }}</span>
+                <span class="item-detail-text-meta">{{ onsale }}</span>
                 <span class="dot-separeted"></span>
                 <span class="item-detail-text-meta">{{ metaTextTwo }}</span>
                 <span class="dot-separeted"></span>
@@ -204,9 +204,11 @@
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
-import SectionData from "@/store/store.js";
-import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+import axios from "axios";
+import SectionData from "@/store/store.js";
+import { mapState } from "vuex";
+// import Purchase from "@/components/common/Purchase";
 
 export default {
   name: "ProductDetail",
@@ -215,10 +217,10 @@ export default {
     return {
       SectionData,
       id: this.$route.params.id,
-      title: "3번 데이터",
+      title: "작품 이름", // 작품이름
       imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
       // imgLg: "@/images/favicon.png",
-      metaText: "Not for sale",
+      onsale: "Not for sale", // 판매 중 인지
       metaTextTwo: "500 editions",
       metaTextThree: "500 editions",
       content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
@@ -257,14 +259,14 @@ export default {
       itemDetailList: [
         {
           id: 1,
-          title: "@nathan_walls",
+          title: "작가 이름",
           subTitle: "Creator",
           avatar: require("@/images/thumb/avatar.jpg"),
           path: "/author",
         },
         {
           id: 2,
-          title: "@kamran_ahmed",
+          title: "보유자 이름",
           subTitle: "Collection",
           avatar: require("@/images/thumb/avatar-2.jpg"),
           path: "/author",
@@ -272,18 +274,42 @@ export default {
       ],
     };
   },
+  // components: {
+  //   Purchase,
+  // },
+  created() {
+    this.getItmeDetail()
+  },
   methods: {
-    async getItmesByAddress(address) {
-      const getItems = await axios({
+    getItmeDetail() {
+      axios({
         method: "GET",
         url: `${SERVER_URL}/api/nft/detail/${this.$route.params.id}`,
-      }).then((res) => {
-        console.log(res);
+        headers: {
+          // Authorization: token,
+          Authorization:
+            this.authToken
+        },
+      })
+      .then((res)=> {
+        console.log(res.data,'eeeeeeeeeeeeeeee')
+        this.itemDetailList[0].title = res.data.AuthorMember.memberId
+        this.itemDetailList[1].title = res.data.OwnerMember.memberId
+        // this.itemDetailList[0].avatar = res.data.AuthorMember.profile
+        this.title = res.data.nft.nftName
+        if (res.data.nft.onsale){
+          this.onsale = "On Sale"
+        }else {
+          this.onsale = "Not for Sale"
+        }
+        this.content = res.data.nft.nftDescription
+        // this.itemDetailHistoryList = res.data.marketList
       });
+
     },
   },
-  created() {
-    this.getItmesByAddress();
-  },
+  computed: {
+    ...mapState(["authToken"]),
+  }
 };
 </script>

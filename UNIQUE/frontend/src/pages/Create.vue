@@ -148,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: "해성",
+        nftAuthorName: this.username,
         nftDescription: null,
         file: null,
       },
@@ -210,8 +210,9 @@ export default {
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
         console.log("일치합니다.");
+        console.log(this.username,"11111111111111111");
         let data = new FormData();
-        data.append("nftAuthorName", this.form.nftAuthorName);
+        data.append("nftAuthorName", this.username);
         data.append("nftName", this.form.nftName);
         data.append("nftDescription", this.form.nftDescription);
         data.append("file", this.form.file);
@@ -323,7 +324,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["myAddress"]),
+    ...mapState(["myAddress","username"]),
     ...mapState(["authToken"]),
   },
   mounted() {
