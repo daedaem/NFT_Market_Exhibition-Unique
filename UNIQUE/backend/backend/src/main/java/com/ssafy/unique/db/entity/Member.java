@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +19,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
+@DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
@@ -33,7 +37,7 @@ public class Member {
 
 	@Column(name = "MEMBER_ADDRESS")
 	private String memberAddress;
-	
+
 	@Column(name = "PROFILE_IMAGE_URL")
 	private String profileImageUrl;
 	
