@@ -148,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: "해성",
+        nftAuthorName: null,
         nftDescription: null,
         file: null,
       },
@@ -209,7 +209,7 @@ export default {
 
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-        console.log("일치합니다.");
+        // console.log("일치합니다.");
         let data = new FormData();
         data.append("nftAuthorName", this.form.nftAuthorName);
         data.append("nftName", this.form.nftName);
@@ -254,18 +254,20 @@ export default {
         //
         const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
         // console.log(walletAccount.methods);
-        console.log("walletAccount" + walletAccount);
+        // console.log("walletAccount" + walletAccount);
         const signedTx = await walletAccount.signTransaction(rawTx);
         console.log(signedTx, "signedTx");
+        // this.createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+        // console.log(createSaleCAss, "여기 뭐떠?");
         if (signedTx == null) {
           console.log("TransactionSignFailedException");
         } else {
-          let tran = await web3.eth
-            .sendSignedTransaction(signedTx.rawTransaction)
-            .on("receipt", console.log)
-            .on("transactionHash", (txhash) => {
-              console.log("Tx Hash: " + txhash);
-            });
+          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction).on("receipt", console.log);
+          // .on("transactionHash", (txhash) => {
+          //   console.log("Tx Hash: " + txhash);
+          // });
+          const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // console.log(createSaleCAss, "여기 뭐떠?");
           //   .on("confirmation", console.log);
           // console.log(tran, "tran");
           // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
@@ -275,7 +277,7 @@ export default {
         // --------------------------
         // const newtokenId = createNFTResponse.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
-        console.log(newtokenId, "이거토큰아이디임");
+        // console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
         const ownerof = await NFTcreateContractInstance.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
