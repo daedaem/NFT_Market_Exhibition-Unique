@@ -14388,66 +14388,15 @@
     "version": "0.8.10+commit.fc410830.Emscripten.clang"
   },
   "networks": {
-    "1337": {
-      "events": {
-        "0x874bdb649427dfeceaa7f10beee59a823d3e45a6814f50bc18ba2adefd058e48": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_saleContract",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "_owner",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_workId",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewSale",
-          "type": "event"
-        },
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0xA6b0Bd3e5147Ec38D72e11dc6508Cd5150F70925",
-      "transactionHash": "0xbcbf41117f0971eeaee83eff73f4de0caa470b5c77369c62aa31be708a4ac985"
-    },
     "202112031219": {
       "events": {},
       "links": {},
-      "address": "0x8a97ef9259F5Da85CA23bCb880DFC0CF6c9825Ac",
-      "transactionHash": "0x16b3567665e4ae9e7d7ca3a7015733e43d252e3649f69fe5bb17e6494dfb97af"
+      "address": "0x1409644d552ffbd942750B4d76d28a6fAcCFc760",
+      "transactionHash": "0x3dd10a0c7cd83975e68111179bf531a89f0a62dc893e620bb3c98c0711a22f5b"
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-04T15:18:15.939Z",
+  "updatedAt": "2022-04-05T03:12:47.864Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
