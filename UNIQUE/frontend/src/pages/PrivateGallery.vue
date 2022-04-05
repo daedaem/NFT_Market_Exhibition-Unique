@@ -122,7 +122,7 @@ export default {
           Authorization:
           this.authToken,
         },
-        params: { limit: 100, offset: 0, type: "CUR"},
+        params: { limit: 100, offset: 0, type: "PRI"},
       })
       .then((res)=> {
         console.log(res.data)

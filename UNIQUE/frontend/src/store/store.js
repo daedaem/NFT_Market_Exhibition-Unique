@@ -1271,6 +1271,12 @@ let SectionData = {
         slug: "history-tab",
         bsTarget: "#history",
       },
+      {
+        id: 3,
+        title: "Detail",
+        slug: "detail-tab",
+        bsTarget: "#detail",
+      },
     ],
     itemDetailOwnerList: [
       {

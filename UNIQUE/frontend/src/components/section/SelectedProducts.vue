@@ -1,5 +1,6 @@
 <template>
   <div class="card card-full">
+    <div>{{product.nft.nftSeq}}</div>
     <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
       <img src="http://img.khan.co.kr/news/2020/10/16/2020101601001687000138341.jpg" class="card-img-top" alt="art image" />
       <!-- {{ product.nft.nftWorkUri }} -->
@@ -27,8 +28,8 @@
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.marketId)]" style="background-color: #00FF7F">Remove</span>
-      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.marketId)]">Add</span>
+      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.nft.nftSeq)]" style="background-color: #00FF7F">Remove</span>
+      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.nft.nftSeq)]">Add</span>
     </div>
     <!-- end card-body -->
     <!-- <router-link
