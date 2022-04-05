@@ -121,15 +121,9 @@ export default createStore({
             commit("SET_ADDRESS", res.data.memberAddress);
             router.push({ name: "Home" });
           } else {
-<<<<<<< HEAD
-            commit("SET_TOKEN", res.headers.authorization);
-            commit("SET_USERNAME", credentials);
-            this.dispatch("wallet");
-=======
             this.dispatch("wallet");
             commit("SET_TOKEN", res.headers.authorization);
             commit("SET_USERNAME", credentials);
->>>>>>> 9919f52424a5ad314c8bacf7a773e0462c9de709
             // if (!res.data.memberAddress) {
             //   const result = wallet();
             //   console.log(result, " 나온건가");
@@ -158,13 +152,8 @@ export default createStore({
       let data = new FormData();
       data.append("memberId", credentials.memberId);
       data.append("memberPassword", credentials.memberPassword);
-<<<<<<< HEAD
       data.append("memberBio", credentials.memberBio);
       data.append("profileImage", credentials.file);
-=======
-      // data.append("memberBio", credentials.memberBio);
-      // data.append("file", credentials.file);
->>>>>>> 9919f52424a5ad314c8bacf7a773e0462c9de709
       // console.log(credentials, "credentials");
       axios({
         method: "post",

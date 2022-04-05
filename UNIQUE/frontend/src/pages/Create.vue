@@ -148,11 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-<<<<<<< HEAD
         nftAuthorName: this.username,
-=======
-        nftAuthorName: null,
->>>>>>> 9919f52424a5ad314c8bacf7a773e0462c9de709
         nftDescription: null,
         file: null,
       },
@@ -213,12 +209,7 @@ export default {
 
       // 공개키가 유효하다면 정보 등록
       if (checkPubKey === myAccount) {
-<<<<<<< HEAD
-        console.log("일치합니다.");
-        console.log(this.username,"11111111111111111");
-=======
         // console.log("일치합니다.");
->>>>>>> 9919f52424a5ad314c8bacf7a773e0462c9de709
         let data = new FormData();
         data.append("nftAuthorName", this.username);
         data.append("nftName", this.form.nftName);

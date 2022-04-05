@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row align-items-center justify-content-center">
         <div class="col-lg-11 col-md-11 col-sm-11">
-          <form action="#" class="form-create mb-5 mb-lg-0">
+          <!-- <form action="#" class="form-create mb-5 mb-lg-0"> -->
             <div class="section-head-sm ps-4">
               <h2 class="mb-2" v-html="SectionData.registerData.title"></h2>
             </div>
@@ -33,8 +33,8 @@
                 <h4 class="mb-2">Bio</h4>
                 <textarea type="password" class="form-control" style="height: 100%" id="bio" placeholder="Input your Biography" v-model="credentials.memberBio" autocomplete="off"></textarea>
                 <div class="my-3">
-                  <button class="btn btn-dark d-flex" style="margin-left: auto" type="submit" @click="signup(credentials)">{{ SectionData.registerData.btnText }}</button>
 
+                  <button class="btn btn-dark d-flex" style="margin-left: auto" type="submit" @click="signup(credentials)">{{ SectionData.registerData.btnText }}</button>
                   <p class="mt-3 form-text text-end">
                     {{ SectionData.registerData.haveAccountText }} <router-link :to="SectionData.registerData.btnTextLink" class="btn-link">{{ SectionData.registerData.btnTextTwo }}</router-link>
                   </p>
@@ -43,7 +43,7 @@
               <!-- bio end-->
               <!-- end form-floating -->
             </div>
-          </form>
+          <!-- </form> -->
           <!-- <p class="mb-4 form-text text-end">{{ SectionData.registerData.termText }}</p> -->
 
           <!-- ------- -->
