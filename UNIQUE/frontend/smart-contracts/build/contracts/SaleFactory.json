@@ -14388,6 +14388,57 @@
     "version": "0.8.10+commit.fc410830.Emscripten.clang"
   },
   "networks": {
+    "1337": {
+      "events": {
+        "0x874bdb649427dfeceaa7f10beee59a823d3e45a6814f50bc18ba2adefd058e48": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_saleContract",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_owner",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_workId",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewSale",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x951377CFcD105AF1c5dE3749d32e2223c39FDcFe",
+      "transactionHash": "0x2a975ac8fe5c8d3f9f3113937e7a73f418bf0995ee06e7bd1ee9c2377e510cff"
+    },
     "5777": {
       "events": {
         "0x874bdb649427dfeceaa7f10beee59a823d3e45a6814f50bc18ba2adefd058e48": {
@@ -14441,7 +14492,7 @@
     }
   },
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-02T00:04:28.248Z",
+  "updatedAt": "2022-04-04T02:35:04.828Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
