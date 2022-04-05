@@ -70,7 +70,7 @@ contract SaleFactory is Ownable {
 
         // 4-2). 등록된 세일들에 대한 내용들을 sales리스트에 추가한다.
         // sales[_workId.current()] = address(this);
-        sales.push(address(sale));
+        sales.push(address(this));
         // 4-3). 생성된 sale 컨트랙트 주소정보를 반환한다.
         // 밑둘다 있어야하는건지 하나만 있으면 되는건지
         emit NewSale(address(sale), msg.sender, _workId.current());
