@@ -229,6 +229,7 @@ export default {
       authorPrivateKey: null,
       newtokenId: null,
       marketData: { nftSeq: "", marketContractAddress: null, price: "", startTime: "", endTime: "" },
+      createSaleCA: null,
       // startTime: "",
       // endTime: "",
     };
@@ -279,64 +280,76 @@ export default {
           TOKEN_CA,
           NFT_CA
         );
+        // const slaesitems = await saleFactoryContractInsatnce.methods.allSales().call();
+        // myAccount, console.log(slaesitems, "전체!!!!!");
+        // myAccount, console.log(slaesitems[slaesitems.length - 1], "소수!!!!!");
+        // console.log(salesInstance, "salesInstancesalesInstance");
+        // 생성된 모든 세일들에서 내계좌로 만든 아이템 중 제일 최신거가 지금 만든거니까
+        const transha = await saleFactoryContractInsatnce.getPastEvents("NewSale", { filter: { _owner: myAccount } });
+        const SaleCA = transha[transha.length - 1].returnValues[0];
+        const SaleID = transha[transha.length - 1].returnValues[2];
+        // const Cas = await web3.eth.getTransactionReceipt(transha[0].transactionHash);
+        // console.log(Cas, "맨 마지막!!!!");
         // console.log(saleFactoryContractResult.address, "saleFactoryContractResult");
         // 인코드 ABI
-        const saleContractEncodedMethod = saleFactoryContractResult.encodeABI();
+        const saleContractEncodedMethod = await saleFactoryContractResult.encodeABI();
         // console.log(saleContractEncodedMethod, "saleFactoryContractResult");
 
         const gasEstimate = await saleFactoryContractResult.estimateGas({ from: myAccount });
         // console.log(gasEstimate, "가스 측정");
         // 트랜잭션 정의
-        const rawTx = {
+        const saleCreateRawTx = {
           from: myAccount,
-          // to: SALE_FACTORY_CA,
+          to: SaleCA,
           // SALE_FACTORY_CA
           gas: gasEstimate,
           data: saleContractEncodedMethod,
         };
-        // console.log(rawTx, "rawTx");
+        console.log(saleCreateRawTx, "saleCreateRawTx");
         // 계좌주소 얻기
-        const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        const walletAccount = await web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
         // 서명
-        const signedTx = await walletAccount.signTransaction(rawTx);
+
+        // console.log(res);
+        const signedTx = await walletAccount.signTransaction(saleCreateRawTx);
         // console.log(signedTx, "signedTx");
         // 서명할게 없으면 실패
         if (signedTx == null) {
-          console.log("TransactionSignFailedException");
+          alert("TransactionSignFailedException");
         }
         // 서명할게 있으면
         else {
           //
-          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+          // let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
           // .on("receipt", console.log)
-          // const saleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
-          // console.log(saleCA, "컨트랙트어드레스");
+          // this.createSaleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // this.createSaleCA = await web3.eth.getTransactionReceipt(tran.transactionHash.contract);
+          // console.log(this.createSaleCA, "컨트랙트어드레스");
           // console.log(SALE_FACTORY_CA, "SALE_FACTORY_CA");
           // Sale contract 열기
-
+          // const salesInstance = await saleFactoryContractInsatnce.methods.allSales().call();
+          // console.log(salesInstance, "salesInstancesalesInstance");
           // sale데이터 정리
+
           this.marketData.nftSeq = this.marketInfoData.nft.nftSeq;
-          this.marketData.marketContractAddress = saleCA.contractAddress;
+          // this.marketData.marketContractAddress = this.createSaleCA.contractAddress;
+          // this.marketData.marketContractAddress = this.createSaleCA.contractAddress;
           // this.marketData.price = Number(this.marketData.price);
           this.marketData.startTime = startTime;
           this.marketData.endTime = endTime;
-          console.log(this.marketData.nftSeq, this.marketData.marketContractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
+          // console.log(this.marketData.nftSeq, this.marketData.marketContractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
           // 백에드에 데이터 저장
           const NFTvalue = Number(this.marketData.price);
-          // console.log(startTime, "시작");
-          // console.log(endTime, typeof endTime, "끝");
-          // console.log(typeof saleCA);
           axios({
             method: "post",
             url: `${SERVER_URL}/api/market/register/`,
             headers: {
-              // Authorization: token,
               Authorization: this.authToken,
-              // "Content-Type": "multipart/form-data",
             },
             data: {
               nftSeq: this.marketInfoData.nft.nftSeq,
-              marketContractAddress: this.marketData.marketContractAddress,
+              // marketContractAddress: this.marketData.marketContractAddress,
+              marketContractAddress: SaleCA,
               price: NFTvalue,
               startTime: startTime,
               endTime: endTime,
@@ -349,42 +362,75 @@ export default {
               alert("There is no item in our Market.");
             });
         }
-        // .on("reciept");
-        // console.log("세일 함수 호출됨?");
-        //         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods
-        // .createSale(this.marketInfoData.nft.nftTokenId, this.marketData.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
-        // .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
-        // ---------------------------------------------
-        // 호출 후 CA 저장 후 백엔드에 보내기
-        // 백엔드에 해당 sale contract adress 저장해야함
-        // const saleCA = saleFactoryContractResult.logs[0].args._saleContract;
-        // cosnole.log(saleCA);
-        // console.log(saleCA, "saleCA 나왔는가");
-        // await axios({
-        //   method: "post",
-        //   url: `${SERVER_URL}/api/market/register`,
-        //   data: { nftSeq: 토큰아이디, marketContractAddress: saleCA, price: this.marketData.price, startTime: this.date[0], endTime: this.date[1] },
-        // }).catch(() => {
-        //   alert("로그인 정보가 일치하지 않습니다.");
-        // });
+        // 토큰 맡기기 계약생성
+        const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        // this.createSaleCA???
+        console.log(SaleCA, this.marketInfoData.nft.nftTokenId, "요기입니다요");
+        const NFTContractResponse = await NFTContractInstance.methods.approve(SaleCA, this.marketInfoData.nft.nftTokenId);
+        // console.log(NFTContractResponse, "NFTContractResponse: CA");
+        const NFTEncodedMethod = NFTContractResponse.encodeABI();
 
-        // // 해당 ssafy 토큰 컨트랙트의 권한 승인 부여
-        // // 1. 해당 nft contract adress백엔드에서 호출해오기
-        // // 2.권한 부여
-        // const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-        // const resultOfRegisterApprove = await NFTContractInstance.methods.approve(saleCA, 토큰아이디);
-        // console.log(resultOfRegisterApprove);
-        // await this.$router.go({ name: "ProductDetail", params: { id: NFT_CA } });
-        // //
-      }
-      // 프라이빗 키와 다르다면
-      else {
+        const NFTgasEstimate = await NFTContractResponse.estimateGas({ from: myAccount });
+        console.log(NFTgasEstimate, "NFTgasEstimate가스 측정");
+        const NFTrawTx = {
+          from: myAccount,
+          // to: this.createSaleCA,
+          to: SaleCA,
+          gas: NFTgasEstimate,
+          data: NFTEncodedMethod,
+        };
+        console.log(NFTrawTx, "NFTrawTx");
+        //
+        const MYwalletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        // console.log(walletAccount.methods);
+        console.log("walletAccount" + MYwalletAccount);
+        const NFTsignedTx = await MYwalletAccount.signTransaction(NFTrawTx);
+        console.log(NFTsignedTx, "NFTsignedTx");
+        if (NFTsignedTx == null) {
+          console.log("TransactionSignFailedException");
+        } else {
+          let tran = await web3.eth.sendSignedTransaction(NFTsignedTx.rawTransaction).on("receipt", console.log);
+          // .on("transactionHash", (txhash) => {
+          // console.log("Tx Hash: " + txhash);
+          // });
+          // console.log(tran, "tran");
+          // const NFTgasEstimate =
+          // .on("reciept");
+          // console.log("세일 함수 호출됨?");
+          //         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods
+          // .createSale(this.marketInfoData.nft.nftTokenId, this.marketData.price, Date.parse(startTime), Date.parse(endTime), TOKEN_CA, NFT_CA)
+          // .send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
+          // ---------------------------------------------
+          // 호출 후 CA 저장 후 백엔드에 보내기
+          // 백엔드에 해당 sale contract adress 저장해야함
+          // const this.createSaleCA = saleFactoryContractResult.logs[0].args._saleContract;
+          // cosnole.log(this.createSaleCA);
+          // console.log(this.createSaleCA, "this.createSaleCA 나왔는가");
+          // await axios({
+          //   method: "post",
+          //   url: `${SERVER_URL}/api/market/register`,
+          //   data: { nftSeq: 토큰아이디, marketContractAddress: this.createSaleCA, price: this.marketData.price, startTime: this.date[0], endTime: this.date[1] },
+          // }).catch(() => {
+          //   alert("로그인 정보가 일치하지 않습니다.");
+          // });
+
+          // // 해당 ssafy 토큰 컨트랙트의 권한 승인 부여
+          // // 1. 해당 nft contract adress백엔드에서 호출해오기
+          // // 2.권한 부여
+          // const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+          // const resultOfRegisterApprove = await NFTContractInstance.methods.approve(this.createSaleCA, 토큰아이디);
+          // console.log(resultOfRegisterApprove);
+          // await this.$router.go({ name: "ProductDetail", params: { id: NFT_CA } });
+          // //
+        }
+        // 프라이빗 키와 다르다면
+      } else {
+        alert("프라이빗키가 안맞습니다.");
         this.authorPrivateKey = null;
         // this.$router.go();
       }
     },
   },
-
   computed: {
     ...mapState(["myAddress"]),
     ...mapState(["authToken"]),
