@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ssafy.unique.api.request.MemberBioReq;
 import com.ssafy.unique.api.request.MemberReq;
+import com.ssafy.unique.api.response.MemberRes;
 import com.ssafy.unique.api.response.MemberResultRes;
 import com.ssafy.unique.api.response.PopularRes;
 import com.ssafy.unique.api.response.ResultRes;
@@ -281,6 +282,23 @@ public class MemberServiceImpl implements MemberService{
 			res.setResult(FAIL);
 		}
 		return res;
+	}
+
+	@Override
+	public MemberRes findMemberById(Long memberSeq) {
+		Member member = memberRepository.findById(memberSeq).get();
+		
+		MemberRes memberRes = MemberRes.builder()
+				.memberSeq(member.getMemberSeq())
+				.memberId(member.getMemberId())
+				.memberAddress(member.getMemberAddress())
+				.authority(member.isAuthority())
+				.memberBio(member.getMemberBio())
+				.ssf(member.getSsf())
+				.regDt(member.getRegDt())
+				.build();
+		
+		return memberRes;
 	}
 
 }

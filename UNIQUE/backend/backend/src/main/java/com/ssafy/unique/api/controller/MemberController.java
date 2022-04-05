@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -194,6 +195,23 @@ public class MemberController {
 		
 	}
 	
+	@Operation(description = "회원의 프로필 불러오기")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+	@GetMapping("/profile/{memberSeq}")
+	public ResponseEntity<MemberRes> findMemberById(@PathVariable("memberSeq") Long memberSeq) {
+		
+		MemberRes res = memberService.findMemberById(memberSeq);
+		
+		if( res != null ) {
+			return new ResponseEntity<MemberRes> (res, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<MemberRes> (res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
 	
 }
 
