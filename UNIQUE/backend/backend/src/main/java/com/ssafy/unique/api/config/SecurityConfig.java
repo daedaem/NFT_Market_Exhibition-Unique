@@ -78,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v3/**").permitAll() //swagger 설정 참조
                 .antMatchers("/nft/**").permitAll() // nft 관련 데이터 사용
                 .antMatchers("/market/**").permitAll()
+                .antMatchers("/web3j/**").permitAll()
                 .anyRequest().authenticated()
                 
                 .and()
