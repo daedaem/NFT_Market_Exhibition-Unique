@@ -117,7 +117,7 @@ public class IPFSServiceImpl implements IPFSService {
 
 				// Owner Address를 구한다
 				String ownerAddress = memberRepository.findMemberAddressByMemberSeq(nftReq.getNftAuthorSeq());
-
+				System.out.println(ownerAddress);
 				// MetadataUri를 구한다
 				String nftMetadataUri = merkleNode.hash.toBase58();
 

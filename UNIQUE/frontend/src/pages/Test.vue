@@ -43,11 +43,13 @@ import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
 import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import { mapState } from "vuex";
 const abi = ABIS.abi;
-const CA = SsafyNFT.networks["1337"].address;
+const CA = SsafyNFT.networks["202112031219"].address;
 
 // let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
-web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default {
   name: "Test",
@@ -68,11 +70,10 @@ export default {
         url: `${SERVER_URL}/api/nft/items`,
         headers: {
           // Authorization: token,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+          Authorization: this.authToken,
         },
       });
-      this.items = getItems.data;
+      this.items = getItems.data.nftList;
       console.log(this.items);
     },
     async getItmesByAddress(address) {
@@ -81,8 +82,7 @@ export default {
         url: `${SERVER_URL}/api/nft/items/${address}`,
         headers: {
           // Authorization: token,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+          Authorization: this.authToken,
         },
       });
       this.aitems = getItems.data;
@@ -94,13 +94,15 @@ export default {
         url: `${SERVER_URL}/api/nft/details/${token_id}`,
         headers: {
           // Authorization: token,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+          Authorization: this.authToken,
         },
       });
       this.exampleResult = getDetails.data[0];
       console.log(this.exampleResult);
     },
+  },
+  computed: {
+    ...mapState(["authToken"]),
   },
 };
 </script>
