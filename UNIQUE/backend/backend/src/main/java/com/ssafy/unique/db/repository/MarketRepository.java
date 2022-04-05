@@ -65,7 +65,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			      + " offset ? ", nativeQuery = true)
 	List<Market> findTypeOtherWithLimitOffset(String type, int limit, int offset);
 	
-	@Query(value =  " select * "
+	@Query(value =  " select count(*) "
 		          +   " from market "
 		          +   " join nft "
 		          +     " on market.nft_seq = nft.nft_seq "
@@ -78,7 +78,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	
 	
 	
-	@Query(value =  " select count(*) "
+	@Query(value =  " select * "
 			      +   " from market "
 			      +   " join nft "
 			      +     " on market.nft_seq = nft.nft_seq "
@@ -125,6 +125,6 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 	List<Market> findRecordByNftSeq(Long nftSeq);
 
 	// NFT의 현재 거래현황만 확인
-	@Query(value = "select * from market where nft_seq = ? order by start_time desc limit 1", nativeQuery = true)
+	@Query(value = "select market.buyer from market where nft_seq = ? order by start_time desc limit 1", nativeQuery = true)
 	Market findCurrentMarketByNftSeq(Long nftSeq);
 }

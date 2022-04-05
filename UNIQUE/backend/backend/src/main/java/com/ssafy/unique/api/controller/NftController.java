@@ -2,6 +2,7 @@ package com.ssafy.unique.api.controller;
 
 
 import com.ssafy.unique.api.request.NftReq;
+import com.ssafy.unique.api.response.NftDetailResultRes;
 import com.ssafy.unique.api.response.NftResultRes;
 import com.ssafy.unique.api.service.NftService;
 import com.ssafy.unique.db.entity.Nft;
@@ -65,14 +66,14 @@ public class NftController {
         }
     }
 
-    @GetMapping("/{nftSeq}")
-                    ResponseEntity<NftResultRes> nftListByNftSeq(@PathVariable Long nftSeq) {
-                NftResultRes res = nftService.findByNftSeq(nftSeq);
+    @GetMapping("/detail/{nftSeq}")
+    ResponseEntity<NftDetailResultRes> nftDetailByNftSeq(@PathVariable Long nftSeq) {
+        NftDetailResultRes res = nftService.findDetailByNftSeq(nftSeq);
 
         if(res.getResult() == SUCCESS) {
-                    return new ResponseEntity<NftResultRes>(res, HttpStatus.OK);
+                    return new ResponseEntity<NftDetailResultRes>(res, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<NftResultRes>(res,HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<NftDetailResultRes>(res,HttpStatus.NOT_FOUND);
         }
 
 

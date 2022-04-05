@@ -32,4 +32,7 @@ public interface MemberService {
 //	// 아이디/비밀번호 찾기
 //	public MemberResultRes memberFindId(String memberEmail);
 //	public MemberResultRes memberFindPw(MemberRes memberRes);
+
+	//프로필 이미지 가져오기
+	public MemberResultRes findMemberProfileImageById(String memberId);
 }

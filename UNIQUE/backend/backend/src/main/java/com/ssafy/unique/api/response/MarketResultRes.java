@@ -16,5 +16,6 @@ public class MarketResultRes {
 	
 	private Market market;
 	private List<Market> marketList;
+	private String profileInfo;
 	
 }

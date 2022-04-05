@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/Purchase",
+    name: "Purchase",
+    component: () => import("../components/common/Purchase.vue"),
+  },
+  {
     path: "/",
     name: "Home",
     component: () => import("../pages/Home.vue"),
@@ -44,6 +49,12 @@ const routes = [
     component: () => import("../pages/Exhibition.vue"),
   },
   {
+    path: "/exhibition/:id",
+    name: "ExhibitionDetail",
+    component: () => import("../pages/ExhibitionDetail.vue"),
+  },
+
+  {
     path: "/blog-detail-:id",
     name: "PrivateGalleryDetail",
     component: () => import("../pages/PrivateGalleryDetail.vue"),
@@ -68,17 +79,16 @@ const routes = [
     name: "Register",
     component: () => import("../pages/Register.vue"),
   },
-
   {
     path: "/test",
     name: "Test",
     component: () => import("../pages/Test.vue"),
   },
-  // {
-  //   path: "/privateGallery",
-  //   name: "PrivateGallery",
-  //   component: () => import("../pages/PrivateGallery.vue"),
-  // },
+  {
+    path: "/privateCreate",
+    name: "PrivateCreate",
+    component: () => import("../pages/PrivateCreate.vue"),
+  },
 ];
 
 const router = createRouter({

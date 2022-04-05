@@ -28,60 +28,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-              <!-- <div class="form-item mb-4"> -->
-              <!-- <h5 class="mb-3">Select Method</h5> -->
-              <!-- <ul class="row g-3 nav nav-tabs nav-tabs-s2" id="myTab" role="tablist">
-                  <li class="nav-item col-4 col-sm-4 col-lg-3" role="presentation" v-for="list in SectionData.selectMethodTabNav" :key="list.id">
-                    <button class="nav-link" :class="list.isActive" :id="list.slug" data-bs-toggle="tab" :data-bs-target="list.bsTarget" type="button">
-                      <em class="ni nav-link-icon" :class="list.icon"></em>
-                      <span class="nav-link-title mt-1 d-block">{{ list.title }}</span>
-                    </button>
-                  </li>
-                </ul> -->
-              <!-- <div class="tab-content mt-4" id="myTabContent">
-                  <div class="tab-pane fade show active" id="fixed-price" role="tabpanel" aria-labelledby="fixed-price-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Price</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter a price for item" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="timed-auction" role="tabpanel" aria-labelledby="timed-auction-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                      <div class="row mt-3">
-                        <div class="col-lg-6">
-                          <label class="mb-2 form-label">Starting date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- <div class="col-lg-6">
-                          <label class="mb-2 form-label">Expiration date</label>
-                          <input type="date" class="form-control form-control-s1" />
-                        </div> -->
-              <!-- end col-lg-6 -->
-              <!-- </div> -->
-              <!-- end row -->
-              <!-- </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- <div class="tab-pane fade" id="open-for-bids" role="tabpanel" aria-labelledby="open-for-bids-tab">
-                    <div class="form-create-tab-wrap">
-                      <label class="mb-2 form-label">Minimum bid</label>
-                      <input type="text" class="form-control form-control-s1" placeholder="Enter Minimum bid" />
-                    </div> -->
-              <!-- end form-create-tab-wrap -->
-              <!-- </div> -->
-              <!-- end tab-pane -->
-              <!-- </div> -->
-              <!-- end tab-content -->
-              <!-- </div> -->
-              <!-- end form-item -->
-
-              <!-- end form-item -->
+              <!-- 작품 제목 및 설명 입력  -->
               <div class="form-item mb-4">
                 <div class="mb-4">
                   <label class="mb-2 form-label">Title</label>
@@ -93,11 +40,7 @@
                 </div>
               </div>
               <!-- end form-item -->
-
-              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button>
-
-              <!-- 
-              <button data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block">Create Item</button> -->
+              <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block" @click="checkInputData">Create Item</button>
             </form>
           </div>
           <!-- endn col -->
@@ -108,9 +51,10 @@
     </section>
     <!-- create-section -->
     <!-- Footer  -->
-    <Footer classname="bg-dark on-dark"></Footer>
+    <Footer classname="bg-black on-dark"></Footer>
     <!-- first Modal -->
-    <div class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
+    <!-- 등록하려는 아이템의 제목, 설명, 파일이 모두 있을 때 다음 모달로 -->
+    <div v-if="this.form.nftDescription && this.form.nftName && this.form.file" class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -137,11 +81,11 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey && checkInputData === true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
+            <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
 
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
@@ -174,16 +118,19 @@ import Web3 from "web3";
 import SectionData from "@/store/store.js";
 import getAddressFrom from "../utils/AddressExtractor";
 // import ABI from "../../common/ABI";
-import ABIS from "../../smart-contracts/build/contracts/SsafyNFT.json";
-import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
 // const abi = ABI.CONTRACT_ABI.NFT_ABI;
-const abi = ABIS.abi;
-// console.log(abi);
-const CA = SsafyNFT.networks["1337"].address;
-// console.log(CA);
+import SsafyNFT from "../../smart-contracts/build/contracts/SsafyNFT.json";
+import { mapState } from "vuex";
+
+const NFT_ABI = SsafyNFT.abi;
+// const NFT_CA = "0x6c927304104cdaa5a8b3691e0ade8a3ded41a333";
+const NFT_CA = SsafyNFT.networks["202112031219"].address;
 
 // 네트워크 연결
-let web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL)); // let Web3 = require("web3");
+// let web3 = new Web3();
+// web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
 
 // let pollWeb3 = state => {
@@ -201,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: "해성",
+        nftAuthorName: null,
         nftDescription: null,
         file: null,
       },
@@ -213,8 +160,21 @@ export default {
   },
   methods: {
     selectFile(data) {
-      this.form.nftName = data.nftName;
       this.form.file = data.target.files[0];
+    },
+    checkInputData() {
+      // console.log(authToken);
+      // console.log(this.$store.state.myAddress);
+      // console.log(myAddress);
+      // console.log(this.myAddress);
+      // log(NFT_CA);myAddress
+      // console.log(this.date[0], this.date[1], this.form.price);
+      if (!this.form.file || !this.form.nftName || !this.form.nftDescription) {
+        alert("Please Input information for Create your item");
+      } else {
+        console.log("통과");
+        return true;
+      }
     },
     async submitCreateNFT() {
       /**
@@ -231,13 +191,15 @@ export default {
        * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
        */
       // url:해시된, nft:이름, 작성자 일련번호
-      // console.log(this.authorPrivateKey);
+      console.log(this.authorPrivateKey);
       // privatekey는 0x로 시작하는듯?
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
-      // console.log(checkPubKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // 내계좌 조회 1.
-      const temp = await web3.eth.getAccounts();
-      const myAccount = temp[0];
+      console.log(checkPubKey, "체크퍼브키");
+      // 서버 배포 후
+      const myAccount = await this.myAddress;
+      console.log(myAccount, "되나");
+
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
       // web3.eth.accounts.wallet.add(sender);
@@ -259,47 +221,87 @@ export default {
           data: data,
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.$store.state.authToken,
             "Content-Type": "multipart/form-data",
           },
         });
         const IPFSresult = createIPFS.data.nftMetadataUri;
-        console.log(IPFSresult, "ipfs결과");
-        const ssafyToken1 = await new web3.eth.Contract(abi, CA);
+        // console.log(IPFSresult, "ipfs결과");
+        const NFTcreateContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+        // console.log(myAccount);
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await ssafyToken1.methods.current().call({ from: myAccount });
-        // console.log(results);
+        const results = await NFTcreateContractInstance.methods.current().call({ from: myAccount });
+        // console.log(results)
         // 2번째 트랜잭션하는 함수 호출
-        const response = await ssafyToken1.methods.create(myAccount, IPFSresult).send({ from: myAccount, gas: 6000000, gasPrice: "20000000000" });
-        // console.log(response.events.Transfer.returnValues.tokenId, "결과는");
-        const newtokenId = response.events.Transfer.returnValues.tokenId;
+        const createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
+        const newtokenId = await NFTcreateContractInstance.methods.current().call();
+        // console.log(newtokenId, "newtokenId");
+        // console.log(createNFTResponse, "createNFTResponse");
+        const contractEncodedMethod = createNFTResponse.encodeABI();
+        // console.log(contractEncodedMethod, "contractEncodedMethod");
+        // 서명
+        // 원래는 서명하시겠습니까 뜨는게?!
+
+        const gasEstimate = await createNFTResponse.estimateGas({ from: myAccount });
+        console.log(gasEstimate, "가스 측정");
+        const rawTx = {
+          from: myAccount,
+          to: NFT_CA,
+          gas: gasEstimate,
+          data: contractEncodedMethod,
+        };
+        console.log(rawTx, "rawTx");
+        //
+        const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        // console.log(walletAccount.methods);
+        // console.log("walletAccount" + walletAccount);
+        const signedTx = await walletAccount.signTransaction(rawTx);
+        console.log(signedTx, "signedTx");
+        // this.createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+        // console.log(createSaleCAss, "여기 뭐떠?");
+        if (signedTx == null) {
+          console.log("TransactionSignFailedException");
+        } else {
+          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction).on("receipt", console.log);
+          // .on("transactionHash", (txhash) => {
+          //   console.log("Tx Hash: " + txhash);
+          // });
+          const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // console.log(createSaleCAss, "여기 뭐떠?");
+          //   .on("confirmation", console.log);
+          // console.log(tran, "tran");
+          // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
+          // console.log(resultofCreate, "컨트랙트어드레스");
+        }
+
+        // --------------------------
+        // const newtokenId = createNFTResponse.events.Transfer.returnValues.tokenId;
         this.newtokenId = newtokenId;
-        console.log(newtokenId, "이거토큰아이디임");
+        // console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
-        const ownerof = await ssafyToken1.methods.ownerOf(newtokenId).call().then(console.log);
+        const ownerof = await NFTcreateContractInstance.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
-        const tokenurls = await ssafyToken1.methods.tokenURI(newtokenId).call().then(console.log);
+        const tokenurls = await NFTcreateContractInstance.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
+        // nft에 대한 정보 백엔드에 업로드
+        console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
           url: `${SERVER_URL}/api/file/update`,
-          data: { tokenId: newtokenId, ownerAddress: "0x123412341234", metadataUri: IPFSresult },
+          data: { tokenId: newtokenId, ownerAddress: myAccount, metadataUri: IPFSresult, contractAddress: NFT_CA },
           headers: {
             // Authorization: token,
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0OTMxMjA0OX0.XlFGY8_2TU2KyQcju3n0qHOYOJvvt9jZ40ZLSlzgdCnHsSEsl63xh3NW-1M2Px6L3TQ5Z-gSpsVsA5qEf1an_A",
+            Authorization: this.$store.state.authToken,
           },
         });
-        console.log(createNFTtoBack);
-        console.log(this.newtokenId, "나오나");
+        // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
 
         // ownerof, newtokenId, IPFSresult
 
-        // ssafyToken1.methods.create(myAccount, IPFSresult).then((res) => {
+        // NFTcreateContractInstance.methods.create(myAccount, IPFSresult).then((res) => {
         //   console.log(res, "결과");
         // });
-        // console.log(ssafyToken1.methods, "방법들");
+        // console.log(NFTcreateContractInstance.methods, "방법들");
         // mintResult.methods.get().call().then(console.log);
         // const finalresult = mintResult.encodeABI();
         // .then(() => {
@@ -314,63 +316,19 @@ export default {
         //   });
         // });
       } else {
+        // alert("Please, check your private key");
         this.authorPrivateKey = null;
+        // this.$router.go();
       }
       // 위에 3번 전 과정
       // console.log(this.form);
     },
-    // async getValue() {
-    //   web3 = new Web3(web3.currentProvider);
-    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
-    //   this.currentAddress = electionContract._address;
-    //   let candidatesCount = await electionContract.methods.candidatesCount().call();
-    //   this.tableData = [];
-    //   for (let i = 0; i < candidatesCount; i++) {
-    //     if (i != 0) {
-    //       let candidates = await electionContract.methods.candidates(i).call();
-    //       this.tableData.push({ id: i, name: candidates.name, votes: candidates.voteCount });
-    //     }
-    //   }
-    // },
-    // async setVote() {
-    //   web3 = new Web3(web3.currentProvider);
-    //   let electionContract = new web3.eth.Contract(this.electionContract.abi, "0x9828F99985a337c41fE3Ef1B72932365d3EA4e58");
-    //   let vote = await electionContract.methods.vote(this.selectedCandidate).send({ from: process.env.VUE_APP_ETHADDRESS });
-    //   console.log(vote);
-    // },
+  },
+  computed: {
+    ...mapState(["myAddress"]),
+    ...mapState(["authToken"]),
   },
   mounted() {
-    // async function loadMyAccount() {
-    //   await web3.eth.getAccounts().then((res) => (this.myAccount = res[0]));
-    //   // console.log(myAccounts[0]);
-    //   await console.log(this.myAccount);
-    //   // this.myAccount = await myAccounts[0];
-
-    //   // console.log(myAccounts, "내계좌주소");
-    //   // console.log(mintResult, "결과 확인");
-    //   // 함수결과값
-    //   // 메타 url:
-    // }
-    // loadMyAccount();
-    // async function hello() {
-    //   const result = await new Web3.eth.Contract(abi, CA);
-    //   console.log(result);
-    //   return result;
-    // }
-    // hello().then((res) => console.log(res, "뒤"));
-
-    // async function hello2() {
-    //   const results = await Web3.eth.Contract(ABI, CA);
-    //   console.log(results);
-    //   return results;
-    // }
-    // hello2().then((res) => console.log(res, "뒤2"));
-
-    // 현재 작가는 해당 아이디 이후 변경예정
-    // console.log(web3.eth.getAccounts(), "요기");
-    // function getAccount() {
-    // web3.eth.getAccounts(function)}
-
     /*==============File upload =============== */
     function fileUpload(selector) {
       let elem = document.querySelectorAll(selector);
@@ -413,7 +371,6 @@ export default {
         });
       }
     }
-
     checkboxSwitcher(".checkbox-switcher");
   },
 };
