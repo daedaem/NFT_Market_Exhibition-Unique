@@ -1,8 +1,9 @@
 <template>
   <div class="card card-full">
-    <div class="card-image" @click="moveToDetail(`${product.marketId}`)">
+    <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
       <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
-      {{ product.nft.nftWorkUri }}
+      <!-- {{ product.nft.nftWorkUri }} -->
+      {{ product.nft.fileUrl }}
     </div>
     <div class="card-body p-4">
       <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
@@ -49,7 +50,8 @@
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span class="btn btn-sm btn-dark">Purchase</span>
+      <!-- <span class="btn btn-sm btn-dark">Purchase</span> -->
+      <Purchase :product="product"></Purchase>
     </div>
     <!-- end card-body -->
     <!-- <router-link
@@ -76,8 +78,12 @@
 </template>
 <script>
 import { createPopper } from "@popperjs/core";
+import Purchase from "@/components/common/Purchase";
 export default {
   name: "Products",
+  components: {
+    Purchase,
+  },
   props: ["product"],
   methods: {
     moveToDetail(productId) {
@@ -86,8 +92,6 @@ export default {
         name: "ProductDetail",
         params: {
           id: productId,
-          //       id: this.newtokenId,
-          //       //
         },
       });
     },

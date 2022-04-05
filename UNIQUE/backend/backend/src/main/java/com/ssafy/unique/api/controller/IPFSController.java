@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
 import com.ssafy.unique.api.request.NftReq;
 import com.ssafy.unique.api.request.NftUpdateReq;
 import com.ssafy.unique.api.response.NftRes;
@@ -64,6 +68,10 @@ public class IPFSController {
 			@ModelAttribute NftReq nftReq, 
 			MultipartHttpServletRequest request) {
 		System.out.println("Upload 진입");
+		// Security Context에서 memberSeq를 구한다
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Long memberSeq = Long.parseLong(authentication.getName());
+		System.out.println(memberSeq);
 		
 		NftRes nftRes = ipfsService.saveFile(nftReq, request);
 		

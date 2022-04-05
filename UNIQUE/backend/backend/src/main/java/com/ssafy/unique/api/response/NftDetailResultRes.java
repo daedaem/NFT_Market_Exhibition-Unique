@@ -6,6 +6,9 @@ import com.ssafy.unique.db.entity.Nft;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @Setter
 public class NftDetailResultRes {
@@ -13,5 +16,6 @@ public class NftDetailResultRes {
     private Nft nft;
     private Member OwnerMember;
     private Member AuthorMember;
-    private Market market;
+    private List<Market> marketList;
+    private List<String> buyerList;
 }

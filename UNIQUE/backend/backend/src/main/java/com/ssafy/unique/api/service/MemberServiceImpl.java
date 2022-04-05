@@ -268,4 +268,19 @@ public class MemberServiceImpl implements MemberService{
 		return res;
 	}
 
+	
+	//유저의 이미지 반환
+	@Override
+	public MemberResultRes findMemberProfileImageById(String memberId) {
+		MemberResultRes res = new MemberResultRes();
+		try {
+			String profileImage = memberRepository.findProfileImage(memberId);
+			res.setResult(SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(FAIL);
+		}
+		return res;
+	}
+
 }
