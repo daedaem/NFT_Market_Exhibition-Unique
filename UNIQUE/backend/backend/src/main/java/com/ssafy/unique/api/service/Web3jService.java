@@ -5,7 +5,7 @@ import java.math.BigInteger;
 
 public interface Web3jService {
 
-    BigInteger test() throws Exception;
+    BigInteger getBalance() throws Exception;
 
     void tokentransfer() throws Exception;
 }
