@@ -266,10 +266,10 @@ export default {
         // salefactory 계약 인스턴스 호출
         const saleFactoryContractInsatnce = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
         // createsale 메소드 호출
-        const startTime = this.date[0];
-        const endTime = this.date[1];
+        // const startTime = this.date[0];
+        // const endTime = this.date[1];
         // nft토큰아이디, 가격, 시작시간, 끝나는 시간, SSAFY토큰CA, 현재 NFT의 CA
-        console.log(saleFactoryContractInsatnce, "saleFactoryContractInsatnce");
+        // console.log(saleFactoryContractInsatnce, "saleFactoryContractInsatnce");
 
         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods.createSale(
           this.marketInfoData.nft.nftTokenId,
@@ -294,7 +294,7 @@ export default {
           gas: gasEstimate,
           data: saleContractEncodedMethod,
         };
-        console.log(rawTx, "rawTx");
+        // console.log(rawTx, "rawTx");
         // 계좌주소 얻기
         const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
         // 서명
