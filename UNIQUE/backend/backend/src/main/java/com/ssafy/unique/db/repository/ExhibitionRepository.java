@@ -11,7 +11,7 @@ import com.ssafy.unique.db.entity.Exhibition;
 @Repository
 public interface ExhibitionRepository extends JpaRepository<Exhibition, Long>{
 
-	@Query( value = " select * from exhibition order by reg_dt limit ? offset ? ", nativeQuery = true)
+	@Query( value = " select * from exhibition order by reg_dt desc limit ? offset ? ", nativeQuery = true)
 	List<Exhibition> findTypeAllWithLimitOffset(int limit, int offset);
 	
 	@Query( value = " select count(*) from exhibition ", nativeQuery = true)
@@ -19,7 +19,7 @@ public interface ExhibitionRepository extends JpaRepository<Exhibition, Long>{
 	
 	
 	
-	@Query( value = " select * from exhibition where exhibition_type = ? order by reg_dt limit ? offset ? ", nativeQuery = true)
+	@Query( value = " select * from exhibition where exhibition_type = ? order by reg_dt desc limit ? offset ? ", nativeQuery = true)
 	List<Exhibition> findTypeOtherWithLimitOffset(String type, int limit, int offset);
 	
 	@Query( value = " select count(*) from exhibition where exhibition_type = ? ", nativeQuery = true)
