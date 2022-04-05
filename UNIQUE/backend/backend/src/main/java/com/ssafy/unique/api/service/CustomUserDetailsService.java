@@ -73,6 +73,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 				.memberId(member.getMemberId())
 				.memberAddress(member.getMemberAddress())
 				.authority(member.isAuthority())
+				.ssf(member.getSsf())
 				.build();
 		
 		return memberRes;
