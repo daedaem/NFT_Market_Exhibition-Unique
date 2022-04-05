@@ -1,47 +1,14 @@
 package com.ssafy.unique.api.controller;
 
 
-import com.ssafy.unique.ERC20;
-import com.ssafy.unique.api.config.Web3jConfig;
-import com.ssafy.unique.api.request.NftReq;
 import com.ssafy.unique.api.response.NftDetailResultRes;
 import com.ssafy.unique.api.response.NftResultRes;
 import com.ssafy.unique.api.service.NftService;
 import com.ssafy.unique.api.service.Web3jService;
-import com.ssafy.unique.api.service.Web3jServiceImpl;
-import com.ssafy.unique.db.entity.Nft;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import org.web3j.abi.FunctionEncoder;
-import org.web3j.abi.TypeReference;
-import org.web3j.abi.datatypes.Address;
-import org.web3j.abi.datatypes.Function;
-import org.web3j.abi.datatypes.Type;
-import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.RawTransaction;
-import org.web3j.crypto.TransactionEncoder;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
-import org.web3j.protocol.core.methods.response.EthSendTransaction;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.FastRawTransactionManager;
-import org.web3j.tx.gas.ContractGasProvider;
-import org.web3j.tx.gas.DefaultGasProvider;
-import org.web3j.tx.response.PollingTransactionReceiptProcessor;
-import org.web3j.utils.Numeric;
-
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @CrossOrigin(
         origins = { "http://localhost:5500", "http://172.30.1.59:5500", "http://192.168.0.100:5500", "http://192.168.0.40:5500","https://j6e205.p.ssafy.io" },
@@ -117,12 +84,6 @@ public class NftController {
 
     }
 
-    @GetMapping("/web")
-    BigInteger setWeb3j() throws Exception {
-       BigInteger s = web3jService.test();
-//       System.out.println(s);
-        return s;
-    }
 
 
 
