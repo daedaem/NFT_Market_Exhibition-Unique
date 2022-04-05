@@ -1,11 +1,8 @@
 package com.ssafy.unique.api.service;
 
-import java.io.IOException;
-import java.math.BigInteger;
+import com.ssafy.unique.api.response.TokenRes;
 
 public interface Web3jService {
-
-    BigInteger getBalance() throws Exception;
-
-    void tokentransfer() throws Exception;
+	TokenRes tokentransfer(Long ssf) throws Exception;
+	TokenRes getBalance() throws Exception;
 }

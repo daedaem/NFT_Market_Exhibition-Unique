@@ -13,6 +13,7 @@ public class MemberRes {
 	private String memberId;
 	private String memberAddress;
 	private boolean authority;
+	private Long ssf;
 //	private String memberEmail;
 //	private String memberName;
 //	private String memberNickname;
