@@ -82,6 +82,7 @@ import AccountSection from "./components/section/AccountSection.vue";
 
 import LoginSection from "./components/section/LoginSection.vue";
 import RegisterSection from "./components/section/RegisterSection.vue";
+import DetailPurchase from "./components/common/DetailPurchase.vue";
 
 import Purchase from "./components/common/Purchase.vue";
 import ExhibitionCards from "./components/section/ExhibitionCards.vue";
@@ -127,6 +128,7 @@ app.component("AccountSection", AccountSection);
 
 app.component("LoginSection", LoginSection);
 app.component("RegisterSection", RegisterSection);
+app.component("DetailPurchase", DetailPurchase);
 
 app.component("Purchase", Purchase);
 app.component("ExhibitionCards", ExhibitionCards);
