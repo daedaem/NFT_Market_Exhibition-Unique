@@ -75,7 +75,7 @@ import ExploreSection from "./components/section/ExploreSection.vue";
 //
 import HeaderDashboard from "./components/common/HeaderDashboard.vue";
 import AuthorHero from "./components/section/AuthorHero.vue";
-import ProfileSection from "./components/section/ProfileSection.vue";
+// import ProfileSection from "./components/section/ProfileSection.vue";
 import AuthorSidebar from "./components/common/AuthorSidebar.vue";
 import UserSidebar from "./components/common/UserSidebar.vue";
 import AccountSection from "./components/section/AccountSection.vue";
@@ -121,7 +121,7 @@ app.use(router).mount("#app");
 
 app.component("HeaderDashboard", HeaderDashboard);
 app.component("AuthorHero", AuthorHero);
-app.component("ProfileSection", ProfileSection);
+// app.component("ProfileSection", ProfileSection);
 app.component("AuthorSidebar", AuthorSidebar);
 app.component("UserSidebar", UserSidebar);
 app.component("AccountSection", AccountSection);

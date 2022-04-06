@@ -11,7 +11,7 @@
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
-          <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
+          <!-- <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link> -->
           <!-- <div class="card-generic custom-tooltip-dropdown">
             <div class="author-action d-flex flex-wrap align-items-center mb-3">
               <div class="flex-shrink-0 avatar">

@@ -11,12 +11,12 @@ const routes = [
     name: "Home",
     component: () => import("../pages/Home.vue"),
   },
-  {
-    path: "/details/:id",
-    name: "ProductDetail",
-    component: () => import("../pages/ProductDetail.vue"),
-    props: true,
-  },
+  // {
+  //   path: "/details/:id",
+  //   name: "ProductDetail",
+  //   component: () => import("../pages/ProductDetail.vue"),
+  //   props: true,
+  // },
   {
     path: "/explore",
     name: "explore",
@@ -59,16 +59,16 @@ const routes = [
     name: "PrivateGalleryDetail",
     component: () => import("../pages/PrivateGalleryDetail.vue"),
   },
-  {
-    path: "/profile/:id",
-    name: "profile",
-    component: () => import("../pages/Profile.vue"),
-  },
-  {
-    path: "/profile/account",
-    name: "account",
-    component: () => import("../pages/Account.vue"),
-  },
+  // {
+  //   path: "/profile/:id",
+  //   name: "profile",
+  //   component: () => import("../pages/Profile.vue"),
+  // },
+  // {
+  //   path: "/profile/account",
+  //   name: "account",
+  //   component: () => import("../pages/Account.vue"),
+  // },
   {
     path: "/login",
     name: "login",
