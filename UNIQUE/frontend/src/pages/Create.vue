@@ -148,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: null,
+        nftAuthorName: this.username,
         nftDescription: null,
         file: null,
       },

@@ -5,6 +5,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <div>{{ product.marketId }}</div>
             <h4 class="modal-title">Complete checkout</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
