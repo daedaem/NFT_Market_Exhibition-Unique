@@ -67,6 +67,7 @@
 
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
 import { mapState } from "vuex";
 import axios from "axios";
 import Web3 from "web3";
@@ -85,8 +86,8 @@ let SALE_FACTORY_ABI = SaleFactory.abi;
 let SALE_FACTORY_CA = SaleFactory.networks["202112031219"].address;
 let SALE_ABI = Sale.abi;
 // 네트워크 연결
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+
 export default {
   name: "Purchase",
   data() {
@@ -102,25 +103,25 @@ export default {
   },
   props: ["product", "marketId"],
   methods: {
-    async check() {
-      const tokenCont = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-      // const ressa = await tokenCont.methods.ownerOf(128).call();
-      const ressdda = await tokenCont.methods.balanceOf(this.myAddress).call();
-      // console.log(ressa, "ressa");
-      console.log(ressdda, "ressdda");
+    // async check() {
+    //   const tokenCont = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+    //   // const ressa = await tokenCont.methods.ownerOf(128).call();
+    //   const ressdda = await tokenCont.methods.balanceOf(this.myAddress).call();
+    //   // console.log(ressa, "ressa");
+    //   console.log(ressdda, "ressdda");
 
-      const ssafyToken1 = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
-      const getbalance2 = await ssafyToken1.methods.balanceOf(this.myAddress).call();
-      const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-      let aca = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
-      // let csc = await NFTContractInstance.methods.ownerOf(33).call();
-      let vas = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
-      console.log(aca, "aca");
-      // console.log(csc, "csc");
-      console.log(vas, "vas");
-      console.log(getbalance2, "맞나이거");
-      // console.log(TOKEN_CA, "토큰");
-    },
+    //   const ssafyToken1 = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+    //   const getbalance2 = await ssafyToken1.methods.balanceOf(this.myAddress).call();
+    //   const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+    //   let aca = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+    //   // let csc = await NFTContractInstance.methods.ownerOf(33).call();
+    //   let vas = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+    //   console.log(aca, "aca");
+    //   // console.log(csc, "csc");
+    //   console.log(vas, "vas");
+    //   console.log(getbalance2, "맞나이거");
+    //   // console.log(TOKEN_CA, "토큰");
+    // },
 
     async purchaseNFT() {
       console.log(this.marketContractAddress);
@@ -316,9 +317,8 @@ export default {
     },
   },
   created() {
-    this.check();
+    // this.check();
     // console.log(this.product);
-
     // this.marketId = this.product.marketId;
     // this.nftSeq = this.product.nft.nftSeq;
     // console.log(this.marketContractAddress);
