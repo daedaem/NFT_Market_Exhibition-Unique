@@ -8,7 +8,7 @@
     <div style="max-width: 1200px; margin: auto">
       <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
-        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id }, data: {} }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id },}" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
       </div>
     </div>
@@ -22,6 +22,7 @@
                 <img :src="imgLg" />
               </div>
               <!-- end item-detail-img-container -->
+              <!-- 사진아래1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111 -->
               <div class="item-detail-tab">
                 <ul class="nav nav-tabs nav-tabs-s1" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation" v-for="list in SectionData.itemDetailData.itemDetailTabNav" :key="list.id">
@@ -31,15 +32,15 @@
                 <div class="tab-content mt-3" id="myTabContent">
                   <div class="tab-pane fade show active" id="owners" role="tabpanel" aria-labelledby="owners-tab">
                     <div class="item-detail-tab-wrap">
-                      <div class="card-media card-media-s2 mb-3" v-for="item in ownerlist" :key="item.id">
-                        <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
-                          <img :src="item.avatar" alt="avatar" />
+                      <div class="card-media card-media-s2 mb-3">
+                        <router-link :to="itemDetailList[1].path" class="card-media-img flex-shrink-0 d-block">
+                          <img :src="itemDetailList[1].avatar" alt="avatar" />
                         </router-link>
                         <div class="card-media-body text-truncate">
                           <p class="fw-semibold text-truncate">
-                            <a :href="item.path" class="text-black">{{ item.title }}</a>
+                            <a :href="itemDetailList[1].path" class="text-black">{{ itemDetailList[1].title }}</a>
                           </p>
-                          <p class="small">{{ item.subTitle }}</p>
+                          <p class="small">{{ itemDetailHistoryList[0].subTitle }}</p>
                         </div>
                       </div>
                       <!-- end card -->
@@ -47,21 +48,6 @@
                     <!-- end item-detail-tab-wrap -->
                   </div>
                   <!-- end tab-pane -->
-                  <!-- <div class="tab-pane fade" id="bids" role="tabpanel" aria-labelledby="bids-tab">
-                    <div class="item-detail-tab-wrap">
-                      <div class="card-media card-media-s2 mb-3" v-for="item in SectionData.itemDetailData.itemDetailBidsList" :key="item.id">
-                        <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
-                          <img :src="item.avatar" alt="avatar" />
-                        </router-link>
-                        <div class="card-media-body text-truncate">
-                          <p class="fw-semibold text-black text-truncate">{{ item.title }}</p>
-                          <p class="small">{{ item.date }}</p>
-                        </div>
-                      </div>
-                      end card
-                    </div>
-                    end item-detail-tab-wrap
-                  </div> -->
                   <!-- end tab-pane -->
                   <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
                     <div class="item-detail-tab-wrap">
@@ -74,6 +60,19 @@
                           <p class="small text-truncate">{{ item.subTitle }}</p>
                         </div>
                       </div>
+                      <!-- end card -->
+                    </div>
+                    <!-- end item-detail-tab-wrap -->
+                  </div>
+                  <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                    <div class="item-detail-tab-wrap">
+                      <ul>
+                        <li><p>Contract Address : {{nftCA}}</p></li>
+                        <li><p>Token ID : {{id}} SSF</p></li>
+                        <li><p>Price : {{price}} SSF</p></li>
+                        <li><p>Token Standard : ERC - 721</p></li>
+                        <li><p>BlockChain : SSAFY TOKEN</p></li>
+                      </ul>
                       <!-- end card -->
                     </div>
                     <!-- end item-detail-tab-wrap -->
@@ -91,9 +90,9 @@
                 <h1 class="item-detail-title mb-2">{{ title }}</h1>
               </div>
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
-                <span class="item-detail-text-meta">{{ metaText }}</span>
+                <span class="item-detail-text-meta">{{ onsale }}</span>
                 <span class="dot-separeted"></span>
-                <span class="item-detail-text-meta">{{ metaTextTwo }}</span>
+                <span class="item-detail-text-meta">{{ price }}</span>
                 <span class="dot-separeted"></span>
                 <span class="item-detail-text-meta" v-html="metaTextThree"></span>
               </div>
@@ -106,25 +105,13 @@
                         <img :src="item.avatar" alt="avatar" />
                       </router-link>
                       <div class="card-media-body">
-                        <router-link :to="item.path" class="fw-semibold">{{ item.title }}</router-link>
+                        <router-link :to="item.path" class="fw-semibold">@{{ item.title }}</router-link>
                         <p class="fw-medium small">{{ item.subTitle }}</p>
                       </div>
                     </div>
                     <!-- end card -->
                   </div>
                   <!-- end col-->
-                  <!-- <div class="col-xl-12" v-for="item in SectionData.itemDetailData.itemDetailListTwo" :key="item.id">
-                    <div class="card-media card-media-s1">
-                      <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
-                        <img :src="item.avatar" alt="avatar" />
-                      </router-link>
-                      <div class="card-media-body">
-                        <p class="fw-semibold text-black">{{ item.title }}</p>
-                        <span class="fw-medium small">{{ item.subTitle }}</span>
-                      </div>
-                    </div>
-                    end card
-                  </div> -->
                   <!-- end col-->
                 </div>
                 <!-- end row -->
@@ -136,16 +123,6 @@
                     <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a>
                     <!-- <Purchase :product="product"></Purchase> -->
                   </li>
-                  <!-- <li class="flex-grow-1">
-                    <div class="dropdown">
-                      <a href="#" class="btn bg-dark-dim d-block" data-bs-toggle="dropdown">{{ SectionData.itemDetailData.btnTextThree }}</a>
-                      <div class="dropdown-menu card-generic p-2 keep-open w-100 mt-1">
-                        <router-link :to="icon.path" class="dropdown-item card-generic-item" v-for="(icon, i) in SectionData.socialShareList" :key="i"
-                          ><em class="ni me-2" :class="icon.btnClass"></em>{{ icon.title }}</router-link
-                        >
-                      </div>
-                    </div>
-                  </li> -->
                 </ul>
               </div>
               <!-- end item-detail-btns -->
@@ -204,9 +181,11 @@
 
 <script>
 // Import component data. You can change the data in the store to reflect in all component
-import SectionData from "@/store/store.js";
-import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+import axios from "axios";
+import SectionData from "@/store/store.js";
+import { mapState } from "vuex";
+// import Purchase from "@/components/common/Purchase";
 
 export default {
   name: "ProductDetail",
@@ -215,11 +194,12 @@ export default {
     return {
       SectionData,
       id: this.$route.params.id,
-      title: "3번 데이터",
+      nftCA:null,
+      title: "작품 이름", // 작품이름
       imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
       // imgLg: "@/images/favicon.png",
-      metaText: "Not for sale",
-      metaTextTwo: "500 editions",
+      onsale: "Not for sale", // 판매 중 인지
+      price: "500 editions",
       metaTextThree: "500 editions",
       content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
       ownerlist: [
@@ -232,39 +212,39 @@ export default {
         },
       ],
       itemDetailHistoryList: [
-        {
-          id: 1,
-          title: "Listed 1 edition for 0.35 ETH",
-          subTitle: "by Medicom 21 hours ago",
-          avatar: require("@/images/thumb/avatar-4.jpg"),
-          path: "/author",
-        },
-        {
-          id: 2,
-          title: "Purchased 1 edition for 0.1 ETH",
-          subTitle: "by Medicom 21 hours ago",
-          avatar: require("@/images/thumb/avatar-5.jpg"),
-          path: "/author",
-        },
-        {
-          id: 3,
-          title: "Purchased 1 edition for 0.1 ETH",
-          subTitle: "by French Montana 23/09/2021",
-          avatar: require("@/images/thumb/avatar-6.jpg"),
-          path: "/author",
-        },
+        // {
+        //   id: 1,
+        //   title: "Listed 1 edition for 0.35 ETH",
+        //   subTitle: "by Medicom 21 hours ago",
+        //   avatar: require("@/images/thumb/avatar-4.jpg"),
+        //   path: "/author",
+        // },
+        // {
+        //   id: 2,
+        //   title: "Purchased 1 edition for 0.1 ETH",
+        //   subTitle: "by Medicom 21 hours ago",
+        //   avatar: require("@/images/thumb/avatar-5.jpg"),
+        //   path: "/author",
+        // },
+        // {
+        //   id: 3,
+        //   title: "Purchased 1 edition for 0.1 ETH",
+        //   subTitle: "by French Montana 23/09/2021",
+        //   avatar: require("@/images/thumb/avatar-6.jpg"),
+        //   path: "/author",
+        // },
       ],
       itemDetailList: [
         {
           id: 1,
-          title: "@nathan_walls",
+          title: "작가 이름",
           subTitle: "Creator",
           avatar: require("@/images/thumb/avatar.jpg"),
           path: "/author",
         },
         {
           id: 2,
-          title: "@kamran_ahmed",
+          title: "보유자 이름",
           subTitle: "Collection",
           avatar: require("@/images/thumb/avatar-2.jpg"),
           path: "/author",
@@ -272,18 +252,67 @@ export default {
       ],
     };
   },
+  // components: {
+  //   Purchase,
+  // },
+  created() {
+    this.getItmeDetail()
+  },
   methods: {
-    async getItmesByAddress(address) {
-      const getItems = await axios({
+    getItmeDetail() {
+      axios({
         method: "GET",
         url: `${SERVER_URL}/api/nft/detail/${this.$route.params.id}`,
-      }).then((res) => {
-        console.log(res);
+        headers: {
+          // Authorization: token,
+          Authorization:
+            this.authToken
+        },
+      })
+      .then((res)=> {
+        console.log(res.data,'eeeeeeeeeeeeeeee')
+        this.itemDetailList[0].title = res.data.AuthorMember.memberId
+        this.itemDetailList[1].title = res.data.OwnerMember.memberId
+        // this.itemDetailList[0].avatar = res.data.AuthorMember.profile
+        this.itemDetailList[0].avatar = "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E"
+        this.title = res.data.nft.nftName
+        this.content = res.data.nft.nftDescription
+        this.nftCA = res.data.nft.nftContractAddress
+        if (res.data.marketList.length >= 1) {
+          this.price = res.data.marketList[res.data.marketList.length-1].price
+        }
+        if (res.data.nft.onsale){
+          this.onsale = "On Sale"
+        }else {
+          this.onsale = "Not for Sale"
+        }
+        for (var i=0; i < res.data.marketList.length; i++){
+          if (i === 0){
+            this.itemDetailHistoryList.push({
+            id : i,
+            title : `Listed 1 edition for ${res.data.marketList[i].price} SSF`,
+            subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
+            avatar: require("@/images/thumb/avatar-4.jpg"),
+            path: "/author",
+            // avatar: res.data.buyerList[i].profileImageUrl
+          })
+          }else {
+            this.itemDetailHistoryList.push({
+              id : i,
+              title : `Purchased 1 edition for ${res.data.marketList[i].price} SSF`,
+              subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
+              avatar: require("@/images/thumb/avatar-4.jpg"),
+              path: "/author",
+              // avatar: res.data.buyerList[i].profileImageUrl
+            })
+          }
+        }
+        // this.itemDetailHistoryList = res.data.marketList
       });
     },
   },
-  created() {
-    this.getItmesByAddress();
-  },
+  computed: {
+    ...mapState(["authToken"]),
+  }
 };
 </script>

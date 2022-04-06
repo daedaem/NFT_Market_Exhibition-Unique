@@ -4,27 +4,27 @@
         <div class="col-md-6 col-lg-6 col-xl-12 sidebar-widget">
             <h3 class="mb-3">{{ SectionData.authorSidebarData.sidebarWidget.title }}</h3>
             <p class="sidebar-text mb-3">{{ content }}</p>
-            <p class="sidebar-text text-dark-gray">
+            <!-- <p class="sidebar-text text-dark-gray">
                 <span class="me-4"><strong class="text-black">{{ followingnum }}</strong> {{ followingtext }}</span>
                 <span><strong class="text-black">{{ followernum }}</strong> {{ followertext }} </span>
-            </p>
-            <div class="follow-wrap mt-3">
+            </p> -->
+            <!-- <div class="follow-wrap mt-3">
                 <p class="mb-1 text-black fw-semibold">{{ SectionData.authorSidebarData.sidebarWidget.followText }}</p>
                 <div class="avatar-group mb-3">
                     <a :href="item.path" v-for="(item, i) in avatars" :key="i"><img :src="item.avatar" alt=""></a>
                 </div>
                 <a href="#" class="btn-link sidebar-btn-link" data-bs-toggle="modal" data-bs-target="#followersModal">{{ SectionData.authorSidebarData.sidebarWidget.btnText  }}</a>
-            </div>
+            </div> -->
+        </div><!-- end col -->
+        <div class="col-md-6 col-lg-6 col-xl-12 sidebar-widget">
+            <h3 class="mb-2">{{ SectionData.authorSidebarData.sidebarWidgetThree.title }}</h3>
+            <p class="sidebar-text">{{ datetext }}</p>
         </div><!-- end col -->
         <div class="col-md-6 col-lg-6 col-xl-12 sidebar-widget">
             <h3 class="mb-3">{{ SectionData.authorSidebarData.sidebarWidgetTwo.title }}</h3>
             <ul class="social-links">
                 <li v-for="(link, i) in links" :key="i"><router-link :to="link.path"><span class="ni icon" :class="link.class"></span>{{ link.title }}</router-link></li>
             </ul>
-        </div><!-- end col -->
-        <div class="col-md-6 col-lg-6 col-xl-12 sidebar-widget">
-            <h3 class="mb-2">{{ SectionData.authorSidebarData.sidebarWidgetThree.title }}</h3>
-            <p class="sidebar-text">{{ datetext }}</p>
         </div><!-- end col -->
      </div><!-- end sidebar -->
     <!-- Modal -->

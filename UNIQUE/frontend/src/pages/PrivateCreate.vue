@@ -84,7 +84,7 @@ export default {
     return {
       SectionData,
       selectedIds: [],
-      nftMarketItems: null,
+      newnftItems: null,
       page: 1,
       currentPage: 0,
       perPage: 8,
@@ -155,20 +155,18 @@ export default {
     //   this.filterData = filterData;
     // },
     async getItemsAll() {
-      const newnftMarketItems = await axios({
+      const newnftItems = await axios({
         method: "GET",
-        url: `${SERVER_URL}/api/market`,
+        url: `${SERVER_URL}/api/nft/items/${this.myAddress}`,
         headers: {
           // Authorization: token,
           Authorization:
             this.authToken,
         },
-        params: { limit: 100, offset: 0, type: this.selectedTab, searchWord: "" },
-        // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
       });
-      this.total = newnftMarketItems.data.marketList.length;
-      this.nftMarketItems = newnftMarketItems.data.marketList;
-      console.log(this.nftMarketItems);
+      this.total = newnftItems.data.nftList.length;
+      this.newnftItems = newnftItems.data.nftList;
+      console.log(this.newnftItems);
     },
   },
   created: function () {
@@ -178,18 +176,19 @@ export default {
   watch: {},
   computed: {
     ...mapState([
-      "authToken"
+      "authToken",
+      "myAddress"
     ]),
     // 마켓아이템스에 아이템이 담겨져 있지 않으면 담아오고
     displayedRecords() {
-      if (!this.nftMarketItems) {
+      if (!this.newnftItems) {
         this.getItemsAll();
       }
       // 마켓아이템스에 아이템이 담겨져 있으면 현재 페이지에 맞춰서 잘라서 보내기
       else {
         const startIndex = this.perPage * (this.page - 1);
         const endIndex = startIndex + this.perPage;
-        return this.nftMarketItems.slice(startIndex, endIndex);
+        return this.newnftItems.slice(startIndex, endIndex);
       }
     },
     // pagedNumber() {

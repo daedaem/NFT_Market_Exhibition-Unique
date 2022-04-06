@@ -1,6 +1,6 @@
 <template>
   <router-link to="/" class="logo-link" :class="classname">
-    <h3 style="font-family: DM Serif Display, serif">Unique</h3>
+    <p class="logo">Unique</p>
     <!-- <img class="logo-dark logo-img" :src="require('@/images/logo-black.png')" alt="logo" /> -->
     <!-- <img class="logo-light logo-img" :src="require('@/images/logo-white.png')" alt="logo" /> -->
   </router-link>
@@ -12,12 +12,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.h3 {
-  // @import url("https://fonts.googleapis.com/css2?family=Ruslan+Display&display=swap");
-  // font-family: "DM Serif Display", serif;
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+.logo {
   font-family: "DM Serif Display", serif;
-  // font-family: 'Ramaraja', serif;
-  // font-size: 40px;
-  // font-family: "Ruslan Display", cursive;
+  letter-spacing: 0px;
+  color: black;
+  font-size: 25px;
+  font-weight: 700;
 }
 </style>
