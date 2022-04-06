@@ -70,7 +70,7 @@ contract SaleFactory is Ownable {
 
         // 4-2). 등록된 세일들에 대한 내용들을 sales리스트에 추가한다.
         // sales[_workId.current()] = address(this);
-        sales.push(address(this));
+        sales.push(address(sale));
         // 4-3). 생성된 sale 컨트랙트 주소정보를 반환한다.
         // 밑둘다 있어야하는건지 하나만 있으면 되는건지
         emit NewSale(address(sale), msg.sender, _workId.current());
@@ -185,14 +185,13 @@ contract Sale {
         // 해당 Sale의 판매 시점이 유효한 경우
         // 끝난시간보다 현재시각이 아직 남았어야하고
         // 현재시간보다 판매시점이 전이어야함
-        require(saleEndTime - block.timestamp >= 0);
-        // require(block.timestamp >= saleStartTime);
+
         // 구매 희망자가 Sale 컨트랙트에게 구매 희망자의 ERC-20 토큰을 송금할 수 있는 권한을 허용
         // 5-1)은 일단 입찰기능이 없어서 우리는 해결안해도 됨
         // 5-2) 구매자의 ERC-20 토큰을 즉시 구매가만큼 판매자에게 송금한다.
         // 얼마 보낼 수 있는지 체킹해야하는거 아닌가
-        uint256 nowpayable = _getCurrencyAmount();
-        require(purchasePrice <= nowpayable);
+        // uint256 nowpayable = _getCurrencyAmount();
+        // require(purchasePrice <= nowpayable);
 
         // 함수 호출자의 계좌로 부터 seller가 bid_amount만큼 인출 허용하도록
         // erc20Contract.approve(address(this), purchasePrice);
@@ -315,10 +314,8 @@ contract Sale {
     }
 
     modifier onlyAfterStart() {
-        require(
-            block.timestamp >= saleStartTime,
-            "Sale: This sale is not started."
-        );
+        require(saleEndTime - block.timestamp >= 0);
+        require(block.timestamp <= saleStartTime, "Sale: This sale is not started.");
         _;
     }
 

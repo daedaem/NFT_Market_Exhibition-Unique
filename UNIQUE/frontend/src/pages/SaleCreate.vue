@@ -171,7 +171,7 @@ export default {
       },
     })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         marketInfoData.value = res.data;
       })
       .catch(() => {
@@ -253,19 +253,31 @@ export default {
       // }
     },
     async submitSaleCreateNFT() {
+      console.log(this.marketInfoData.nft.nftTokenId, "this.marketInfoData.nft.nftTokenI");
+      // let ow = await NFTcreateContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
+      // console.log(ow, "1번");
+
+      // const gs = NFTContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
+      // const ds = NFTContractInstance.methods.getApproved(this.marketInfoData.nft.nftTokenId).call();
+
+      // console.log(gs, "gs");
+      // console.log(ds, "ds");
+
       // console.log("되나");
       const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       const myAccount = this.myAddress;
       // console.log(myAccount, "myAccount");
       // const temp = await web3.eth.getAccounts();
       // 공개키가 유효하다면 정보 등록
-      if (checkPubKey === myAccount) {
+
+      if (checkPubKey === myAccount && this.marketInfoData.nft.nftOwnerAddress == myAccount) {
         // console.log("일치합니다.");
         // 컨트랙트한테 권한 부여
         // 구매입장
         // tokenContract.methods.approve("createsaleCA에", "가격, {from: 구매자}");
         // salefactory 계약 인스턴스 호출
         const saleFactoryContractInsatnce = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
+
         // createsale 메소드 호출
         const startTime = this.date[0];
         const endTime = this.date[1];
@@ -274,7 +286,7 @@ export default {
 
         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods.createSale(
           this.marketInfoData.nft.nftTokenId,
-          this.marketData.price,
+          Number(this.marketData.price),
           Date.parse(startTime),
           Date.parse(endTime),
           TOKEN_CA,
@@ -324,33 +336,52 @@ export default {
           const saleItems = await saleFactoryContractInsatnce.methods.allSales().call();
           // const saleItems = await saleFactoryContractInsatnce.methods.allSales().call();
           console.log(saleItems, "saleItems");
-
+          // ow = await NFTcreateContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
+          // console.log(ow, "2번");
           const findMySales = await saleFactoryContractInsatnce.getPastEvents("NewSale", { filter: { _owner: myAccount } });
           console.log(findMySales, "findMySales");
           const SaleCA = findMySales[findMySales.length - 1].returnValues[0];
+          const nowonwer = findMySales[findMySales.length - 1].returnValues[1];
           const SaleID = findMySales[findMySales.length - 1].returnValues[2];
           // console.log(SaleCA, SaleID, this.marketInfoData.nft.nftTokenId, "요기입니다요");
 
           //------------- NFT 소유권 해당 Sale컨트랙트로 이전----------------
-          const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+          let NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+
+          // console.log(SaleCA, "SaleCA");
+          // console.log(this.marketInfoData.nft.nftTokenId);
+          // let checking = await NFTContractInstance.methods.getApproved(this.marketInfoData.nft.nftTokenId).call();
+          // console.log(checking, "1,");
           const NFTContractResult = await NFTContractInstance.methods.approve(SaleCA, this.marketInfoData.nft.nftTokenId);
+          // const NFTContractResult = await NFTContractInstance.methods.setApprovalForAll(SaleCA, this.marketInfoData.nft.nftTokenId);
+
+          // checking = await NFTContractInstance.methods.getApproved(this.marketInfoData.nft.nftTokenId).call();
+          // console.log(checking, "2");
           const NFTContractInstanceEncodeMethod = await NFTContractResult.encodeABI();
-          const NFTgasEstimate = await NFTContractResult.estimateGas({ from: myAccount });
+          console.log(NFTContractInstanceEncodeMethod, "NFTContractInstanceEncodeMethod");
+          // const NFTgasEstimate = await NFTContractResult.estimateGas();
+          // console.log(NFTgasEstimate, "NFTgasEstimate");
           const NFTRawTX = {
             from: myAccount,
             to: NFT_CA,
-            gas: NFTgasEstimate,
+            gas: 50000000,
             data: NFTContractInstanceEncodeMethod,
           };
           console.log(NFTRawTX, "saleCreateRawTx");
+          // await web3.eth.personal.unlockAccount(myAccount);
           const NFTsignedTX = await walletAccount.signTransaction(NFTRawTX);
           console.log(NFTsignedTX, "NFTsignedTX");
           // 팔릴 시, nft 소유권 자동 이전에 대한 서명하기
+          // checking = NFTContractInstance.methods.getApproved(this.marketInfoData.nft.nftTokenId).call();
+          // console.log(checking, "3");
           if (NFTsignedTX == null) {
             alert("The sign of Approbation for NFT is not completed");
           } else {
             const NFTsigneResult = await web3.eth.sendSignedTransaction(NFTsignedTX.rawTransaction);
             console.log(NFTsigneResult);
+
+            let checking = NFTContractInstance.methods.getApproved(this.marketInfoData.nft.nftTokenId).call();
+            console.log(checking, "4");
             this.marketData.nftSeq = this.marketInfoData.nft.nftSeq;
             this.marketData.marketContractAddress = SaleCA;
             // this.marketData.marketContractAddress = this.createSaleCA.contractAddress;
@@ -360,10 +391,11 @@ export default {
             // console.log(this.marketData.nftSeq, this.marketData.marketContractAddress, Number(this.marketData.price), this.marketData.startTime, this.marketData.endTime, "------------");
             // 두 서명 모두 해결 했으면
             // 백에드에 데이터 저장
-
-            const OwnerofToken = await NFTContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
-            console.log(SaleCA, OwnerofToken, "둘이 같나?");
-            const NFTvalue = Number(this.marketData.price);
+            // ow = await NFTcreateContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
+            // console.log(ow, "3번");
+            // const OwnerofToken = await NFTContractInstance.methods.ownerOf(this.marketInfoData.nft.nftTokenId).call();
+            // console.log(SaleCA, OwnerofToken, "둘이 같나?");
+            // const NFTvalue = Number(this.marketData.price);
             axios({
               method: "post",
               url: `${SERVER_URL}/api/market/register/`,
@@ -373,7 +405,7 @@ export default {
               data: {
                 nftSeq: this.marketInfoData.nft.nftSeq,
                 marketContractAddress: SaleCA,
-                price: NFTvalue,
+                price: Number(this.marketData.price),
                 startTime: startTime,
                 endTime: endTime,
               },
@@ -390,7 +422,7 @@ export default {
           // console.log(NFTContractInstance, "NFTContractInstance");
           // this.createSaleCA???
           //
-          // let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+          // let tran = await web3.eth.sendSignedTransaction(signedTx.d);
           // .on("receipt", console.log)
           // this.createSaleCA = await web3.eth.getTransactionReceipt(tran.transactionHash);
           // this.createSaleCA = await web3.eth.getTransactionReceipt(tran.transactionHash.contract);
@@ -461,7 +493,7 @@ export default {
         }
         // 프라이빗 키와 다르다면
       } else {
-        alert("Please, check your Private key");
+        alert("Are you owner of this item? If you are, Please, check your Private key");
         this.authorPrivateKey = null;
         this.$router.go();
       }

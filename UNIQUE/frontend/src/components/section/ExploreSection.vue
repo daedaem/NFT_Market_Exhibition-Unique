@@ -92,7 +92,8 @@ export default {
           // Authorization: token,
           Authorization: this.authToken,
         },
-        params: { limit: 16, offset: 0, type: this.selectedTab, searchWord: "" },
+        // limit 부분 바꿔야할듯
+        params: { limit: 100000, offset: 0, type: this.selectedTab, searchWord: "" },
         // params: { limit: this.perpage, offset: this.page * this.perpage, type: this.selectedTab, searchWord: "" },
       });
       this.total = newnftMarketItems.data.marketList.length;

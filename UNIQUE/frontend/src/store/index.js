@@ -145,6 +145,7 @@ export default createStore({
       commit("REMOVE_TOKEN");
       commit("REMOVE_ADDRESS");
       commit("REMOVE_USERNAME");
+      router.push({ name: "Home" });
 
       // router.push({ name: "Login" });
     },
