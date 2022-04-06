@@ -9,7 +9,7 @@
     </header>
     <div style="max-width: 1200px; margin: auto">
       <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
-        <router-link :to="{ name: 'PrivateCreate'}" class="btn btn-dark d-block mb-2">Create</router-link>
+        <router-link :to="{ name: 'PrivateCreate' }" class="btn btn-dark d-block mb-2">Create</router-link>
       </div>
     </div>
     <!-- Blog  -->
@@ -71,7 +71,8 @@
         </div>
 
         <div class="text-center mt-4 mt-md-5">
-          <Pagination :records="exhibitionList.length" v-model="page" :per-page="perPage"></Pagination>
+          <Pagination v-if="exhibitionList" :records="exhibitionList.length" v-model="page" :per-page="perPage"></Pagination>
+          <Pagination v-else :records="0" v-model="page" :per-page="perPage"></Pagination>
         </div>
       </div>
       <!-- .container -->
@@ -88,8 +89,8 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import SectionData from "@/store/store.js";
 import HeroFour from "@/components/section/HeroFour.vue";
 import Pagination from "v-pagination-3";
-import axios from 'axios';
-import {mapState} from 'vuex';
+import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "PrivateGallery",
@@ -100,15 +101,13 @@ export default {
   data() {
     return {
       SectionData,
-      exhibitionList:null,
+      exhibitionList: null,
       page: 1,
       perPage: 6,
     };
   },
   computed: {
-    ...mapState([
-      "authToken"
-    ]),
+    ...mapState(["authToken"]),
     displayedRecords() {
       if (!this.exhibitionList) {
         this.getGallerys();
@@ -135,20 +134,18 @@ export default {
         method: "GET",
         url: `${SERVER_URL}/api/exhibition`,
         headers: {
-          Authorization:
-          this.authToken,
+          Authorization: this.authToken,
         },
-        params: { limit: 100, offset: 0, type: "PRI"},
-      })
-      .then((res)=> {
-        console.log(res.data)
-        this.exhibitionList = res.data.exhibitionList
-      })
+        params: { limit: 100, offset: 0, type: "PRI" },
+      }).then((res) => {
+        console.log(res.data);
+        this.exhibitionList = res.data.exhibitionList;
+      });
     },
   },
-  created: function(){
-    this.getGallerys()
-  }
+  created: function () {
+    this.getGallerys();
+  },
 };
 </script>
 
