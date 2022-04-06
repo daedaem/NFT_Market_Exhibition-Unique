@@ -72,7 +72,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 				.memberSeq(member.getMemberSeq())
 				.memberId(member.getMemberId())
 				.memberAddress(member.getMemberAddress())
+				.profileImageUrl(member.getProfileImageUrl())
 				.authority(member.isAuthority())
+				.memberBio(member.getMemberBio())
+				.ssf(member.getSsf())
+				.regDt(member.getRegDt())
 				.build();
 		
 		return memberRes;
