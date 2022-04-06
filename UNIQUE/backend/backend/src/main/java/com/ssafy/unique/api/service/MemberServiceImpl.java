@@ -292,6 +292,7 @@ public class MemberServiceImpl implements MemberService{
 				.memberSeq(member.getMemberSeq())
 				.memberId(member.getMemberId())
 				.memberAddress(member.getMemberAddress())
+				.profileImageUrl(member.getProfileImageUrl())
 				.authority(member.isAuthority())
 				.memberBio(member.getMemberBio())
 				.ssf(member.getSsf())
