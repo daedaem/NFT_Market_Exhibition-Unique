@@ -36415,7 +36415,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-04-06T08:07:35.442Z",
+  "updatedAt": "2022-04-06T16:02:33.276Z",
   "devdoc": {
     "details": "EIP-721을 준수하여 ERC721을 작성합니다.  https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard 여기 참고함 https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol",
     "kind": "dev",
