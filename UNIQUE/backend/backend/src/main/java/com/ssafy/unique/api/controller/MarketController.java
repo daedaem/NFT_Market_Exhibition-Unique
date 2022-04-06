@@ -1,18 +1,5 @@
 package com.ssafy.unique.api.controller;
 
-import com.ssafy.unique.api.response.NftResultRes;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ssafy.unique.api.request.MarketParamReq;
 import com.ssafy.unique.api.request.MarketReq;
 import com.ssafy.unique.api.request.MarketUpdateReq;
@@ -20,10 +7,12 @@ import com.ssafy.unique.api.response.MarketResultRes;
 import com.ssafy.unique.api.response.ResultRes;
 import com.ssafy.unique.api.service.IPFSService;
 import com.ssafy.unique.api.service.MarketService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = { "http://localhost:5500", "http://172.30.1.59:5500", "http://192.168.0.100:5500",
 		"http://192.168.0.40:5500", "https://j6e205.p.ssafy.io" }, allowCredentials = "true", // axios가 sessionId를 계속

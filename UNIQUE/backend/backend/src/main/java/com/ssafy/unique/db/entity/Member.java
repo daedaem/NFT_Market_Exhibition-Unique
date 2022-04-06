@@ -1,10 +1,16 @@
 package com.ssafy.unique.db.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +22,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
+@DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
@@ -33,7 +40,7 @@ public class Member {
 
 	@Column(name = "MEMBER_ADDRESS")
 	private String memberAddress;
-	
+
 	@Column(name = "PROFILE_IMAGE_URL")
 	private String profileImageUrl;
 	
@@ -42,4 +49,11 @@ public class Member {
 	
 	@Column(name = "MEMBER_BIO")
 	private String memberBio;
+	
+	@Column(name = "SSF")
+	private Long ssf;
+	
+	@CreationTimestamp
+	@Column(name = "REG_DT")
+	private Date regDt;
 }
