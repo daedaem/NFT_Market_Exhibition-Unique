@@ -17,30 +17,31 @@
       <div class="container">
         <!-- blog section -->
         <div class="row g-gs">
-          <div class="col-lg-4 col-md-6" v-for="item of displayedRecords" :key="item.id">
-            <div class="card card-full card-blog">
+          <div class="col-lg-4 col-md-6" v-for="item of displayedRecords" :key="item">
+            <div class="card card-full card-blog" @click="moveToDetail(item.exhibitionId)">
               <div class="d-block card-image">
-                <img :src="item.img" class="card-img-top" alt="" />
+                <!-- <img :src="item.img" class="card-img-top" alt="" /> -->
+                <img src="https://i.ytimg.com/vi/-9Be9EtRXvk/maxresdefault.jpg" class="card-img-top" alt="" />
                 <div class="bg-dark-transparent card-overlay">
                   <div class="d-flex align-items-center card-author">
                     <div class="flex-shrink-0 avatar avatar-2">
-                      <img :src="item.avatar" alt="" class="rounded-circle" />
+                      <img src="@/images/thumb/avatar-4.jpg" alt="" class="rounded-circle" />
                     </div>
                     <div class="flex-grow-1 ms-2 text-white">
-                      <span>{{ item.userName }}</span>
+                      <span>{{ item.member.memberId }}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="card-body card-body-s1">
-                <h4 class="card-title mb-3">{{ item.title }}</h4>
-                <p class="card-text">{{ item.desc }}</p>
+                <h4 class="card-title mb-3">{{ item.exhibitionTitle }}</h4>
+                <p class="card-text">{{ item.exhibitionDescription }}</p>
               </div>
               <!-- end card-body -->
               <hr class="my-0" />
               <div class="card-body card-body-s1 py-3">
                 <div class="card-action-info">
-                  <span><em class="ni ni-calender-date me-1"></em>{{ item.date }}</span>
+                  <span><em class="ni ni-calender-date me-1"></em>{{ item.regDt }}</span>
                   <span>
                     <span class="me-3"><em class="ni ni-comments me-1"></em>{{ item.numberText }}</span>
                     <span><em class="ni ni-heart me-1"></em>{{ item.numberTextTwo }}</span>
@@ -49,7 +50,7 @@
                 <!-- end card-action-info -->
               </div>
               <!-- end card-body -->
-              <router-link
+              <!-- <router-link
                 class="details"
                 :to="{
                   name: 'PrivateGalleryDetail',
@@ -62,7 +63,7 @@
                   },
                 }"
               >
-              </router-link>
+              </router-link> -->
             </div>
             <!-- end card -->
           </div>
@@ -70,7 +71,7 @@
         </div>
 
         <div class="text-center mt-4 mt-md-5">
-          <Pagination :records="SectionData.blogData.blogListThree.length" v-model="page" :per-page="perPage"></Pagination>
+          <Pagination :records="exhibitionList.length" v-model="page" :per-page="perPage"></Pagination>
         </div>
       </div>
       <!-- .container -->
@@ -99,6 +100,7 @@ export default {
   data() {
     return {
       SectionData,
+      exhibitionList:null,
       page: 1,
       perPage: 6,
     };
@@ -108,12 +110,26 @@ export default {
       "authToken"
     ]),
     displayedRecords() {
-      const startIndex = this.perPage * (this.page - 1);
-      const endIndex = startIndex + this.perPage;
-      return this.SectionData.blogData.blogListThree.slice(startIndex, endIndex);
+      if (!this.exhibitionList) {
+        this.getGallerys();
+      }
+      // 마켓아이템스에 아이템이 담겨져 있으면 현재 페이지에 맞춰서 잘라서 보내기
+      else {
+        const startIndex = this.perPage * (this.page - 1);
+        const endIndex = startIndex + this.perPage;
+        return this.exhibitionList.slice(startIndex, endIndex);
+      }
     },
   },
   methods: {
+    moveToDetail(productId) {
+      this.$router.push({
+        name: "PrivateGalleryDetail",
+        params: {
+          id: productId,
+        },
+      });
+    },
     getGallerys() {
       axios({
         method: "GET",
@@ -122,14 +138,15 @@ export default {
           Authorization:
           this.authToken,
         },
-        params: { limit: 100, offset: 0, type: "CUR"},
+        params: { limit: 100, offset: 0, type: "PRI"},
       })
       .then((res)=> {
         console.log(res.data)
+        this.exhibitionList = res.data.exhibitionList
       })
     },
   },
-  mounted (){
+  created: function(){
     this.getGallerys()
   }
 };

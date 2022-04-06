@@ -21,9 +21,9 @@
     <li class="menu-item" v-else>
       <router-link :to="SectionData.headerData.menuList5.navList[0].path" class="menu-link">{{ SectionData.headerData.menuList5.title }}</router-link>
     </li>
-    <li>
+    <!-- <li>
       <button @click="wallet">wallet</button>
-    </li>
+    </li> -->
   </ul>
 </template>
 

@@ -148,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: null,
+        nftAuthorName: this.username,
         nftDescription: null,
         file: null,
       },
@@ -211,7 +211,7 @@ export default {
       if (checkPubKey === myAccount) {
         // console.log("일치합니다.");
         let data = new FormData();
-        data.append("nftAuthorName", this.form.nftAuthorName);
+        data.append("nftAuthorName", this.username);
         data.append("nftName", this.form.nftName);
         data.append("nftDescription", this.form.nftDescription);
         data.append("file", this.form.file);
@@ -233,8 +233,8 @@ export default {
         const results = await NFTcreateContractInstance.methods.current().call({ from: myAccount });
         // console.log(results)
         // 2번째 트랜잭션하는 함수 호출
-        const createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
-        const newtokenId = await NFTcreateContractInstance.methods.current().call();
+        let createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
+        // let newtokenId = await NFTcreateContractInstance.methods.current().call();
         // console.log(newtokenId, "newtokenId");
         // console.log(createNFTResponse, "createNFTResponse");
         const contractEncodedMethod = createNFTResponse.encodeABI();
@@ -242,12 +242,13 @@ export default {
         // 서명
         // 원래는 서명하시겠습니까 뜨는게?!
 
-        const gasEstimate = await createNFTResponse.estimateGas({ from: myAccount });
-        console.log(gasEstimate, "가스 측정");
+        // const gasEstimate = await createNFTResponse.estimateGas({ from: myAccount });
+        // console.log(gasEstimate, "가스 측정");
         const rawTx = {
           from: myAccount,
           to: NFT_CA,
-          gas: gasEstimate,
+          // gas: gasEstimate,
+          gas: 500000,
           data: contractEncodedMethod,
         };
         console.log(rawTx, "rawTx");
@@ -267,7 +268,7 @@ export default {
           //   console.log("Tx Hash: " + txhash);
           // });
           const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
-          // console.log(createSaleCAss, "여기 뭐떠?");
+          console.log(createSaleCAss, "여기 뭐떠?");
           //   .on("confirmation", console.log);
           // console.log(tran, "tran");
           // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
@@ -276,14 +277,41 @@ export default {
 
         // --------------------------
         // const newtokenId = createNFTResponse.events.Transfer.returnValues.tokenId;
+        // console.log("이후 토큰 아이디");
+        let newtokenId = await NFTcreateContractInstance.methods.current().call();
+
         this.newtokenId = newtokenId;
-        // console.log(newtokenId, "이거토큰아이디임");
+        console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
+        // let cc = await NFTcreateContractInstance.methods.ownerOf(1).call().then(console.log);
+        console.log("1번 아이디입니다 ");
+        // cc = await NFTcreateContractInstance.methods.ownerOf(2).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(3).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(4).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(5).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(6).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(7).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(8).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(9).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(10).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(11).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(12).call().then(console.log);
+        // cc = await NFTcreateContractInstance.methods.ownerOf(13).call().then(console.log);
+        console.log("아아");
+
         const ownerof = await NFTcreateContractInstance.methods.ownerOf(newtokenId).call().then(console.log);
         // 해당 토큰의 uri 주소
         const tokenurls = await NFTcreateContractInstance.methods.tokenURI(newtokenId).call().then(console.log);
         // 아래 세가지
         // nft에 대한 정보 백엔드에 업로드
+        console.log(newtokenId, "newtokenId");
+        console.log(createNFTResponse, "createNFTResponse");
+        console.log("------------------------");
+        newtokenId = await NFTcreateContractInstance.methods.current().call();
+        console.log(newtokenId, "newtokenId");
+        console.log(createNFTResponse, "createNFTResponse");
+        let checking = NFTcreateContractInstance.methods.getApproved(newtokenId).call();
+        console.log(checking, "11111111111111111");
         console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
         const createNFTtoBack = await axios({
           method: "PUT",
@@ -294,6 +322,8 @@ export default {
             Authorization: this.$store.state.authToken,
           },
         });
+
+        this.$router.push({ name: "ProductDetail", id: newtokenId });
         // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
 
         // ownerof, newtokenId, IPFSresult
@@ -325,7 +355,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["myAddress"]),
+    ...mapState(["myAddress", "username"]),
     ...mapState(["authToken"]),
   },
   mounted() {

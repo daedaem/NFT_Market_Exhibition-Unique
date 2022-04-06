@@ -24,8 +24,8 @@
         </div>
       </div>
       <!-- end card-price-wrap -->
-      <span v-if="clicked" class="btn btn-sm" @click="[clicked = !clicked, removeId(product.nftSeq)]" style="background-color: #00FF7F">Remove</span>
-      <span v-else class="btn btn-sm btn-dark" @click="[clicked = !clicked, insertId(product.nftSeq)]">Add</span>
+      <!-- <span v-if="clicked" class="btn btn-sm" style="background-color: #00FF7F">Remove</span>
+      <span v-else class="btn btn-sm btn-dark">Add</span> -->
     </div>
     <!-- end card-body -->
     <!-- <router-link
@@ -52,33 +52,21 @@
 </template>
 <script>
 export default {
-  name: "SelectedProducts",
-  props: ["product", "selectedIds"],
+  name: "NftProducts",
+  props: ["product"],
   data() {
     return{
-      clicked: false,
     }
   },
   methods: {
-    moveToDetail(productId) {
-      this.$router.push({
-        name: "ProductDetail",
-        params: {
-          id: productId,
-        },
-      });
-    },
-    removeId(Id) {
-      this.$emit('removeId',Id)
-    },
-    insertId(Id) {
-      this.$emit('insertId',Id)
-    },
-    isClicked() {
-      if (this.selectedIds.includes(this.product.nftSeq)){
-        this.clicked = true
-      }
-    },
+    // moveToDetail(productId) {
+    //   this.$router.push({
+    //     name: "ProductDetail",
+    //     params: {
+    //       id: productId,
+    //     },
+    //   });
+    // },
     calculatedReplyTime(res) {
       console.log(res,'22e2e2');
       let ReplynewTime = new Date(res);
@@ -89,7 +77,7 @@ export default {
       const minutes = seconds / 60;
       if (minutes < 60) return `${Math.floor(minutes)} min ago`;
       const hours = minutes / 60;
-      if (hours < 24) return `${Math.floor(hours)} h ago`;
+      if (hours < 24) return `${Math.floor(hours)}h ago`;
       const days = hours / 24;
       if (days < 7) return `${Math.floor(days)} d ago`;
       const weeks = days / 7;
@@ -104,8 +92,6 @@ export default {
 
   },
   created: function () {
-    console.log(this.product, 'w조');
-    this.isClicked()
     this.newTime = this.calculatedReplyTime(this.product.regDt)
   },
 };

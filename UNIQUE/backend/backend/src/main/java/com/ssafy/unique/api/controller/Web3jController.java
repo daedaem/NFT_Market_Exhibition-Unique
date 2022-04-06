@@ -1,25 +1,23 @@
 package com.ssafy.unique.api.controller;
 
-import com.ssafy.unique.api.service.Web3jService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.*;
-import org.web3j.abi.FunctionEncoder;
-import org.web3j.abi.FunctionReturnDecoder;
-import org.web3j.abi.TypeReference;
-import org.web3j.abi.datatypes.Address;
-import org.web3j.abi.datatypes.Function;
-import org.web3j.abi.datatypes.Type;
-import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.request.Transaction;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
-
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.unique.api.response.TokenRes;
+import com.ssafy.unique.api.service.Web3jService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 @CrossOrigin(
@@ -31,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/web3j")
-@Tag(name = "nft Controller", description = "ERC20 관련 데이터를 다룬다.")
+@Tag(name = "Web3j Controller", description = "ERC20 관련 데이터를 다룬다.")
 public class Web3jController {
 
     private final Web3jService web3jService;
@@ -40,44 +38,52 @@ public class Web3jController {
         this.web3jService = web3jService;
     }
 
-
-    @GetMapping("/transfer")
-    public void transfer() throws Exception{
-        web3jService.tokentransfer();
+	private static final int SUCCESS = 1;
+	
+	
+	@Operation(description = "현재 로그인한 유저의 지갑으로 토큰 발급")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+    @GetMapping("/transfer/{ssf}")
+    public ResponseEntity<TokenRes> transfer(@PathVariable("ssf") Long ssf) throws Exception {
+        System.out.println("Enter transfer()");
+    	TokenRes res = web3jService.tokentransfer(ssf);
+        
+    	if (res.getResult() == SUCCESS) {
+    		System.out.println("GET BALANCE");
+    		res = web3jService.getBalance();
+    	} else {
+    		System.out.println("ERROR: TRANSFER FAIL");
+    		return new ResponseEntity<TokenRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+        
+        
+		if (res.getResult() == SUCCESS) {
+			return new ResponseEntity<TokenRes>(res, HttpStatus.OK);
+		} else {
+			System.out.println("ERROR: GET BALANCE FAIL");
+			return new ResponseEntity<TokenRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
 
-    @GetMapping("/getBalance")
-    public BigInteger getBalance() throws Exception
-    {
-
-        Web3j web3 = Web3j.build(new HttpService("http://20.196.209.2:8545"));
-        Web3ClientVersion web3ClientVersion = web3.web3ClientVersion().sendAsync().get();
-        System.out.println(web3ClientVersion.getWeb3ClientVersion());
-
-        // 주소를 변수로 선언
-        String MY_ADDRESS = "0x22d3D425AddA3B8b07267C64738a5872E2Ef0f39";
-        String CONTRACT_ADDRESS = "0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333";
-
-        // input parameter
-        List<Type> params = new ArrayList<>();
-        params.add(new Address(MY_ADDRESS));
-
-        // output parameters
-        List<TypeReference<?>> returnTypes = Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {});
-
-        Function function = new Function("balanceOf", params, returnTypes);
-
-        String txData = FunctionEncoder.encode(function);
-        org.web3j.protocol.core.methods.response.EthCall response = web3.ethCall(
-                Transaction.createEthCallTransaction(MY_ADDRESS, CONTRACT_ADDRESS, txData),
-                DefaultBlockParameterName.LATEST).sendAsync().get();
-
-        List<Type> results = FunctionReturnDecoder.decode(response.getValue(), function.getOutputParameters());
-
-        BigInteger balance = (BigInteger) results.get(0).getValue();
-        System.out.println(balance);
-
-        return balance;
-
+	
+	@Operation(description = "현재 로그인한 유저의 지갑 잔고 확인")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공"),
+			@ApiResponse(responseCode = "500", description = "실패")
+	})
+    @GetMapping("/getbalance")
+    public ResponseEntity<TokenRes> getBalance() throws Exception {
+    	System.out.println("Enter getBalance()");
+    	TokenRes res = web3jService.getBalance();
+    	
+		if (res.getResult() == SUCCESS) {
+			return new ResponseEntity<TokenRes>(res, HttpStatus.OK);
+		} else {
+			System.out.println("ERROR: GET BALANCE FAIL");
+			return new ResponseEntity<TokenRes>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
 }

@@ -87,6 +87,7 @@ import Purchase from "./components/common/Purchase.vue";
 import ExhibitionCards from "./components/section/ExhibitionCards.vue";
 import ExhibitionCarousel from "./components/section/ExhibitionCarousel";
 import CarouselScreenSlider from "./components/common/CarouselScreenSlider.vue";
+import NftProducts from "./components/section/NftProducts.vue";
 
 app.component("HeaderMain", HeaderMain);
 app.component("LogoLink", LogoLink);
@@ -132,3 +133,4 @@ app.component("ExhibitionCards", ExhibitionCards);
 
 app.component("ExhibitionCarousel", ExhibitionCarousel);
 app.component("CarouselScreenSlider", CarouselScreenSlider);
+app.component("NftProducts", NftProducts);

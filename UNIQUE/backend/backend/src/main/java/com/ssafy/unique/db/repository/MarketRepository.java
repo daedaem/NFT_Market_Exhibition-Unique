@@ -19,6 +19,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 					+  " from market "
 					+ " where ended = false "
 					+   " and canceled = false "
+					+ " order by market_id desc "
 					+ " limit ? "
 					+" offset ? ", nativeQuery = true)
 	List<Market> findTypeAllWithLimitOffset(int limit, int offset);
@@ -37,6 +38,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			       + " where ended = false "
 			       +   " and canceled = false "
 			       +   " and nft_name like ?% "
+			       + " order by market_id desc "
 			       + " limit ? "
 			       +" offset ? ", nativeQuery = true)
 	List<Market> findTypeAllWithLimitOffsetSearchWord(String searchWord, int limit, int offset);
@@ -61,6 +63,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			      +  " where ended = false "
 			      +    " and canceled = false "
 			      +    " and nft_type like ?% "
+			      +  " order by market_id desc "
 			      +  " limit ? "
 			      + " offset ? ", nativeQuery = true)
 	List<Market> findTypeOtherWithLimitOffset(String type, int limit, int offset);
@@ -86,6 +89,7 @@ public interface MarketRepository extends JpaRepository<Market, Long> {
 			      +    " and canceled = false "
 			      +    " and nft_type like ?% "
 			      +    " and nft_name like ?% "
+			      +  " order by market_id desc "
 			      +  " limit ? "
 			      + " offset ?  ", nativeQuery = true)
 	List<Market> findTypeOtherWithLimitOffsetSearchWord(String type, String searchWord, int limit, int offset);
