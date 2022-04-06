@@ -42,9 +42,14 @@
 export default {
   name: 'AuthorHero',
   props: ['img', 'avatarSize', 'title', 'username', 'isDropdown', 'btntext', 'isCopyInput', 'btnlink', 'coverimg','address'],
-  setup(props) {
-     const message = props.address;
-     const onCopy = (e) => {
+  data() {
+      return {
+          message:this.address
+      }
+  },
+  mounted() {
+    const message = this.message;
+    const onCopy = (e) => {
         let target = e.trigger.querySelector(".tooltip-text");
         let prevText = target.innerHTML;
         target.innerHTML = "Copied";
@@ -54,5 +59,16 @@ export default {
     }
     return { message, onCopy }
   },
+//   setup(props) {
+//      const onCopy = (e) => {
+//         let target = e.trigger.querySelector(".tooltip-text");
+//         let prevText = target.innerHTML;
+//         target.innerHTML = "Copied";
+//         setTimeout(function(){
+//         target.innerHTML = prevText;
+//         }, 1000)
+//     }
+//     return { message, onCopy }
+//   },
 }
 </script>

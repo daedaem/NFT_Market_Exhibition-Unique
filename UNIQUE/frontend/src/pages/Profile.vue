@@ -1,9 +1,10 @@
 <template>
   <div class="page-wrap">
     <!-- header  -->
-    <header class="header-section has-header-main bg-pattern-3">
+    <header class="header-section has-header-main bg-gradient-2">
+      <!-- <router-link>aaaaa</router-link> -->
       <!-- Header main -->
-      <HeaderDashboard></HeaderDashboard>
+      <HeaderMain></HeaderMain>
       <!-- hero -->
       <AuthorHero
         avatarSize="avatar-3"
@@ -20,6 +21,9 @@
       ></AuthorHero>
     </header>
     <!-- Author section  -->
+    <div>
+      <router-link to="/"><p>ddddddddd</p></router-link>
+    </div>
     <ProfileSection
      :content = member.memberBio
      :datetext = member.regDt
@@ -38,7 +42,9 @@ import axios from "axios";
 import SectionData from "@/store/store.js";
 import { mapState } from "vuex";
 export default {
-  name: "Profile",
+  name: "profile",
+  components: {
+  },
   data() {
     return {
       SectionData,
