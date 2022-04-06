@@ -9,9 +9,9 @@
                             <div class="author-hero-content-wrap d-flex flex-wrap justify-content-between ms-3 flex-grow-1">
                                 <div class="author-hero-content me-3">
                                     <h4 class="hero-author-title mb-1 text-white">{{ title }}</h4>
-                                    <p class="hero-author-username mb-1 text-white">{{ username }}</p>
+                                    <p class="hero-author-username mb-1 text-white">@{{ username }}</p>
                                     <div class="d-flex align-items-center" v-if="isCopyInput">
-                                        <input type="text" class="copy-input text-white" v-model="message" id="copy-input" readonly>
+                                        <input type="text" class="copy-input text-white" style="max-width:3750px; width:375px" v-model="message" id="copy-input" readonly>
                                         <div class="tooltip-s1">
                                             <button v-clipboard:copy="message" v-clipboard:success="onCopy"  class="copy-text text-white ms-2" type="button">
                                                 <span class="tooltip-s1-text tooltip-text">Copy</span>
@@ -41,9 +41,9 @@
 
 export default {
   name: 'AuthorHero',
-  props: ['img', 'avatarSize', 'title', 'username', 'isDropdown', 'btntext', 'isCopyInput', 'btnlink', 'coverimg'],
-  setup() {
-     const message = '0x76669f...a0e9ca52';
+  props: ['img', 'avatarSize', 'title', 'username', 'isDropdown', 'btntext', 'isCopyInput', 'btnlink', 'coverimg','address'],
+  setup(props) {
+     const message = props.address;
      const onCopy = (e) => {
         let target = e.trigger.querySelector(".tooltip-text");
         let prevText = target.innerHTML;
@@ -53,6 +53,6 @@ export default {
         }, 1000)
     }
     return { message, onCopy }
-  }
+  },
 }
 </script>

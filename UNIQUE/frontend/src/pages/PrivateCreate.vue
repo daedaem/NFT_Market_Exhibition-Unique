@@ -155,7 +155,6 @@ export default {
     //   this.filterData = filterData;
     // },
     async getItemsAll() {
-      console.log(typeof(this.myAddress))
       const newnftItems = await axios({
         method: "GET",
         url: `${SERVER_URL}/api/nft/items/${this.myAddress}`,

@@ -55,7 +55,7 @@ const routes = [
   },
 
   {
-    path: "/blog-detail-:id",
+    path: "/privateGalleryDetail/:id",
     name: "PrivateGalleryDetail",
     component: () => import("../pages/PrivateGalleryDetail.vue"),
   },
@@ -65,7 +65,7 @@ const routes = [
     component: () => import("../pages/Profile.vue"),
   },
   {
-    path: "/account",
+    path: "/profile/account",
     name: "account",
     component: () => import("../pages/Account.vue"),
   },

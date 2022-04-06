@@ -14,6 +14,7 @@ export default createStore({
     authToken: localStorage.getItem("jwt"),
     username: null,
     myAddress: null,
+    userId: null,
     ExhibitionsCards: [
       {
         id: 1,
@@ -70,6 +71,9 @@ export default createStore({
     REMOVE_USERNAME: function (state) {
       state.username = "";
     },
+    REMOVE_ID: function (state) {
+      state.userId = "";
+    },
     SET_USERNAME: function (state, credentials) {
       state.username = credentials.memberId;
     },
@@ -77,6 +81,9 @@ export default createStore({
       state.myAddress = newAddress;
       console.log(state.myAddress, typeof state.myAddress);
       // return newAddress.address;
+    },
+    SET_ID: function (state, newId) {
+      state.userId = newId;
     },
     EXHIBITION_CARDS: function (state, cards) {
       state.ExhibitionsCards = cards;
@@ -119,11 +126,13 @@ export default createStore({
             // }
             // 여기 없으니까 안됨
             commit("SET_ADDRESS", res.data.memberAddress);
+            commit("SET_ID", res.data.memberSeq);
             router.push({ name: "Home" });
           } else {
             this.dispatch("wallet");
             commit("SET_TOKEN", res.headers.authorization);
             commit("SET_USERNAME", credentials);
+            commit("SET_ID", res.data.memberSeq);
             // if (!res.data.memberAddress) {
             //   const result = wallet();
             //   console.log(result, " 나온건가");
@@ -145,6 +154,7 @@ export default createStore({
       commit("REMOVE_TOKEN");
       commit("REMOVE_ADDRESS");
       commit("REMOVE_USERNAME");
+      commit("REMOVE_ID");
 
       // router.push({ name: "Login" });
     },
