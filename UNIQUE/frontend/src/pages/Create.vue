@@ -148,7 +148,7 @@ export default {
         nftWorkUri: null,
         nftType: null,
         nftName: null,
-        nftAuthorName: null,
+        nftAuthorName: this.username,
         nftDescription: null,
         file: null,
       },
@@ -211,7 +211,7 @@ export default {
       if (checkPubKey === myAccount) {
         // console.log("일치합니다.");
         let data = new FormData();
-        data.append("nftAuthorName", this.form.nftAuthorName);
+        data.append("nftAuthorName", this.username);
         data.append("nftName", this.form.nftName);
         data.append("nftDescription", this.form.nftDescription);
         data.append("file", this.form.file);
@@ -325,7 +325,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["myAddress"]),
+    ...mapState(["myAddress","username"]),
     ...mapState(["authToken"]),
   },
   mounted() {

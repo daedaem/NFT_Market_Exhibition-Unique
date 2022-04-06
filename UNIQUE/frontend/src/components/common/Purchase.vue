@@ -1,10 +1,12 @@
 <template>
   <div>
+    <div>{{product.marketId}}</div>
     <button type="button" data-bs-toggle="modal" data-bs-target="#purchaseNFTModal" class="btn btn-sm btn-dark d-block">Purchase</button>
     <div class="modal fade" id="purchaseNFTModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <div>{{product.marketId}}</div>
             <h4 class="modal-title">Complete checkout</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
@@ -109,6 +111,7 @@ export default {
     },
 
     async purchaseNFT() {
+      console.log(this.product.marketId)
       const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       const temp = await web3.eth.getAccounts();
       const myAccount = temp[0];
