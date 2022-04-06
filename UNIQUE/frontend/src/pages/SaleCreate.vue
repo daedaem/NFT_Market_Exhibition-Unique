@@ -182,6 +182,7 @@ export default {
     onMounted(() => {
       const startDate = new Date();
       const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+
       // let startTime = Date(startDate + 3240 * 10000)
       //   .toISOString()
       //   .replace("T", " ")
@@ -189,6 +190,7 @@ export default {
       // let endTime = new Date(+new Date().setDate(startDate.getDate() + 7) + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
       let startTime = new Date(+startDate + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
       let endTime = new Date(new Date(+startDate).setDate(startDate.getDate() + 7) + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, "");
+
       // console.log(timeis, "timeis");
       // console.log(timeTo, "timeTo");
       date.value = [startTime, endTime];
@@ -279,10 +281,13 @@ export default {
         const saleFactoryContractInsatnce = await new web3.eth.Contract(SALE_FACTORY_ABI, SALE_FACTORY_CA);
 
         // createsale 메소드 호출
-        // const startTime = this.date[0];
-        // const endTime = this.date[1];
+        const startTime = this.date[0];
+        const endTime = this.date[1];
         // nft토큰아이디, 가격, 시작시간, 끝나는 시간, SSAFY토큰CA, 현재 NFT의 CA
         // console.log(saleFactoryContractInsatnce, "saleFactoryContractInsatnce");
+        console.log(startTime, "2");
+        console.log(endTime, "2");
+        console.log(Date.parse(startTime), Date.parse(endTime), "@");
 
         const saleFactoryContractResult = await saleFactoryContractInsatnce.methods.createSale(
           this.marketInfoData.nft.nftTokenId,
