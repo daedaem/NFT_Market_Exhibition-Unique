@@ -16,8 +16,15 @@ export default {
 .logo {
   font-family: "DM Serif Display", serif;
   letter-spacing: 0px;
-  color: black;
   font-size: 25px;
   font-weight: 700;
+  color: black;
+}
+.dark-mode .logo {
+  font-family: "DM Serif Display", serif;
+  letter-spacing: 0px;
+  font-size: 25px;
+  font-weight: 700;
+  color: white;
 }
 </style>

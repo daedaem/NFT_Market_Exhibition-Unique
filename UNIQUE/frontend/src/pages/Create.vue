@@ -86,7 +86,6 @@
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
             <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
-
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
@@ -127,8 +126,13 @@ const NFT_ABI = SsafyNFT.abi;
 const NFT_CA = SsafyNFT.networks["202112031219"].address;
 
 // 네트워크 연결
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL)); // let Web3 = require("web3");
+// let web2 = web3.setProvider(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+// console.log(web3, "web3");
+// console.log(web2, "web2");
+// console.log(web3.currentProvider, "?");
 // let web3 = new Web3();
 // web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));
 // let webs = new Web3("http://127.0.0.1:7545");
@@ -176,7 +180,10 @@ export default {
         return true;
       }
     },
+
     async submitCreateNFT() {
+      console.log(GANACHE_SERVER_URL, "GANACHE_SERVER_URL");
+      console.log(SERVER_URL, "SERVER_URL");
       /**
        * PJT Ⅱ - 과제 1: 작품 등록 및 NFT 생성
        * Req.1-F1 작품 등록 화면 및 등록 요청
@@ -191,14 +198,13 @@ export default {
        * 5. 정상 동작 시 token Id와 owner_address를 백엔드에 업데이트 요청합니다.
        */
       // url:해시된, nft:이름, 작성자 일련번호
-      console.log(this.authorPrivateKey);
-      // privatekey는 0x로 시작하는듯?
-      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
+      console.log(typeof this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       // 내계좌 조회 1.
-      console.log(checkPubKey, "체크퍼브키");
+      console.log(typeof checkPubKey, "체크퍼브키");
       // 서버 배포 후
       const myAccount = await this.myAddress;
-      console.log(myAccount, "되나");
+      console.log(typeof myAccount, "되나");
 
       // 내계좌 조회 2번
       // var sender = web3.eth.accounts.privateKetToAccount("0x" + 프라이빗키);
@@ -229,16 +235,21 @@ export default {
         // console.log(IPFSresult, "ipfs결과");
         const NFTcreateContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
         // console.log(myAccount);
+        console.log(NFTcreateContractInstance, "NFTcreateContractInstance");
         // 1번째 방법 state 변경 안시키는 call함수 호출
-        const results = await NFTcreateContractInstance.methods.current().call({ from: myAccount });
-        // console.log(results)
+        // const results = await NFTcreateContractInstance.methods.current().call({ from: myAccount });
+        // console.log(results, "results");
         // 2번째 트랜잭션하는 함수 호출
         let createNFTResponse = await NFTcreateContractInstance.methods.create(myAccount, IPFSresult);
         // let newtokenId = await NFTcreateContractInstance.methods.current().call();
         // console.log(newtokenId, "newtokenId");
-        // console.log(createNFTResponse, "createNFTResponse");
+        let web2 = web3.setProvider(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+        console.log(web3, "web3");
+        console.log(web2, "web2");
+        console.log(web3.currentProvider, "?");
+        console.log(createNFTResponse, "createNFTResponse");
         const contractEncodedMethod = createNFTResponse.encodeABI();
-        // console.log(contractEncodedMethod, "contractEncodedMethod");
+        console.log(contractEncodedMethod, "contractEncodedMethod");
         // 서명
         // 원래는 서명하시겠습니까 뜨는게?!
 
@@ -251,52 +262,50 @@ export default {
           gas: 500000,
           data: contractEncodedMethod,
         };
+        web2 = web3.setProvider(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+        console.log(web3, "web3");
+        console.log(web2, "web2");
+        console.log(web3.currentProvider, "?");
         console.log(rawTx, "rawTx");
         //
-        const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
-        // console.log(walletAccount.methods);
+        // const walletAccount = web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
+        // console.log(walletAccount, "walletAccount");
         // console.log("walletAccount" + walletAccount);
-        const signedTx = await walletAccount.signTransaction(rawTx);
+        // const gasPrice = await web3.eth.getGasPrice();
+        // console.log(gasPrice, "gasPrice");
+        const signedTx = await web3.eth.accounts.signTransaction(rawTx, this.authorPrivateKey);
         console.log(signedTx, "signedTx");
         // this.createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
-        // console.log(createSaleCAss, "여기 뭐떠?");
+        // console.log(createSaleCAss, "createSaleCAss?");
         if (signedTx == null) {
           console.log("TransactionSignFailedException");
         } else {
-          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction).on("receipt", console.log);
+          let tran = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
           // .on("transactionHash", (txhash) => {
           //   console.log("Tx Hash: " + txhash);
           // });
-          const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
-          console.log(createSaleCAss, "여기 뭐떠?");
+          console.log(tran, "tran");
+          // const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // console.log(createSaleCAss, "createSaleCAss?");
           //   .on("confirmation", console.log);
-          // console.log(tran, "tran");
+          console.log(tran, "tran");
           // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");
           // console.log(resultofCreate, "컨트랙트어드레스");
         }
 
         // --------------------------
         // const newtokenId = createNFTResponse.events.Transfer.returnValues.tokenId;
-        // console.log("이후 토큰 아이디");
+        console.log("이후 토큰 아이디");
         let newtokenId = await NFTcreateContractInstance.methods.current().call();
-
+        web2 = web3.setProvider(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+        console.log(web3, "web3");
+        console.log(web2, "web2");
+        console.log(web3.currentProvider, "?");
         this.newtokenId = newtokenId;
         console.log(newtokenId, "이거토큰아이디임");
         // 토큰id의 주인주소
-        // let cc = await NFTcreateContractInstance.methods.ownerOf(1).call().then(console.log);
+
         console.log("1번 아이디입니다 ");
-        // cc = await NFTcreateContractInstance.methods.ownerOf(2).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(3).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(4).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(5).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(6).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(7).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(8).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(9).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(10).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(11).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(12).call().then(console.log);
-        // cc = await NFTcreateContractInstance.methods.ownerOf(13).call().then(console.log);
         console.log("아아");
 
         const ownerof = await NFTcreateContractInstance.methods.ownerOf(newtokenId).call().then(console.log);
@@ -322,8 +331,19 @@ export default {
             Authorization: this.$store.state.authToken,
           },
         });
+        await axios({
+          method: "get",
+          url: `${SERVER_URL}/api/nft/items/${myAccount}`,
+          headers: {
+            // Authorization: token,
+            Authorization: this.$store.state.authToken,
+          },
+        }).then((res) => {
+          // console.log(res.data.nftList[41].nftSeq);
+          const pos = res.data.nftList[res.data.nftList.length - 1].nftSeq;
+          this.$router.push({ name: "ProductDetail", params: { id: pos } });
+        });
 
-        this.$router.push({ name: "ProductDetail", id: newtokenId });
         // console.log(newtokenId, myAccount, IPFSresult, NFT_CA, "됩니까");
 
         // ownerof, newtokenId, IPFSresult
@@ -346,7 +366,6 @@ export default {
         //   });
         // });
       } else {
-        // alert("Please, check your private key");
         this.authorPrivateKey = null;
         // this.$router.go();
       }
@@ -386,22 +405,25 @@ export default {
     fileUpload(".file-upload-input");
 
     /*  ============== Unlock once purchased Checkbox switcher ============= */
-    function checkboxSwitcher(selector) {
-      let elem = document.querySelectorAll(selector);
-      if (elem.length > 0) {
-        elem.forEach((item) => {
-          item.addEventListener("change", function () {
-            let target = document.getElementById(item.dataset.target);
-            if (this.checked) {
-              target.classList.add("is-shown");
-            } else {
-              target.classList.remove("is-shown");
-            }
-          });
-        });
-      }
-    }
-    checkboxSwitcher(".checkbox-switcher");
+    // function checkboxSwitcher(selector) {
+    //   let elem = document.querySelectorAll(selector);
+    //   if (elem.length > 0) {
+    //     elem.forEach((item) => {
+    //       item.addEventListener("change", function () {
+    //         let target = document.getElementById(item.dataset.target);
+    //         if (this.checked) {
+    //           console.log(target, "뭔데 도대체 이게 어?");
+    //           target.classList.add("is-shown");
+    //         } else {
+    //           console.log(target, "뭔데 도대체 이게 어?");
+
+    //           target.classList.remove("is-shown");
+    //         }
+    //       });
+    //     });
+    //   }
+    // }
+    // checkboxSwitcher(".checkbox-switcher");
   },
 };
 </script>

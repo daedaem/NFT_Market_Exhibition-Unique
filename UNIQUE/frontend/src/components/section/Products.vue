@@ -1,17 +1,17 @@
 <template>
   <div class="card card-full">
     <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
-      <!-- <img :src="`https://cloudflare-ipfs.com/ipfs/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" /> -->
+      <img :src="`https://j6e205.p.ssafy.io/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" />
       <!-- {{ product.nft.nftWorkUri }} -->
       {{ product.nft.fileUrl }}
     </div>
     <div class="card-body p-4">
-      <h5 @click="moveToDetail(`${product.marketId}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
+      <h5 @click="moveToDetail(`${product.nft.nftSeq}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
       <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
         <div class="custom-tooltip-wrap">
-          <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorName}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
+          <router-link :to="{ name: 'profile', params: { id: `${product.nft.nftAuthorSeq}` } }" class="custom-tooltip author-link">{{ product.nft.nftAuthorName }}</router-link>
           <!-- <div class="card-generic custom-tooltip-dropdown">
             <div class="author-action d-flex flex-wrap align-items-center mb-3">
               <div class="flex-shrink-0 avatar">
@@ -96,27 +96,27 @@ export default {
       });
     },
   },
-  mounted() {
-    /*============= Custom Tooltips =============== */
-    function customTooltip(selector, active) {
-      let elem = document.querySelectorAll(selector);
-      if (elem.length > 0) {
-        elem.forEach((item) => {
-          const parent = item.parentElement;
-          const next = item.nextElementSibling;
-          createPopper(item, next);
-          parent.addEventListener("mouseenter", function () {
-            parent.classList.add(active);
-          });
-          parent.addEventListener("mouseleave", function () {
-            parent.classList.remove(active);
-          });
-        });
-      }
-    }
+  // mounted() {
+  //   /*============= Custom Tooltips =============== */
+  //   function customTooltip(selector, active) {
+  //     let elem = document.querySelectorAll(selector);
+  //     if (elem.length > 0) {
+  //       elem.forEach((item) => {
+  //         const parent = item.parentElement;
+  //         const next = item.nextElementSibling;
+  //         createPopper(item, next);
+  //         parent.addEventListener("mouseenter", function () {
+  //           parent.classList.add(active);
+  //         });
+  //         parent.addEventListener("mouseleave", function () {
+  //           parent.classList.remove(active);
+  //         });
+  //       });
+  //     }
+  //   }
 
-    customTooltip(".custom-tooltip", "active");
-  },
+  //   customTooltip(".custom-tooltip", "active");
+  // },
   created: function () {
     // console.log(this.product);
   },
