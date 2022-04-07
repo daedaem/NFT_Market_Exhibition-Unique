@@ -3,7 +3,7 @@
     <!-- header  -->
     <header class="header-section has-header-main bg-pattern-3">
       <!-- Header main -->
-      <HeaderDashboard></HeaderDashboard>
+      <HeaderMain></HeaderMain>
       <!-- hero -->
       <AuthorHero
         avatarSize="avatar-3"
@@ -13,6 +13,7 @@
         :username="SectionData.authorPersonalData.userName"
         :btntext="SectionData.authorPersonalData.btnTextTwo"
         :btnlink="SectionData.authorPersonalData.btnLinkTwo"
+        myId=47
       ></AuthorHero>
     </header>
     <!-- account section -->

@@ -108,7 +108,7 @@
                 <div class="card">
                   <div class="card-body card-body-s1">
                     <div class="avatar avatar-1 mb-3 mx-auto">
-                      <img :src="avatar" alt="" />
+                      <img src="http://kaihuastudio.com/common/img/default_profile.png" alt="" />
                     </div>
                     <!-- <h4 class="mb-2">{{ creator.memberId }}</h4> -->
                     <h4 align="center" class="mb-2">Shcho21112</h4>

@@ -194,20 +194,6 @@ export default {
           avatar: require("@/images/thumb/avatar-4.jpg"),
           path: "/author",
         },
-        // {
-        //   id: 2,
-        //   title: "Purchased 1 edition for 0.1 ETH",
-        //   subTitle: "by Medicom 21 hours ago",
-        //   avatar: require("@/images/thumb/avatar-5.jpg"),
-        //   path: "/author",
-        // },
-        // {
-        //   id: 3,
-        //   title: "Purchased 1 edition for 0.1 ETH",
-        //   subTitle: "by French Montana 23/09/2021",
-        //   avatar: require("@/images/thumb/avatar-6.jpg"),
-        //   path: "/author",
-        // },
       ],
       itemDetailList: [
         {
