@@ -84,8 +84,16 @@ export default {
   components: {
     Purchase,
   },
+  data() {
+    // return { product: product };
+  },
   props: ["product"],
   methods: {
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
+    },
     moveToDetail(productId) {
       console.log(productId);
       this.$router.push({
@@ -123,7 +131,7 @@ export default {
   //   customTooltip(".custom-tooltip", "active");
   // },
   created: function () {
-    // console.log(this.product);
+    console.log(this.product);
   },
 };
 </script>

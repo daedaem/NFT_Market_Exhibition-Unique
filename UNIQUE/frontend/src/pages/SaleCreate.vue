@@ -51,7 +51,7 @@
         <div class="container">
           <div class="card card-full" style="max-width: 500px; height: auto">
             <div class="card-image">
-              <img src="https://images.pexels.com/photos/1328876/pexels-photo-1328876.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500g" class="card-img-top" style="height: auto" alt="art image" />
+              <img src="`https://j6e205.p.ssafy.io/${ marketInfoData.nft.fileUrl }`" class="card-img-top" style="height: auto" alt="art image" />
               <!-- <img :src="`${marketInfoData.nft.ufleUrl}`" class="card-img-top" style="height: auto" alt="art image" /> -->
             </div>
             <div class="card-body p-4">

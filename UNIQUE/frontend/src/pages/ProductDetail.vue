@@ -6,7 +6,7 @@
       <HeaderMain></HeaderMain>
     </header>
     <div style="max-width: 1200px; margin: auto">
-      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px;">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
         <router-link v-if="onsale === `Not for Sale`" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
@@ -104,7 +104,6 @@
                 <span class="item-detail-text-meta">{{ onsale }}</span>
                 <span class="dot-separeted"></span>
                 <span class="item-detail-text-meta">Price : {{ price }} SSF</span>
-
               </div>
               <p class="item-detail-text mb-4">{{ content }}</p>
               <div class="item-credits">
@@ -132,7 +131,7 @@
                   <li class="flex-grow-1">
                     <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a> -->
                     <!-- <Purchase :product="product"></Purchase> -->
-                    <DetailPurchase :product="product"></DetailPurchase>
+                    <DetailPurchase :marketContractAddress="marketContractAddress" :nftName="title" :price="price" :nftTokenId="nftTokenId"></DetailPurchase>
                   </li>
                 </ul>
               </div>
@@ -169,9 +168,13 @@ import DetailPurchase from "@/components/common/DetailPurchase";
 
 export default {
   name: "ProductDetail",
-  props: ["product"],
+  // props: ["product"],
   data() {
     return {
+      // product: product,
+      marketContractAddress: null,
+      nftTokenId: null,
+
       SectionData,
       id: this.$route.params.id,
       nftCA: null,
@@ -222,10 +225,15 @@ export default {
     DetailPurchase,
     // Purchase,
   },
-  created() {
+  created: function () {
     this.getItmeDetail();
   },
   methods: {
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
+    },
     getItmeDetail() {
       axios({
         method: "GET",
@@ -236,7 +244,10 @@ export default {
         },
       }).then((res) => {
         console.log(res.data, "eeeeeeeeeeeeeeee");
-        // res.data.
+        this.nowInfo = res.data;
+        // -------------------
+        // this.marketContractAddress = res.data.marketList[res.data.marketList.length - 1].marketContractAddress;
+
         this.itemDetailList[0].title = res.data.AuthorMember.memberId;
         this.itemDetailList[1].title = res.data.OwnerMember.memberId;
         this.itemDetailList[0].avatar = `https://j6e205.p.ssafy.io/${res.data.AuthorMember.profileImageUrl}`;
@@ -245,20 +256,22 @@ export default {
         this.itemDetailList[1].path = res.data.OwnerMember.memberSeq;
 
         this.title = res.data.nft.nftName;
+        this.nftTokenId = res.data.nft.nftTokenId;
         this.content = res.data.nft.nftDescription;
         this.nftCA = res.data.nft.nftContractAddress;
         this.imgLg = `https://j6e205.p.ssafy.io/${res.data.nft.fileUrl}`
         if (res.data.marketList.length >= 1) {
           this.price = res.data.marketList[res.data.marketList.length - 1].price;
-        }else {
-          this.onsale = "Not for Sale"
+          this.marketContractAdderess = res.data.marketList[res.data.marketList.length - 1].marketContractAddress;
+        } else {
+          this.onsale = "Not for Sale";
         }
         for (var i = 0; i < res.data.marketList.length; i++) {
-          if (res.data.buyerList[i]==null){
+          if (res.data.buyerList[i] == null) {
             break;
           }
-          if (res.data.buyerList[res.data.buyerList.length -1]){
-            this.onsale = "Not for Sale"
+          if (res.data.buyerList[res.data.buyerList.length - 1]) {
+            this.onsale = "Not for Sale";
           }
           if (i === 0) {
             this.itemDetailHistoryList[0] = {

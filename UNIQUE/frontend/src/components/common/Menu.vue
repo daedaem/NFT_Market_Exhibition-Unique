@@ -6,7 +6,7 @@
     <ul class="menu-btns menu-btns-2">
       <!-- <li><ButtonLink :text="SectionData.headerData.btnText" :link="`/profile/${userId}`" classname="btn" :class="classname"></ButtonLink></li> -->
       <li class="d-none d-lg-inline-block">
-        <router-link to="wallet" class="icon-btn icon-btn-s1" title="Wallet"><em class="ni ni-wallet"></em></router-link>
+        <p class="icon-btn icon-btn-s1" @click="moveToWallet" title="Wallet"><em class="ni ni-wallet"></em></p>
       </li>
       <li class="d-none d-lg-inline-block dropdown">
         <button type="button" class="icon-btn icon-btn-s1" data-bs-toggle="dropdown"><em class="ni ni-user"></em></button>
@@ -129,7 +129,31 @@ export default {
           name: "login",
         })
       }
-    }
+    },
+    moveToWallet() {
+      if (this.isLogin) {
+        this.$router.push({
+          name: "Wallet",
+          // params: {
+          // id: this.userId,
+          // },
+        });
+      } else {
+        alert("로그인을 해주세요");
+        this.$router.push({
+          name: "login",
+        });
+      }
+    },
   },
 };
 </script>
+<style scoped>
+.icon-btn-s1 {
+  cursor: pointer;
+  /* cursor: auto; */
+}
+.card-generic-item {
+  cursor: pointer;
+}
+</style>
