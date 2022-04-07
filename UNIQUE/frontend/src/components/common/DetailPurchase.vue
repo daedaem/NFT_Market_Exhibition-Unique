@@ -66,7 +66,7 @@
 
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
 
 import { mapState } from "vuex";
 import axios from "axios";

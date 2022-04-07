@@ -63,7 +63,7 @@
 
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
 
 import { mapState } from "vuex";
 import axios from "axios";
@@ -239,16 +239,12 @@ export default {
 
             console.log(purchaseFunctionMethodEndcoded, "purchaseFunctionMethodEndcoded");
             // const purchaseGasEstimate = await purchsaeFunctionCallResult.estimateGas({ from: myAccount });
-            // console.log(purchaseGasEstimate, "purchaseGasEstimate");\
-            const wale = "0x" + ((await web3.eth.getTransactionCount(myAccount)) + 1).toString(16);
-            console.log(wale, "wale ");
-            const nonces = await web3.eth.getTransactionCount(this.marketContractAddress);
-            console.log(nonces, "nonces");
-            console.log(myAccount, "내계좌");
+            // console.log(purchaseGasEstimate, "purchaseGasEstimate");
+
             const purchaseRawTx = {
               from: myAccount,
               to: this.marketContractAddress,
-              // nonce: wale,
+              // nonce: ,
               // gasPrice: "0x00",
               // gasLimit: 3000000,
               gas: 5000000,
@@ -256,24 +252,24 @@ export default {
               data: purchaseFunctionMethodEndcoded,
               // chainId: 31221,
             };
+            const walletAccount = await web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
             console.log(purchaseRawTx, "purchaseRawTx");
-            const reulst = await web3.eth.accounts.signTransaction(purchaseRawTx, this.authorPrivateKey);
+
             const purchaseSingedTx = await walletAccount.signTransaction(purchaseRawTx);
+            console.log(purchaseSingedTx, "purchaseSingedTx");
 
-            console.log(reulst, "reulst");
-
-            if (reulst == null) {
+            if (purchaseSingedTx == null) {
               alert("The sign purchase NFT is not completed");
             } else {
               console.log("이제 제발 되어라!!!!!!!!!");
               // const finalresults = await createSaleInstance.methods.getSaleInfo().call();
               // console.log(finalresults, "finalresults");
-              const purchaseSingedResult = await web3.eth.sendSignedTransaction(reulst.rawTransaction);
+              const purchaseSingedResult = await web3.eth.sendSignedTransaction(purchaseSingedTx.rawTransaction);
               console.log(purchaseSingedResult, "purchaseSingedResult");
-              zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
-              checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+              let zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+              // checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
               console.log(zsc, "zsc 구매 후,");
-              console.log(checking, " checking 구매후 전송권한");
+              // console.log(checking, " checking 구매후 전송권한");
               console.log("거래되고나서주인");
 
               // 백엔드에 저장
