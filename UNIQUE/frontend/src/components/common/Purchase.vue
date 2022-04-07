@@ -293,7 +293,7 @@ export default {
                 })
                 .then((res) => {
                   alert("Congratulations!! your transaction has been completed.");
-                  // marketInfoData.value = res.data;
+                  this.$router.go();
                 })
                 .catch(() => {
                   alert("Market Info is not recorded");

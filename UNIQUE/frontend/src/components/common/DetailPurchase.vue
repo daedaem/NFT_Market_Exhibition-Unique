@@ -289,6 +289,7 @@ export default {
                 })
                 .then((res) => {
                   alert("Congratulations!! your transaction has been completed.");
+                  this.$router.go();
                   // marketInfoData.value = res.data;
                 })
                 .catch(() => {
@@ -299,7 +300,7 @@ export default {
           }
         } else {
           alert("please, check your account's balance");
-          // 새로고침
+          // this.$router.go(); // 새로고침
           // this.$router.go();
         }
         // 내 계좌에서 컨트랙트에다가 토큰 전송 권한 부여
