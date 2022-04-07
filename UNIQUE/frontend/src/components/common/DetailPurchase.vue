@@ -287,6 +287,10 @@ export default {
                   console.log(res.data);
                   // marketInfoData.value = res.data;
                 })
+                .then((res) => {
+                  alert("Congratulations!! your transaction has been completed.");
+                  // marketInfoData.value = res.data;
+                })
                 .catch(() => {
                   alert("Market Info is not recorded");
                 });
