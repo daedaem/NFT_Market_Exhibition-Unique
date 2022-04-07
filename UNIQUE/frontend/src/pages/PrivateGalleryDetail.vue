@@ -15,7 +15,7 @@
                   <router-link to="/">Home</router-link>
                 </li>
                 <li class="breadcrumb-item">
-                  <router-link to="/blog">PrivateGallery</router-link>
+                  <router-link to="/PrivateGallery">PrivateGallery</router-link>
                 </li>
                 <li class="breadcrumb-item">
                   {{ exhibition.exhibitionTitle }}
@@ -38,7 +38,7 @@
             <div class="single-entry mb-5 mb-lg-0">
               <!-- <img :src="img" class="w-100 rounded mb-3" alt="" /> -->
               <!-- <img :src="reprentiveNft.fileUrl" class="w-100 rounded mb-3" alt="" /> -->
-              <img src="https://i.ytimg.com/vi/-9Be9EtRXvk/maxresdefault.jpg" class="w-100 rounded mb-3" alt="" />
+              <img :src="`https://j6e205.p.ssafy.io/${representiveNft.fileUrl}`" class="w-100 rounded mb-3" alt="representiveImage" />
               <p class="single-entry-text mb-2 text-black d-flex flex-wrap align-items-center">
                 Published <span class="dot-separeted"></span> {{ representiveNft.regDt }} <span class="dot-separeted"></span> By {{ representiveNft.nftAuthorName }}
               </p>
@@ -46,8 +46,9 @@
               <p class="single-entry-text mb-3">{{ SectionData.blogDetail.contentTwo }}</p> -->
               <blockquote class="blockquote">
                 <p>{{ exhibition.exhibitionDescription }}</p>
-                <p>{{ test }}</p>
+                <!-- <p>{{ test }}</p> -->
               </blockquote>
+
               <!-- <p class="single-entry-text mb-4">{{ SectionData.blogDetail.contentThree }}</p> -->
               <!-- <div class="row g-gs mb-4">
                 <div class="col-lg-6 col-sm-6" v-for="img in SectionData.blogDetail.imgList" :key="img.id">
@@ -108,10 +109,13 @@
                 <div class="card">
                   <div class="card-body card-body-s1">
                     <div class="avatar avatar-1 mb-3 mx-auto">
-                      <img src="http://kaihuastudio.com/common/img/default_profile.png" alt="" />
+                      <img :src="`https://j6e205.p.ssafy.io/${creator.profileImageUrl}`" alt="profile" />
+                      <!-- <p>{{creator.profileImageUrl}}</p> -->
                     </div>
                     <!-- <h4 class="mb-2">{{ creator.memberId }}</h4> -->
-                    <h4 align="center" class="mb-2">Shcho21112</h4>
+                    <router-link :to="{ name: 'profile', params: { id: `${creator.memberSeq}` }}">
+                      <h4 align="center" class="mb-2">{{creator.memberId}}</h4>
+                    </router-link>
                     <blockquote class="blockquote">
                       <p class="sidebar-text mb-3">{{ creator.memberBio }}</p>
                     </blockquote>
@@ -131,7 +135,7 @@
                     <h4 align="center" class="mb-3">{{ SectionData.sidebarData.sidebarWidgetThree.title }}</h4>
                     <ul class="list-item">
                       <li v-for="list in SectionData.sidebarData.sidebarWidgetThree.catList" :key="list.id">
-                        <router-link :to="list.path"><em class="ni ni-chevron-right me-1"></em> {{ list.title }}</router-link>
+                        <p><em class="ni ni-chevron-right me-1"></em> {{ list.title }}</p>
                       </li>
                     </ul>
                   </div>

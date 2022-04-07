@@ -1,8 +1,8 @@
 <template>
   <div class="card card-full">
-    <div class="card-image">
-      <img src="http://img.khan.co.kr/news/2020/10/16/2020101601001687000138341.jpg" class="card-img-top" alt="art image" />
-      <!-- {{ product.nft.nftWorkUri }} -->
+    <div class="card-image" @click="moveToDetail(product.nftSeq)">
+      <img :src="`https://j6e205.p.ssafy.io/${product.fileUrl}`" class="card-img-top" alt="art image" />
+      <p>{{ product.fileUrl }}</p>
     </div>
     <div class="card-body p-4">
       <h3 class="card-title text-truncate mb-0">{{ product.nftName }}</h3>
@@ -16,11 +16,13 @@
       <div class="card-price-wrap d-flex align-items-center justify-content-sm-between mb-3">
         <div class="me-5 me-sm-2">
           <span class="card-price-title">Author</span>
-          <span class="card-price-number">{{ product.nftAuthorName }}</span>
+          <router-link :to="{ name: 'profile', params: { id: `${product.nftAuthorSeq}` } }">
+            <span class="card-price-number">{{ product.nftAuthorName }}</span>
+          </router-link>
         </div>
         <div class="text-sm-end">
           <span class="card-price-title">NFT Type</span>
-          <span class="card-price-number">{{ product.nftType }}</span>
+          <span class="card-price-number">{{ strsplit(product.nftType) }}</span>
         </div>
       </div>
       <!-- end card-price-wrap -->
@@ -59,14 +61,19 @@ export default {
     }
   },
   methods: {
-    // moveToDetail(productId) {
-    //   this.$router.push({
-    //     name: "ProductDetail",
-    //     params: {
-    //       id: productId,
-    //     },
-    //   });
-    // },
+    moveToDetail(productId) {
+      this.$router.push({
+        name: "ProductDetail",
+        params: {
+          id: productId,
+        },
+      });
+    },
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
+    },
     calculatedReplyTime(res) {
       console.log(res,'22e2e2');
       let ReplynewTime = new Date(res);

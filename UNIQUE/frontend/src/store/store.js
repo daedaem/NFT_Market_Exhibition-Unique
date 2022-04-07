@@ -270,7 +270,7 @@ let SectionData = {
   // Product data
   productData: {
     title: "Trending Auctions",
-    content: "This is just a simple text made for this unique and awesome template, you can replace it with any text. It is a long established fact.",
+    content: "Here are Treding Auctions. You can explore items in Unique's Market!.Click to go to the product detail page. ",
     contentTwo: "Explore on the world's best NFT marketplace with our beautiful NFT products. We want to be a part of your smile.",
     btnText: "View all auctions",
     btnLink: "/explore",
@@ -1578,7 +1578,7 @@ let SectionData = {
   // how It Work Data
   howItWorkData: {
     title: "Create and sell your NFTs",
-    content: "This is just a simple text made for this unique and awesome template, you can replace it with any text. It is a long established fact.",
+    content: "Welcome to Unique! In Unique, You can set up your wallet, create collection, mint your NFTs and sale",
     titleTwo: "Mint, Buy and Sell or Just Launch <br> Your Own NFT Store",
     titleThree: "Get Started in 3 simple steps",
     btnText: "Create Store",
@@ -1591,19 +1591,19 @@ let SectionData = {
       },
       {
         id: 2,
-        icon: "icon ni ni-file-text icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4 text-danger",
+        icon: "icon ni ni-file-text icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4",
         title: "Create collection",
-        content: 'Click <a href="profile">My Collections</a> and set up your collection. Add social links, a description',
+        content: 'Click My Collections and set up your collection. Add social links, a description',
       },
       {
         id: 3,
-        icon: "icon ni ni-camera icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4 text-info",
+        icon: "icon ni ni-camera icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4",
         title: "Add your NFTs",
         content: "Upload your work (image, video, audio, or 3D art), add a title and description",
       },
       {
         id: 4,
-        icon: "icon ni ni-money icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4 text-success",
+        icon: "icon ni ni-money icon-lg icon-circle shadow-sm icon-wbg mx-auto mb-4",
         title: "List them for sale",
         content: "Choose between auctions, fixed-price listings, and declining-price listings.",
       },
@@ -5501,23 +5501,23 @@ let SectionData = {
         navList: [
           {
             title: "Profile",
-            path: "profile",
+            path: "/",
           },
           {
             title: "My Offers",
-            path: "offers",
+            path: "/",
           },
           {
             title: "Activity",
-            path: "activity",
+            path: "/",
           },
           {
             title: "Sales & Purchase",
-            path: "purchases-sales",
+            path: "/",
           },
           {
             title: "Payment Methods",
-            path: "payment-methods",
+            path: "/",
           },
         ],
       },
@@ -5527,19 +5527,19 @@ let SectionData = {
         navList: [
           {
             title: "About",
-            path: "about-us",
+            path: "/",
           },
           {
             title: "Blog",
-            path: "blog",
+            path: "/",
           },
           {
             title: "Contact",
-            path: "contact",
+            path: "/",
           },
           {
             title: "Careers",
-            path: "about-us",
+            path: "/",
           },
         ],
       },
@@ -5548,10 +5548,6 @@ let SectionData = {
       {
         title: "Explore",
         path: "/explore",
-      },
-      {
-        title: "Activity",
-        path: "activity",
       },
       {
         title: "Login",
