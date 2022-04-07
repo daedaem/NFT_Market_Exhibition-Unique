@@ -116,7 +116,7 @@ public class MarketServiceImpl implements MarketService {
 		
 		try {
 			// NFT의 소유주가 아니면 실행하지 못하도록 해야할 것
-			if (memberSeq == nft.getNftOwnerSeq()) {
+			if (Long.compare(memberSeq, nft.getNftOwnerSeq()) == 0) {
 				
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 						

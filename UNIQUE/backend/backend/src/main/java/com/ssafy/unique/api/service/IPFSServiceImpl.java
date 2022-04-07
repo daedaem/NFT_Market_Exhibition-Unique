@@ -78,8 +78,8 @@ public class IPFSServiceImpl implements IPFSService {
 	private static final int FAIL = -1;
 
 	String uploadFolder = "upload";
-	String uploadPath = "C:" + File.separator + "SSAFY" + File.separator + "NFT";
-	//	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
+	//String uploadPath = "C:" + File.separator + "SSAFY" + File.separator + "NFT";
+	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
 
 
 	@Override
