@@ -7,33 +7,33 @@
     </header>
     <HeroFour classname="hero-title" :title="SectionData.breadcrumbData.breadcrumbListPrivateCreate.title" :lists="SectionData.breadcrumbData.breadcrumbListPrivateCreate.navList"></HeroFour>
     <!-- login section -->
-    <h1>{{selectedIds}}</h1>
-  <section class="explore-section pt-4">
-    <div class="container">
-      <!-- filter -->
-      <div class="filter-box pb-5">
-        <h3 class="mb-4">Filter by</h3>
-        <div class="filter-btn-group">
-          <a href="#" class="btn btn-sm filter-btn" :class="tab.class" v-for="tab in filterMenu" @click.prevent="setTab(tab, tab.id)" :key="tab.id">{{ tab.title }}</a>
+    <h1>{{ selectedIds }}</h1>
+    <section class="explore-section pt-4">
+      <div class="container">
+        <!-- filter -->
+        <div class="filter-box pb-5">
+          <h3 class="mb-4">Filter by</h3>
+          <div class="filter-btn-group">
+            <a href="#" class="btn btn-sm filter-btn" :class="tab.class" v-for="tab in filterMenu" @click.prevent="setTab(tab, tab.id)" :key="tab.id">{{ tab.title }}</a>
+          </div>
         </div>
-      </div>
-      <div>
-        <h3>Select Items for Gallery</h3>
-        <br>
-      </div>
-      <!-- end filter-box -->
-      <div class="row g-gs">
-        <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product">
-          <SelectedProducts :selectedIds="selectedIds" :product="product" v-on:removeId = removeId v-on:insertId = insertId></SelectedProducts>
+        <div>
+          <h3>Select Items for Gallery</h3>
+          <br />
         </div>
-        <!-- end col -->
-      </div>
-      <!-- end end  -->
-      <div class="text-center mt-4 mt-md-5">
-        <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
-      </div>
-      <form action="#" class="form-create mb-5 mb-lg-0">
-        <!-- <div class="form-item mb-4">
+        <!-- end filter-box -->
+        <div class="row g-gs">
+          <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product">
+            <SelectedProducts :selectedIds="selectedIds" :product="product" v-on:removeId="removeId" v-on:insertId="insertId"></SelectedProducts>
+          </div>
+          <!-- end col -->
+        </div>
+        <!-- end end  -->
+        <div class="text-center mt-4 mt-md-5">
+          <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
+        </div>
+        <form action="#" class="form-create mb-5 mb-lg-0">
+          <!-- <div class="form-item mb-4">
           <h3 class="mb-3">Upload representative Image</h3>
           <div class="file-upload-wrap">
             <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
@@ -41,23 +41,23 @@
             <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
           </div>
         </div> -->
-        <div class="form-item mb-4">
-          <div class="mb-4">
-            <h3 class="mb-2">Title</h3>
-            <input type="text" class="form-control form-control-s1" v-model="galleryName" placeholder="Input your Private Gallery name" />
+          <div class="form-item mb-4">
+            <div class="mb-4">
+              <h3 class="mb-2">Title</h3>
+              <input type="text" class="form-control form-control-s1" v-model="galleryName" placeholder="Input your Private Gallery name" />
+            </div>
+            <div class="mb-4">
+              <h3 class="mb-2">Description</h3>
+              <textarea name="message" class="form-control form-control-s1" v-model="galleryDescription" placeholder="Explain your Private Gallery"></textarea>
+            </div>
           </div>
-          <div class="mb-4">
-            <h3 class="mb-2">Description</h3>
-            <textarea name="message" class="form-control form-control-s1" v-model="galleryDescription" placeholder="Explain your Private Gallery"></textarea>
-          </div>
-        </div>
-      <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block mb-5" @click="createGallery()">Create Item</button>
-      </form>
-    </div>
-    <!-- .container -->
-    <!-- <pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></pagination> -->
-  </section>
-  <Footer classname="bg-dark on-dark"></Footer>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#createNftModal" class="btn btn-dark d-block mb-5" @click="createGallery()">Create Item</button>
+        </form>
+      </div>
+      <!-- .container -->
+      <!-- <pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></pagination> -->
+    </section>
+    <Footer classname="bg-black on-dark"></Footer>
   </div>
   <!-- end page-wrap -->
 </template>
@@ -69,7 +69,7 @@ import SectionData from "@/store/store.js";
 import Pagination from "v-pagination-3";
 import HeroFour from "@/components/section/HeroFour.vue";
 import SelectedProducts from "@/components/section/SelectedProducts";
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 import axios from "axios";
 import router from "@/router/index.js";
 export default {
@@ -109,29 +109,27 @@ export default {
         method: "POST",
         url: `${SERVER_URL}/api/exhibition/register`,
         headers: {
-          Authorization:
-            this.authToken,
+          Authorization: this.authToken,
         },
         data: {
           title: this.galleryName,
           description: this.galleryDescription,
           type: "PRI",
           nftSeqList: this.selectedIds,
-        }
-      })
-      .then((res)=>{
-        console.log('갤러리 성공')
-        router.push({ name: "PrivateGallery" })
-      })
+        },
+      }).then((res) => {
+        console.log("갤러리 성공");
+        router.push({ name: "PrivateGallery" });
+      });
     },
     selectFile(data) {
       this.form.galleryName = data.galleryName;
       this.form.file = data.target.files[0];
     },
-    insertId(Id){
-      this.selectedIds.push(Id)
+    insertId(Id) {
+      this.selectedIds.push(Id);
     },
-    removeId(Id){
+    removeId(Id) {
       this.selectedIds.splice(this.selectedIds.indexOf(Id), 1);
     },
     setPage() {},
@@ -160,8 +158,7 @@ export default {
         url: `${SERVER_URL}/api/nft/items/${this.myAddress}`,
         headers: {
           // Authorization: token,
-          Authorization:
-            this.authToken,
+          Authorization: this.authToken,
         },
       });
       this.total = newnftItems.data.nftList.length;
@@ -175,10 +172,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState([
-      "authToken",
-      "myAddress"
-    ]),
+    ...mapState(["authToken", "myAddress"]),
     // 마켓아이템스에 아이템이 담겨져 있지 않으면 담아오고
     displayedRecords() {
       if (!this.newnftItems) {
@@ -196,7 +190,7 @@ export default {
     //     return this.nftMarketItems.length;
     //   }
   },
-  mounted () {
+  mounted() {
     // function fileUpload(selector) {
     //   let elem = document.querySelectorAll(selector);
     //   if (elem.length > 0) {
@@ -208,7 +202,6 @@ export default {
     //         var lastDot = this.value.lastIndexOf(".");
     //         var ext = this.value.substring(lastDot + 1);
     //         var extTxt = (target.value = ext);
-
     //         if (!allowedExtensions.includes(fileExtension)) {
     //           alert(extTxt + " file type not allowed, Please upload jpg, png, gif, webp, mp4 or mp3 file");
     //           target.innerHTML = "Please upload jpg, png, gif, webp, mp4 or mp3 file";
@@ -220,7 +213,7 @@ export default {
     //   }
     // }
     // fileUpload(".file-upload-input");
-  }
+  },
   //   filteredData() {
   //     return this.SectionData.productData.products.filter((data) => {
   //       if (this.selectedTab === null) return true;

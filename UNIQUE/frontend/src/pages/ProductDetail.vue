@@ -8,7 +8,7 @@
     <div style="max-width: 1200px; margin: auto">
       <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
-        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id },}" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
       </div>
     </div>
@@ -67,9 +67,15 @@
                   <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
                     <div class="item-detail-tab-wrap">
                       <ul>
-                        <li><p>Contract Address : {{nftCA}}</p></li>
-                        <li><p>Token ID : {{id}} SSF</p></li>
-                        <li><p>Price : {{price}} SSF</p></li>
+                        <li>
+                          <p>Contract Address : {{ nftCA }}</p>
+                        </li>
+                        <li>
+                          <p>Token ID : {{ id }} SSF</p>
+                        </li>
+                        <li>
+                          <p>Price : {{ price }} SSF</p>
+                        </li>
                         <li><p>Token Standard : ERC - 721</p></li>
                         <li><p>BlockChain : SSAFY TOKEN</p></li>
                       </ul>
@@ -120,8 +126,9 @@
               <div class="item-detail-btns mt-4">
                 <ul class="btns-group d-flex">
                   <li class="flex-grow-1">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a>
+                    <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a> -->
                     <!-- <Purchase :product="product"></Purchase> -->
+                    <DetailPurchase :product="product"></DetailPurchase>
                   </li>
                 </ul>
               </div>
@@ -141,39 +148,6 @@
     <!-- Footer  -->
     <Footer classname="bg-black on-dark"></Footer>
     <!-- Modal -->
-    <div class="modal fade" id="placeBidModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">{{ SectionData.placeBidModal.title }}</h4>
-            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
-              <em class="ni ni-cross"></em>
-            </button>
-          </div>
-          <!-- end modal-header -->
-          <div class="modal-body">
-            <p class="mb-3" v-html="SectionData.placeBidModal.content"></p>
-            <div class="mb-3">
-              <label class="form-label">{{ SectionData.placeBidModal.labelText }}</label>
-              <input type="text" class="form-control form-control-s1" placeholder="Enter bid" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label" v-html="SectionData.placeBidModal.labelTextTwo"></label>
-              <input type="text" class="form-control form-control-s1" value="1" />
-            </div>
-            <ul class="total-bid-list mb-4">
-              <li v-for="(list, i) in SectionData.placeBidModal.totalBidList" :key="i">
-                <span>{{ list.title }}</span> <span>{{ list.price }}</span>
-              </li>
-            </ul>
-            <a :href="SectionData.placeBidModal.btnLink" class="btn btn-dark d-block">{{ SectionData.placeBidModal.btnText }}</a>
-          </div>
-          <!-- end modal-body -->
-        </div>
-        <!-- end modal-content -->
-      </div>
-      <!-- end modal-dialog -->
-    </div>
     <!-- end modal-->
   </div>
   <!-- end page-wrap -->
@@ -185,6 +159,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import axios from "axios";
 import SectionData from "@/store/store.js";
 import { mapState } from "vuex";
+import DetailPurchase from "@/components/common/DetailPurchase";
 // import Purchase from "@/components/common/Purchase";
 
 export default {
@@ -194,7 +169,7 @@ export default {
     return {
       SectionData,
       id: this.$route.params.id,
-      nftCA:null,
+      nftCA: null,
       title: "작품 이름", // 작품이름
       imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
       // imgLg: "@/images/favicon.png",
@@ -212,13 +187,13 @@ export default {
         },
       ],
       itemDetailHistoryList: [
-        // {
-        //   id: 1,
-        //   title: "Listed 1 edition for 0.35 ETH",
-        //   subTitle: "by Medicom 21 hours ago",
-        //   avatar: require("@/images/thumb/avatar-4.jpg"),
-        //   path: "/author",
-        // },
+        {
+          id: 1,
+          title: "Listed 1 edition for 0.35 ETH",
+          subTitle: "by Medicom 21 hours ago",
+          avatar: require("@/images/thumb/avatar-4.jpg"),
+          path: "/author",
+        },
         // {
         //   id: 2,
         //   title: "Purchased 1 edition for 0.1 ETH",
@@ -252,11 +227,12 @@ export default {
       ],
     };
   },
-  // components: {
-  //   Purchase,
-  // },
+  components: {
+    DetailPurchase,
+    // Purchase,
+  },
   created() {
-    this.getItmeDetail()
+    this.getItmeDetail();
   },
   methods: {
     getItmeDetail() {
@@ -265,46 +241,45 @@ export default {
         url: `${SERVER_URL}/api/nft/detail/${this.$route.params.id}`,
         headers: {
           // Authorization: token,
-          Authorization:
-            this.authToken
+          Authorization: this.authToken,
         },
-      })
-      .then((res)=> {
-        console.log(res.data,'eeeeeeeeeeeeeeee')
-        this.itemDetailList[0].title = res.data.AuthorMember.memberId
-        this.itemDetailList[1].title = res.data.OwnerMember.memberId
+      }).then((res) => {
+        console.log(res.data, "eeeeeeeeeeeeeeee");
+        // res.data.
+        this.itemDetailList[0].title = res.data.AuthorMember.memberId;
+        this.itemDetailList[1].title = res.data.OwnerMember.memberId;
         // this.itemDetailList[0].avatar = res.data.AuthorMember.profile
-        this.itemDetailList[0].avatar = "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E"
-        this.title = res.data.nft.nftName
-        this.content = res.data.nft.nftDescription
-        this.nftCA = res.data.nft.nftContractAddress
+        this.itemDetailList[0].avatar = "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E";
+        this.title = res.data.nft.nftName;
+        this.content = res.data.nft.nftDescription;
+        this.nftCA = res.data.nft.nftContractAddress;
         if (res.data.marketList.length >= 1) {
-          this.price = res.data.marketList[res.data.marketList.length-1].price
+          this.price = res.data.marketList[res.data.marketList.length - 1].price;
         }
-        if (res.data.nft.onsale){
-          this.onsale = "On Sale"
-        }else {
-          this.onsale = "Not for Sale"
+        if (res.data.nft.onsale) {
+          this.onsale = "On Sale";
+        } else {
+          this.onsale = "Not for Sale";
         }
-        for (var i=0; i < res.data.marketList.length; i++){
-          if (i === 0){
-            this.itemDetailHistoryList.push({
-            id : i,
-            title : `Listed 1 edition for ${res.data.marketList[i].price} SSF`,
-            subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
-            avatar: require("@/images/thumb/avatar-4.jpg"),
-            path: "/author",
-            // avatar: res.data.buyerList[i].profileImageUrl
-          })
-          }else {
-            this.itemDetailHistoryList.push({
-              id : i,
-              title : `Purchased 1 edition for ${res.data.marketList[i].price} SSF`,
+        for (var i = 0; i < res.data.marketList.length; i++) {
+          if (i === 0) {
+            this.itemDetailHistoryList[0] = {
+              id: i,
+              title: `Listed 1 edition for ${res.data.marketList[i].price} SSF`,
               subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
               avatar: require("@/images/thumb/avatar-4.jpg"),
               path: "/author",
               // avatar: res.data.buyerList[i].profileImageUrl
-            })
+            };
+          } else {
+            this.itemDetailHistoryList.push({
+              id: i,
+              title: `Purchased 1 edition for ${res.data.marketList[i].price} SSF`,
+              subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
+              avatar: require("@/images/thumb/avatar-4.jpg"),
+              path: "/author",
+              // avatar: res.data.buyerList[i].profileImageUrl
+            });
           }
         }
         // this.itemDetailHistoryList = res.data.marketList
@@ -313,6 +288,6 @@ export default {
   },
   computed: {
     ...mapState(["authToken"]),
-  }
+  },
 };
 </script>

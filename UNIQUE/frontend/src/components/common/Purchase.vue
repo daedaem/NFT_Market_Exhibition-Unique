@@ -5,25 +5,22 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <div>{{ product.marketId }}</div>
+            <!-- <div>{{ product.marketId }}</div> -->
             <h4 class="modal-title">Complete checkout</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
           </div>
           <!-- end modal-header -->
+          <!-- <p class="">hihihi</p> -->
+          <div class="modal-header">If you'd like to purchase,<strong>Please sign for this transaction</strong></div>
           <div class="modal-body">
-            <p class="mb-3"></p>
-            <div class="mb-3">
-              <!-- <label class="form-label">잔액조회</label> -->
-              <!-- <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" /> -->
-            </div>
             <!-- <div class="mb-3">
               <label class="form-label">아아</label>
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div> -->
             <div class="mb-3">
-              <label class="form-label">개인키 입력</label>
+              <label class="form-label">Your Private Key</label>
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div>
             <button class="btn btn-dark d-block" @click="purchaseNFT" :data-bs-target="`#modal` + `${product.marketId}`" data-bs-toggle="modal">Confirm</button>
@@ -37,12 +34,11 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" :id="`modal${product.marketId}`" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div class="modal fade" :id="`modal${product.marketId}`" tabindex="-1" aria-hidden="true" v-if="this.purchase == 1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
-
+            <h4 class="modal-title d-flex justify-content-center">You get {{ product.nft.nftName }}!!</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
@@ -99,6 +95,7 @@ export default {
       nftTokenId: this.product.nft.nftTokenId,
       modalId: "",
       modalLink: "",
+      purchase: 0,
     };
   },
   props: ["product", "marketId"],
@@ -125,7 +122,7 @@ export default {
 
     async purchaseNFT() {
       console.log(this.marketContractAddress);
-      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       const myAccount = this.myAddress;
       if (checkPubKey === myAccount) {
         // 해당 세일컨트랙트인스턴스 생성
@@ -294,6 +291,7 @@ export default {
               })
                 .then((res) => {
                   console.log(res.data);
+                  this.purchase = 1;
                   // marketInfoData.value = res.data;
                 })
                 .catch(() => {

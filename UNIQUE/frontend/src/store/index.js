@@ -185,8 +185,8 @@ export default createStore({
       console.log("실행은?");
       let newAddress = await web3.eth.accounts.create();
       let myAddress = await commit("SET_ADDRESS", newAddress.address);
-      let getbalance = await web3.eth.getBalance(newAddress.address);
-      await console.log(getbalance, "계좌 조회");
+      // let getbalance = await web3.eth.getBalance(newAddress.address);
+      // await console.log(getbalance, "계좌 조회");
       // await console.log(newAddress.address, "잘가나용?");
       await console.log(newAddress, "계좌정보");
       await console.log(this.state.authToken, "토큰은요?");
