@@ -8,7 +8,7 @@
     <div style="max-width: 1200px; margin: auto">
       <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
-        <router-link v-if="onsale === `Not for Sale`" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <router-link v-if="onsale === `Not for Sale` && Owner == userId" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
       </div>
     </div>
@@ -163,6 +163,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 import axios from "axios";
 import SectionData from "@/store/store.js";
 import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import DetailPurchase from "@/components/common/DetailPurchase";
 // import Purchase from "@/components/common/Purchase";
 
@@ -174,6 +175,7 @@ export default {
       // product: product,
       marketContractAddress: null,
       nftTokenId: null,
+      Owner:null,
 
       SectionData,
       id: this.$route.params.id,
@@ -260,6 +262,7 @@ export default {
         this.content = res.data.nft.nftDescription;
         this.nftCA = res.data.nft.nftContractAddress;
         this.imgLg = `https://j6e205.p.ssafy.io/${res.data.nft.fileUrl}`
+        this.Owner = res.data.nft.nftOwnerSeq
         if (res.data.marketList.length >= 1) {
           this.price = res.data.marketList[res.data.marketList.length - 1].price;
           this.marketContractAdderess = res.data.marketList[res.data.marketList.length - 1].marketContractAddress;
@@ -298,7 +301,8 @@ export default {
     },
   },
   computed: {
-    ...mapState(["authToken"]),
+    ...mapState(["authToken","userId"]),
+    ...mapGetters(["isLogin"]),
   },
 };
 </script>
