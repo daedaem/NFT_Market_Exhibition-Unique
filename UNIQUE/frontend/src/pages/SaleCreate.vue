@@ -267,7 +267,7 @@ export default {
       // console.log(ds, "ds");
 
       // console.log("되나");
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
 
       const myAccount = this.myAddress;
       // console.log(myAccount, "myAccount");

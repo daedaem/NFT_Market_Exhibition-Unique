@@ -123,7 +123,7 @@ export default {
 
     async purchaseNFT() {
       console.log(this.marketContractAddress);
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       const myAccount = this.myAddress;
       if (checkPubKey === myAccount) {
         // 해당 세일컨트랙트인스턴스 생성
