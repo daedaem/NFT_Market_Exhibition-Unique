@@ -8,7 +8,7 @@
       <div class="hero-wrap sub-header">
         <div class="container">
           <div class="hero-content text-center py-0">
-            <h1>{{exhibition.exhibitionTitle}}</h1>
+            <h1>{{ exhibition.exhibitionTitle }}</h1>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-s1 justify-content-center mt-3 mb-0">
                 <li class="breadcrumb-item">
@@ -18,7 +18,7 @@
                   <router-link to="/blog">PrivateGallery</router-link>
                 </li>
                 <li class="breadcrumb-item">
-                  {{exhibition.exhibitionTitle}}
+                  {{ exhibition.exhibitionTitle }}
                 </li>
               </ol>
             </nav>
@@ -40,7 +40,7 @@
               <!-- <img :src="reprentiveNft.fileUrl" class="w-100 rounded mb-3" alt="" /> -->
               <img src="https://i.ytimg.com/vi/-9Be9EtRXvk/maxresdefault.jpg" class="w-100 rounded mb-3" alt="" />
               <p class="single-entry-text mb-2 text-black d-flex flex-wrap align-items-center">
-                Published <span class="dot-separeted"></span> {{representiveNft.regDt}} <span class="dot-separeted"></span> By {{representiveNft.nftAuthorName}}
+                Published <span class="dot-separeted"></span> {{ representiveNft.regDt }} <span class="dot-separeted"></span> By {{ representiveNft.nftAuthorName }}
               </p>
               <!-- <p class="single-entry-text mb-3">{{ SectionData.blogDetail.content }}</p>
               <p class="single-entry-text mb-3">{{ SectionData.blogDetail.contentTwo }}</p> -->
@@ -177,27 +177,27 @@
           </div>
           <!-- 리스트 띄우기 시작 -->
           <div class="container">
-          <!-- filter -->
-          <h3 class="my-4"> All items in Gallery</h3>
-          <hr style="height:3px; background: black;">
-          <!-- <div class="filter-box pb-5">
+            <!-- filter -->
+            <h3 class="my-4">All items in Gallery</h3>
+            <hr style="height: 3px; background: black" />
+            <!-- <div class="filter-box pb-5">
             <h3 class="mb-4">Filter by</h3>
             <div class="filter-btn-group">
               <a href="#" class="btn btn-sm filter-btn" :class="tab.class" v-for="tab in filterMenu" @click.prevent="setTab(tab, tab.id)" :key="tab.id">{{ tab.title }}</a>
             </div>
           </div> -->
-          <!-- end filter-box -->
-          <div class="row g-gs">
-            <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product.nft">
-              <NftProducts :product="product.nft"></NftProducts>
+            <!-- end filter-box -->
+            <div class="row g-gs">
+              <div class="col-xl-3 col-lg-4 col-sm-6" v-for="product in displayedRecords" :key="product.nft">
+                <NftProducts :product="product.nft"></NftProducts>
+              </div>
+              <!-- end col -->
             </div>
-            <!-- end col -->
+            <!-- end end  -->
           </div>
-          <!-- end end  -->
-        </div>
-        <div class="text-center mt-4 mt-md-5">
-          <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
-        </div>
+          <div class="text-center mt-4 mt-md-5">
+            <Pagination :records="this.total" v-model="page" :per-page="perPage"> 1</Pagination>
+          </div>
           <!-- 리스트 띄우기 끝 -->
           <!-- end col-lg-4 -->
         </div>
@@ -235,8 +235,8 @@ export default {
       userName: "",
       exhibition: null,
       exhibitionWorkList: null,
-      creator:null,
-      representiveNft:null,
+      creator: null,
+      representiveNft: null,
       test: "Predictions for how secondary NFT sales will revolutionize creative industries. Elementum lacus, tempus aliquam turpis diam amet leo enim. Nisi enim condimentum tincidunt ornare nam adipiscing. Volutpat lacus, est hendrerit elit sed interdum. amet leo enimLorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum lacus, tempus aliquam turpis diam amet leo enim. Nisi enim condimentum tincidunt ornare nam adipiscing. Volutpat lacus, est hendrerit elit sed interdum. amet leo enim.",
       page: 1,
       currentPage: 0,
@@ -264,29 +264,27 @@ export default {
       }
     });
   },
-  methods : {
+  methods: {
     async getExhibitionDetail() {
       const Exhibition = await axios({
         method: "GET",
         url: `${SERVER_URL}/api/exhibition/detail/${this.$route.params.id}`,
         headers: {
-          Authorization:
-            this.authToken
+          Authorization: this.authToken,
         },
-      })
-      .then((res)=> {
-        console.log(res.data)
-        this.exhibition = res.data.exhibition
-        this.exhibitionWorkList = res.data.exhibitionWorkList
-        this.creator = res.data.memberList[0]
-        this.representiveNft = res.data.exhibitionWorkList[0].nft
-        console.log(res.data.exhibitionWorkList[0].nft)
+      }).then((res) => {
+        console.log(res.data);
+        this.exhibition = res.data.exhibition;
+        this.exhibitionWorkList = res.data.exhibitionWorkList;
+        this.creator = res.data.memberList[0];
+        this.representiveNft = res.data.exhibitionWorkList[0].nft;
+        console.log(res.data.exhibitionWorkList[0].nft);
       });
       this.total = this.exhibitionWorkList.length;
     },
   },
-  created: function() {
-    this.getExhibitionDetail()
+  created: function () {
+    this.getExhibitionDetail();
   },
   computed: {
     ...mapState(["authToken"]),
@@ -301,6 +299,6 @@ export default {
         return this.exhibitionWorkList.slice(startIndex, endIndex);
       }
     },
-  }
+  },
 };
 </script>

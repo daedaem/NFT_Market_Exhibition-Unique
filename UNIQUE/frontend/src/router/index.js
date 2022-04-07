@@ -85,6 +85,11 @@ const routes = [
     component: () => import("../pages/Test.vue"),
   },
   {
+    path: "/wallet",
+    name: "Wallet",
+    component: () => import("../pages/Wallet.vue"),
+  },
+  {
     path: "/privateCreate",
     name: "PrivateCreate",
     component: () => import("../pages/PrivateCreate.vue"),

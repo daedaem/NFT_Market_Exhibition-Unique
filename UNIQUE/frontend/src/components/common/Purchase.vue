@@ -5,25 +5,22 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <div>{{ product.marketId }}</div>
+            <!-- <div>{{ product.marketId }}</div> -->
             <h4 class="modal-title">Complete checkout</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
           </div>
           <!-- end modal-header -->
+          <!-- <p class="">hihihi</p> -->
+          <div class="modal-header">If you'd like to purchase,<strong>Please sign for this transaction</strong></div>
           <div class="modal-body">
-            <p class="mb-3"></p>
-            <div class="mb-3">
-              <!-- <label class="form-label">잔액조회</label> -->
-              <!-- <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" /> -->
-            </div>
             <!-- <div class="mb-3">
               <label class="form-label">아아</label>
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div> -->
             <div class="mb-3">
-              <label class="form-label">개인키 입력</label>
+              <label class="form-label">Your Private Key</label>
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div>
             <button class="btn btn-dark d-block" @click="purchaseNFT" :data-bs-target="`#modal` + `${product.marketId}`" data-bs-toggle="modal">Confirm</button>
@@ -37,12 +34,11 @@
     </div>
     <!-- end firstmodal -->
     <!-- start second modal -->
-    <div class="modal fade" :id="`modal${product.marketId}`" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey">
+    <div class="modal fade" :id="`modal${product.marketId}`" tabindex="-1" aria-hidden="true" v-if="this.purchase == 1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{}}</h4>
-
+            <h4 class="modal-title d-flex justify-content-center">You get {{ product.nft.nftName }}!!</h4>
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
@@ -67,6 +63,8 @@
 
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 import { mapState } from "vuex";
 import axios from "axios";
 import Web3 from "web3";
@@ -85,8 +83,8 @@ let SALE_FACTORY_ABI = SaleFactory.abi;
 let SALE_FACTORY_CA = SaleFactory.networks["202112031219"].address;
 let SALE_ABI = Sale.abi;
 // 네트워크 연결
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
+
 export default {
   name: "Purchase",
   data() {
@@ -98,33 +96,34 @@ export default {
       nftTokenId: this.product.nft.nftTokenId,
       modalId: "",
       modalLink: "",
+      purchase: 0,
     };
   },
   props: ["product", "marketId"],
   methods: {
-    async check() {
-      const tokenCont = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-      // const ressa = await tokenCont.methods.ownerOf(128).call();
-      const ressdda = await tokenCont.methods.balanceOf(this.myAddress).call();
-      // console.log(ressa, "ressa");
-      console.log(ressdda, "ressdda");
+    // async check() {
+    //   const tokenCont = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+    //   // const ressa = await tokenCont.methods.ownerOf(128).call();
+    //   const ressdda = await tokenCont.methods.balanceOf(this.myAddress).call();
+    //   // console.log(ressa, "ressa");
+    //   console.log(ressdda, "ressdda");
 
-      const ssafyToken1 = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
-      const getbalance2 = await ssafyToken1.methods.balanceOf(this.myAddress).call();
-      const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
-      let aca = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
-      // let csc = await NFTContractInstance.methods.ownerOf(33).call();
-      let vas = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
-      console.log(aca, "aca");
-      // console.log(csc, "csc");
-      console.log(vas, "vas");
-      console.log(getbalance2, "맞나이거");
-      // console.log(TOKEN_CA, "토큰");
-    },
+    //   const ssafyToken1 = await new web3.eth.Contract(TOKEN_ABI, TOKEN_CA);
+    //   const getbalance2 = await ssafyToken1.methods.balanceOf(this.myAddress).call();
+    //   const NFTContractInstance = await new web3.eth.Contract(NFT_ABI, NFT_CA);
+    //   let aca = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+    //   // let csc = await NFTContractInstance.methods.ownerOf(33).call();
+    //   let vas = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+    //   console.log(aca, "aca");
+    //   // console.log(csc, "csc");
+    //   console.log(vas, "vas");
+    //   console.log(getbalance2, "맞나이거");
+    //   // console.log(TOKEN_CA, "토큰");
+    // },
 
     async purchaseNFT() {
       console.log(this.marketContractAddress);
-      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
       const myAccount = this.myAddress;
       if (checkPubKey === myAccount) {
         // 해당 세일컨트랙트인스턴스 생성
@@ -192,12 +191,12 @@ export default {
             // const NFTContractResult = await NFTContractInstance.methods.setApprovalForAll(this.marketContractAddress, this.nftTokenId);
             // console.log(NFTContractResult, "NFTContractResult");
             console.log("여기 맞나여?");
-            let zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+            // let zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
 
-            let checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
-            console.log(zsc, "zsc 구매 전,");
+            // let checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+            // console.log(zsc, "zsc 구매 전,");
 
-            console.log(checking, " checking 구매전");
+            // console.log(checking, " checking 구매전");
             // chekcing = NFTContractInstance.methods.getApproved(this.nftTokenId).call();
             // console.log(chekcing, "chekcing");
             // const NFTContractInstanceEncodeMethod = await NFTContractResult.encodeABI();
@@ -227,29 +226,25 @@ export default {
             // -----------------------권한 부여 다했으니 이제 구매함수 호출
             // purchase함수 호출을 위한 컨트랙트 인스턴스 생성
             const createSaleInstance = await new web3.eth.Contract(SALE_ABI, this.marketContractAddress);
-            // console.log(createSaleInstance, "createSaleInstance");
+            console.log(createSaleInstance, "createSaleInstance");
             const purchsaeFunctionCallResult = await createSaleInstance.methods.purchase();
-            zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
-            checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
-            console.log(zsc, "zsc 구매 직후,");
-            console.log(checking, " checking 구매직후 전송권한");
+            // zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+            // checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+            // console.log(zsc, "zsc 구매 직후,");
+            // console.log(checking, " checking 구매직후 전송권한");
             // const sendCoin = await NFTContractInstance.methods.transferFrom(this.marketContractAddress, myAccount, 33);
             // console.log(purchsaeFunctionCallResult, "purchsaeFunctionCallResult");
             const purchaseFunctionMethodEndcoded = await purchsaeFunctionCallResult.encodeABI();
             // const sendCoinEncode = await sendCoin.encodeABI();
 
-            // console.log(purchaseFunctionMethodEndcoded, "purchaseFunctionMethodEndcoded");
+            console.log(purchaseFunctionMethodEndcoded, "purchaseFunctionMethodEndcoded");
             // const purchaseGasEstimate = await purchsaeFunctionCallResult.estimateGas({ from: myAccount });
-            // console.log(purchaseGasEstimate, "purchaseGasEstimate");\
-            const wale = "0x" + ((await web3.eth.getTransactionCount(myAccount)) + 1).toString(16);
-            console.log(wale, "wale ");
-            const nonces = await web3.eth.getTransactionCount(this.marketContractAddress);
-            console.log(nonces, "nonces");
-            console.log(myAccount, "내계좌");
+            // console.log(purchaseGasEstimate, "purchaseGasEstimate");
+
             const purchaseRawTx = {
               from: myAccount,
               to: this.marketContractAddress,
-              // nonce: wale,
+              // nonce: ,
               // gasPrice: "0x00",
               // gasLimit: 3000000,
               gas: 5000000,
@@ -257,24 +252,24 @@ export default {
               data: purchaseFunctionMethodEndcoded,
               // chainId: 31221,
             };
+            const walletAccount = await web3.eth.accounts.privateKeyToAccount(this.authorPrivateKey);
             console.log(purchaseRawTx, "purchaseRawTx");
-            const reulst = await web3.eth.accounts.signTransaction(purchaseRawTx, this.authorPrivateKey);
+
             const purchaseSingedTx = await walletAccount.signTransaction(purchaseRawTx);
+            console.log(purchaseSingedTx, "purchaseSingedTx");
 
-            console.log(reulst, "reulst");
-
-            if (reulst == null) {
+            if (purchaseSingedTx == null) {
               alert("The sign purchase NFT is not completed");
             } else {
               console.log("이제 제발 되어라!!!!!!!!!");
               // const finalresults = await createSaleInstance.methods.getSaleInfo().call();
               // console.log(finalresults, "finalresults");
-              const purchaseSingedResult = await web3.eth.sendSignedTransaction(reulst.rawTransaction);
+              const purchaseSingedResult = await web3.eth.sendSignedTransaction(purchaseSingedTx.rawTransaction);
               console.log(purchaseSingedResult, "purchaseSingedResult");
-              zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
-              checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
+              let zsc = await NFTContractInstance.methods.ownerOf(this.product.nft.nftTokenId).call();
+              // checking = await NFTContractInstance.methods.getApproved(this.product.nft.nftTokenId).call();
               console.log(zsc, "zsc 구매 후,");
-              console.log(checking, " checking 구매후 전송권한");
+              // console.log(checking, " checking 구매후 전송권한");
               console.log("거래되고나서주인");
 
               // 백엔드에 저장
@@ -293,6 +288,7 @@ export default {
               })
                 .then((res) => {
                   console.log(res.data);
+                  this.purchase = 1;
                   // marketInfoData.value = res.data;
                 })
                 .catch(() => {
@@ -316,9 +312,8 @@ export default {
     },
   },
   created() {
-    this.check();
+    // this.check();
     // console.log(this.product);
-
     // this.marketId = this.product.marketId;
     // this.nftSeq = this.product.nft.nftSeq;
     // console.log(this.marketContractAddress);

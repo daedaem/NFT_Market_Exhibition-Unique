@@ -5,7 +5,8 @@ import router from "@/router/index.js";
 import Web3 from "web3";
 // import getWeb3 from "../utils/getWeb3;";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default createStore({
@@ -185,8 +186,8 @@ export default createStore({
       console.log("실행은?");
       let newAddress = await web3.eth.accounts.create();
       let myAddress = await commit("SET_ADDRESS", newAddress.address);
-      let getbalance = await web3.eth.getBalance(newAddress.address);
-      await console.log(getbalance, "계좌 조회");
+      // let getbalance = await web3.eth.getBalance(newAddress.address);
+      // await console.log(getbalance, "계좌 조회");
       // await console.log(newAddress.address, "잘가나용?");
       await console.log(newAddress, "계좌정보");
       await console.log(this.state.authToken, "토큰은요?");

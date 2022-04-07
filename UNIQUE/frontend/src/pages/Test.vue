@@ -47,8 +47,8 @@ import { mapState } from "vuex";
 const abi = ABIS.abi;
 const CA = SsafyNFT.networks["202112031219"].address;
 
-// let web3 = new Web3(new Web3.providers.HttpProvider("http://j6e205.p.ssafy.io:8545"));
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default {

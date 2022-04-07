@@ -124,7 +124,8 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
@@ -266,7 +267,8 @@ export default {
       // console.log(ds, "ds");
 
       // console.log("되나");
-      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+
       const myAccount = this.myAddress;
       // console.log(myAccount, "myAccount");
       // const temp = await web3.eth.getAccounts();
@@ -417,6 +419,7 @@ export default {
             })
               .then((res) => {
                 console.log(res, "백엔드에 저~장");
+                this.$router.push({ name: "ProductDetail", params: { id: this.marketInfoData.nft.nftSeq } });
               })
               .catch(() => {
                 alert("There is no item in our Market.");

@@ -35,7 +35,8 @@ import HeroFour from "@/components/section/HeroFour.vue";
 // console.log(CA);
 
 // 네트워크 연결
-// const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+// GANACHE_SERVER_URL="http://20.196.209.2:8545"
+
 // let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 export default {
   name: "Explore",
