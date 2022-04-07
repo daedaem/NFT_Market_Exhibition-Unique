@@ -48,8 +48,8 @@ public class MemberServiceImpl implements MemberService{
 
 
 	String uploadFolder = "upload";
-	String uploadPath = "C:" + File.separator + "SSAFY" + File.separator + "profileImage";
-	//	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
+	//String uploadPath = "C:" + File.separator + "SSAFY" + File.separator + "profileImage";
+	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
 
 	@SuppressWarnings("finally")
 	@Override
