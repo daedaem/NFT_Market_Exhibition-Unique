@@ -6,7 +6,7 @@
     <ul class="menu-btns menu-btns-2">
       <!-- <li><ButtonLink :text="SectionData.headerData.btnText" :link="`/profile/${userId}`" classname="btn" :class="classname"></ButtonLink></li> -->
       <li class="d-none d-lg-inline-block">
-        <router-link to="wallet" class="icon-btn icon-btn-s1" title="Wallet"><em class="ni ni-wallet"></em></router-link>
+        <a href="/wallet" class="icon-btn icon-btn-s1" title="Wallet"><em class="ni ni-wallet"></em></a>
       </li>
       <li class="d-none d-lg-inline-block dropdown">
         <button type="button" class="icon-btn icon-btn-s1" data-bs-toggle="dropdown"><em class="ni ni-user"></em></button>
