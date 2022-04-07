@@ -46,8 +46,9 @@
               <p class="single-entry-text mb-3">{{ SectionData.blogDetail.contentTwo }}</p> -->
               <blockquote class="blockquote">
                 <p>{{ exhibition.exhibitionDescription }}</p>
-                <p>{{ test }}</p>
+                <!-- <p>{{ test }}</p> -->
               </blockquote>
+
               <!-- <p class="single-entry-text mb-4">{{ SectionData.blogDetail.contentThree }}</p> -->
               <!-- <div class="row g-gs mb-4">
                 <div class="col-lg-6 col-sm-6" v-for="img in SectionData.blogDetail.imgList" :key="img.id">
