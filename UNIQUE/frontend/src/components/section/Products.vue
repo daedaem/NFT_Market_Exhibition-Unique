@@ -1,12 +1,12 @@
 <template>
   <div class="card card-full">
     <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
-      <img :src="`https://j6e205.p.ssafy.io/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" />
+      <img :src="`https://j6e205.p.ssafy.io/${product.nft.fileUrl}`" class="card-img-top" alt="art image" />
       <!-- {{ product.nft.nftWorkUri }} -->
-      {{ product.nft.fileUrl }}
+      <!-- {{ product.nft.fileUrl }} -->
     </div>
     <div class="card-body p-4">
-      <h5 @click="moveToDetail(`${product.nft.nftSeq}`)" class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
+      <h5 class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
       <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
         <span class="me-1 card-author-by">By</span>
@@ -46,7 +46,7 @@
         </div>
         <div class="text-sm-end">
           <span class="card-price-title">NFT Type</span>
-          <span class="card-price-number">{{ product.nft.nftType }}</span>
+          <span class="card-price-number">{{ strsplit(product.nft.nftType) }}</span>
         </div>
       </div>
       <!-- end card-price-wrap -->
@@ -84,8 +84,16 @@ export default {
   components: {
     Purchase,
   },
+  data() {
+    // return { product: product };
+  },
   props: ["product"],
   methods: {
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
+    },
     moveToDetail(productId) {
       console.log(productId);
       this.$router.push({
@@ -94,6 +102,11 @@ export default {
           id: productId,
         },
       });
+    },
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
     },
   },
   // mounted() {
@@ -118,7 +131,7 @@ export default {
   //   customTooltip(".custom-tooltip", "active");
   // },
   created: function () {
-    // console.log(this.product);
+    console.log(this.product);
   },
 };
 </script>

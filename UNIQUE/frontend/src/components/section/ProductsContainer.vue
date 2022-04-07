@@ -33,7 +33,7 @@ export default {
           // Authorization: token,
           Authorization: this.authToken,
         },
-        params: { limit: 8, offset: 0, type: "all", searchWord: "" },
+        params: { limit: 100000, offset: 0, type: "all", searchWord: "" },
       });
       this.nftMarketItems = newnftMarketItems.data.marketList;
       // console.log(this.nftmarketItems);
