@@ -9,7 +9,7 @@
             <img :src="item.nftImage" class="card-img-top" alt="featured miage" />
             <div class="card-body card-body-s1">
                 <div class="avatar avatar-1">
-                  <img :src="authorImage" class="rounded-circle">
+                  <img :src="item.authorImage" class="rounded-circle">
                 </div>
                 <h4 class="card-title mt-4 mb-2 pt-1">@{{ item.authorName }}</h4>
                 <p class="fw-semibold">Artist</p>
