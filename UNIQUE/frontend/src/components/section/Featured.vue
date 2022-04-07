@@ -42,7 +42,7 @@ export default {
       featuredList: [
         {
           nftImage:null,
-          authorImage:null,
+          authorImage:"",
           authorName:null,
           nftAuthorSeq:null,
         },

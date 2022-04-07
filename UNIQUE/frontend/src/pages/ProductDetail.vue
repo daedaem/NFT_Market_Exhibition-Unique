@@ -247,6 +247,7 @@ export default {
         this.title = res.data.nft.nftName;
         this.content = res.data.nft.nftDescription;
         this.nftCA = res.data.nft.nftContractAddress;
+        this.imgLg = `https://j6e205.p.ssafy.io/${res.data.nft.fileUrl}`
         if (res.data.marketList.length >= 1) {
           this.price = res.data.marketList[res.data.marketList.length - 1].price;
         }else {

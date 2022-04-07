@@ -15,7 +15,7 @@
                   <router-link to="/">Home</router-link>
                 </li>
                 <li class="breadcrumb-item">
-                  <router-link to="/blog">PrivateGallery</router-link>
+                  <router-link to="/PrivateGallery">PrivateGallery</router-link>
                 </li>
                 <li class="breadcrumb-item">
                   {{ exhibition.exhibitionTitle }}
@@ -109,11 +109,13 @@
                 <div class="card">
                   <div class="card-body card-body-s1">
                     <div class="avatar avatar-1 mb-3 mx-auto">
-                      <img :src="`https://j6e205.p.ssafy.io/${creator.profileImageUrl}`" alt="" />
+                      <img :src="`https://j6e205.p.ssafy.io/${creator.profileImageUrl}`" alt="profile" />
                       <!-- <p>{{creator.profileImageUrl}}</p> -->
                     </div>
                     <!-- <h4 class="mb-2">{{ creator.memberId }}</h4> -->
-                    <h4 align="center" class="mb-2">Shcho21112</h4>
+                    <router-link :to="{ name: 'profile', params: { id: `${creator.memberSeq}` }}">
+                      <h4 align="center" class="mb-2">{{creator.memberId}}</h4>
+                    </router-link>
                     <blockquote class="blockquote">
                       <p class="sidebar-text mb-3">{{ creator.memberBio }}</p>
                     </blockquote>
@@ -133,7 +135,7 @@
                     <h4 align="center" class="mb-3">{{ SectionData.sidebarData.sidebarWidgetThree.title }}</h4>
                     <ul class="list-item">
                       <li v-for="list in SectionData.sidebarData.sidebarWidgetThree.catList" :key="list.id">
-                        <router-link :to="list.path"><em class="ni ni-chevron-right me-1"></em> {{ list.title }}</router-link>
+                        <p><em class="ni ni-chevron-right me-1"></em> {{ list.title }}</p>
                       </li>
                     </ul>
                   </div>

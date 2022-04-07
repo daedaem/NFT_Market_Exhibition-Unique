@@ -5,7 +5,7 @@
       <!-- {{ product.nft.nftWorkUri }} -->
       <!-- {{ product.nft.fileUrl }} -->
     </div>
-    <div class="card-body p-4" @click="moveToDetail(`${product.nft.nftSeq}`)">
+    <div class="card-body p-4">
       <h5 class="card-title text-truncate mb-0">{{ product.nft.nftName }}</h5>
       <!-- <h5 class="card-title text-truncate mb-0">{{ product.nft.title }}</h5> -->
       <div class="card-author mb-1 d-flex align-items-center">
@@ -46,7 +46,7 @@
         </div>
         <div class="text-sm-end">
           <span class="card-price-title">NFT Type</span>
-          <span class="card-price-number">{{ product.nft.nftType }}</span>
+          <span class="card-price-number">{{ strsplit(product.nft.nftType) }}</span>
         </div>
       </div>
       <!-- end card-price-wrap -->
@@ -94,6 +94,11 @@ export default {
           id: productId,
         },
       });
+    },
+    strsplit(req) {
+      const beforeStr = req;
+      const afterStr = beforeStr.split("/");
+      return afterStr[0];
     },
   },
   // mounted() {
