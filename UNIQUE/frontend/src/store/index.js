@@ -175,7 +175,7 @@ export default createStore({
       commit("REMOVE_USERNAME");
       commit("REMOVE_ID");
       // router.go();
-      router.push({ name: "login" });
+      router.push({ name: "Home" });
     },
     signup: function ({ commit }, credentials) {
       let data = new FormData();
@@ -224,7 +224,7 @@ export default createStore({
       console.log("실행은?");
       let newAddress = await web3.eth.accounts.create();
       let myAddress = await commit("SET_ADDRESS", newAddress.address);
-      // alert("<strong>Warning</strong> : keep your private key safely<br> Private key:" + newAddress);
+      alert("Warning: keep your private key safely Private key:" + newAddress);
       // let getbalance = await web3.eth.getBalance(newAddress.address);
       // await console.log(getbalance, "계좌 조회");
       // await console.log(newAddress.address, "잘가나용?");

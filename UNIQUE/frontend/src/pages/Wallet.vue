@@ -150,7 +150,6 @@ export default {
           data: { ssf: this.amountOfToken },
         }).then((res) => {
           this.balanceOf = res.data.ssf;
-
           console.log(res, "내금액");
         });
       }
@@ -162,6 +161,9 @@ export default {
       let newAddress = await web3.eth.accounts.create();
       this.password = newAddress.privateKey;
       this.$store.dispatch("myAddress", newAddress.address);
+      alert("Warning: keep your private key safely Private key");
+      this.balanceOf = 0;
+      this.amountOfToken = 0;
       // let myAddress = await commit("SET_ADDRESS", newAddress.address);
       // const results = await this.wallet().then((res) => console.log(res, "res"));
       // const ps = await results.privateKey;

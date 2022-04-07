@@ -67,17 +67,22 @@
                   <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
                     <div class="item-detail-tab-wrap">
                       <ul>
-                        <li>
-                          <p>Contract Address : {{ nftCA }}</p>
+                        <li class="mb-2">
+                          <p><strong class="text-black"> Contract Address </strong> {{ nftCA }}</p>
                         </li>
                         <li>
-                          <p>Token ID : {{ id }} SSF</p>
+                          <p><strong class="text-black">Token ID :</strong> #{{ id }}</p>
                         </li>
                         <li>
-                          <p>Price : {{ price }} SSF</p>
+                          <p><strong class="text-black">Price :</strong> {{ price }} SSF</p>
                         </li>
-                        <li><p>Token Standard : ERC - 721</p></li>
-                        <li><p>BlockChain : SSAFY TOKEN</p></li>
+                        <li>
+                          <span><strong class="text-black"> Token Standard : </strong></span>
+                          <span>ERC - 721</span>
+                        </li>
+                        <li>
+                          <p><strong class="text-black"> BlockChain : </strong> SSAFY Network</p>
+                        </li>
                       </ul>
                       <!-- end card -->
                     </div>

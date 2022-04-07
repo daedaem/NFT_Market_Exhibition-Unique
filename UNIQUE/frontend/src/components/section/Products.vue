@@ -1,7 +1,7 @@
 <template>
   <div class="card card-full">
     <div class="card-image" @click="moveToDetail(`${product.nft.nftSeq}`)">
-      <img :src="`https://j6e205.p.ssafy.io/${product.nft.nftWorkUri}`" class="card-img-top" alt="art image" />
+      <!-- <img :src="`https://j6e205.p.ssafy.io/${product.nft.fileUrl}`" class="card-img-top" alt="art image" /> -->
       <!-- {{ product.nft.nftWorkUri }} -->
       {{ product.nft.fileUrl }}
     </div>
