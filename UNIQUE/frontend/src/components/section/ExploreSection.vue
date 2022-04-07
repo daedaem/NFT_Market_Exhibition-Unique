@@ -98,7 +98,7 @@ export default {
       });
       this.total = newnftMarketItems.data.marketList.length;
       this.nftMarketItems = newnftMarketItems.data.marketList;
-      console.log(this.nftMarketItems);
+      console.log(newnftMarketItems.data);
       // console.log(this.nftMarketItems);
       // this.nftMarketItems = nftMarketItems.data;
       // this.perPage = 6;

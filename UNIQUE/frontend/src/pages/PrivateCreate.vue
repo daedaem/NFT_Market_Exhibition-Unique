@@ -7,7 +7,6 @@
     </header>
     <HeroFour classname="hero-title" :title="SectionData.breadcrumbData.breadcrumbListPrivateCreate.title" :lists="SectionData.breadcrumbData.breadcrumbListPrivateCreate.navList"></HeroFour>
     <!-- login section -->
-    <h1>{{ selectedIds }}</h1>
     <section class="explore-section pt-4">
       <div class="container">
         <!-- filter -->

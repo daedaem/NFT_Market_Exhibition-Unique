@@ -4,7 +4,7 @@
                 <div class="container">
                     <div class="hero-content py-0 d-flex align-items-center">
                         <div class="avatar flex-shrink-0" :class="avatarSize">
-                                <img :src="img" alt="">
+                                <img :src="profileImageUrl" alt="">
                             </div>
                             <div class="author-hero-content-wrap d-flex flex-wrap justify-content-between ms-3 flex-grow-1">
                                 <div class="author-hero-content me-3">
@@ -30,7 +30,7 @@
 import { mapState } from "vuex";
 export default {
   name: 'AuthorHero',
-  props: ['img', 'avatarSize', 'title', 'username', 'isDropdown', 'btntext', 'isCopyInput', 'btnlink', 'coverimg','address','myId'],
+  props: ['profileImageUrl', 'avatarSize', 'title', 'username', 'isDropdown', 'btntext', 'isCopyInput', 'btnlink', 'coverimg','address','myId'],
   methods: {
       onCopy () {
         const onCopy = (e) => {

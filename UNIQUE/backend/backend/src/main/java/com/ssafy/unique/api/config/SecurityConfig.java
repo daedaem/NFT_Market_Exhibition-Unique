@@ -72,13 +72,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/members/login").permitAll()
-                .antMatchers("/members/register").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll() // swagger-ui 접속
                 .antMatchers("/v3/**").permitAll() //swagger 설정 참조
                 .antMatchers("/nft/**").permitAll() // nft 관련 데이터 사용
                 .antMatchers("/market/**").permitAll()
                 .antMatchers("/web3j/**").permitAll()
+                .antMatchers("/exhibition/**").permitAll()
+                .antMatchers("/members/**").permitAll()
                 .anyRequest().authenticated()
                 
                 .and()

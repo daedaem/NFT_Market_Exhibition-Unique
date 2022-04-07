@@ -23,7 +23,7 @@
         <div class="col-md-6 col-lg-6 col-xl-12 sidebar-widget">
             <h3 class="mb-3">{{ SectionData.authorSidebarData.sidebarWidgetTwo.title }}</h3>
             <ul class="social-links">
-                <li v-for="(link, i) in links" :key="i"><router-link :to="link.path"><span class="ni icon" :class="link.class"></span>{{ link.title }}</router-link></li>
+                <li v-for="(link, i) in links" :key="i"><router-link to="#"><span class="ni icon" :class="link.class"></span>{{ link.title }}</router-link></li>
             </ul>
         </div><!-- end col -->
      </div><!-- end sidebar -->

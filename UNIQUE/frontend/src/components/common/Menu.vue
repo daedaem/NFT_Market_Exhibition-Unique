@@ -16,15 +16,18 @@
           </li>
           <!-- <li v-for="list in SectionData.authorNav" :key="list.id"><router-link class="dropdown-item card-generic-item" :to="list.path"><em class="ni me-2" :class="list.icon"></em>{{ list.title }}</router-link></li> -->
           <li>
-            <router-link class="dropdown-item card-generic-item" :to="`/profile/${userId}`"><em class="ni me-2 ni-user"></em>Profile</router-link>
+            <p class="dropdown-item card-generic-item" @click="moveToProfile()"><em class="ni me-2 ni-user"></em>Profile</p>
           </li>
           <!-- <li><router-link class="dropdown-item card-generic-item" :to="`/account/${userId}`"><em class="ni me-2 ni-setting"></em>Account Settings</router-link></li> -->
           <li>
             <a href="#" class="dropdown-item card-generic-item theme-toggler" title="Toggle Dark/Light mode"><em class="ni ni-moon me-2"></em> Dark Mode</a>
           </li>
           <li><hr class="dropdown-divider" /></li>
-          <li>
-            <router-link class="dropdown-item card-generic-item" to="/"><em class="ni ni-power me-2"></em>Logout</router-link>
+          <li v-if="isLogin">
+            <router-link class="dropdown-item card-generic-item" @click="logout" to="/"><em class="ni ni-power me-2"></em>Logout</router-link>
+          </li>
+          <li v-else>
+            <router-link class="dropdown-item card-generic-item" to="/login"><em class="ni ni-power me-2"></em>Login</router-link>
           </li>
         </ul>
       </li>
@@ -46,6 +49,8 @@
 // Import component data. You can change the data in the store to reflect in all component
 import SectionData from "@/store/store.js";
 import { mapState } from "vuex";
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 // @ is an alias to /src
 import MenuList from "@/components/common/MenuList.vue";
@@ -63,6 +68,7 @@ export default {
   },
   computed: {
     ...mapState(["authToken", "userId", "username"]),
+    ...mapGetters(["isLogin"]),
   },
   mounted() {
     /*  ==========================================
@@ -106,6 +112,24 @@ export default {
     }
 
     themeSwitcher(".theme-toggler");
+  },
+  methods: {
+    ...mapActions(["logout", "wallet"]),
+    moveToProfile() {
+      if (this.isLogin) {
+        this.$router.push({
+          name: "profile",
+          params: {
+          id: this.userId,
+          }
+        })
+      }else {
+        alert('로그인을 해주세요');
+        this.$router.push({
+          name: "login",
+        })
+      }
+    }
   },
 };
 </script>
