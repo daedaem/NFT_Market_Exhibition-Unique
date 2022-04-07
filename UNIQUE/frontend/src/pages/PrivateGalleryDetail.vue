@@ -35,10 +35,12 @@
         <!-- blog section -->
         <div class="row">
           <div class="col-lg-8">
-            <div class="single-entry mb-5 mb-lg-0">
+            <div class="single-entry mb-5 mb-lg-0 mx-auto">
               <!-- <img :src="img" class="w-100 rounded mb-3" alt="" /> -->
               <!-- <img :src="reprentiveNft.fileUrl" class="w-100 rounded mb-3" alt="" /> -->
-              <img :src="`https://j6e205.p.ssafy.io/${representiveNft.fileUrl}`" class="w-100 rounded mb-3" alt="representiveImage" />
+              <div class="text-center">
+                <img :src="`https://j6e205.p.ssafy.io/${representiveNft.fileUrl}`" class="rounded mb-3" alt="representiveImage" />
+              </div>
               <p class="single-entry-text mb-2 text-black d-flex flex-wrap align-items-center">
                 Published <span class="dot-separeted"></span> {{ representiveNft.regDt }} <span class="dot-separeted"></span> By {{ representiveNft.nftAuthorName }}
               </p>
@@ -113,8 +115,8 @@
                       <!-- <p>{{creator.profileImageUrl}}</p> -->
                     </div>
                     <!-- <h4 class="mb-2">{{ creator.memberId }}</h4> -->
-                    <router-link :to="{ name: 'profile', params: { id: `${creator.memberSeq}` }}">
-                      <h4 align="center" class="mb-2">{{creator.memberId}}</h4>
+                    <router-link :to="{ name: 'profile', params: { id: `${creator.memberSeq}` } }">
+                      <h4 align="center" class="mb-2">{{ creator.memberId }}</h4>
                     </router-link>
                     <blockquote class="blockquote">
                       <p class="sidebar-text mb-3">{{ creator.memberBio }}</p>
