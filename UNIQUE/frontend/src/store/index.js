@@ -5,6 +5,8 @@ import router from "@/router/index.js";
 import Web3 from "web3";
 // import getWeb3 from "../utils/getWeb3;";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = http://localhost:8081;
+
 const GANACHE_SERVER_URL = "http://20.196.209.2:8545";
 
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
@@ -16,6 +18,7 @@ export default createStore({
     username: null,
     myAddress: null,
     userId: null,
+    password: null,
     ExhibitionsCards: [
       {
         id: 1,
@@ -29,7 +32,7 @@ export default createStore({
         curators: "Sunghyun",
         image: [
           "https://w.namu.la/s/2405a2a9d1d8f5f6ab689cb37ed1806ba4a8a0107b23242252f23f1e526c0ead19f9c2a1263a266538519a1a6de9c2becb62f7d20d8e4f7745a28b137c98a4d9dddb882ebbaeac0b4ca27300e9d4b81b512e46e34a0f309d6e14342cf9b49cb7",
-          "https://imgnn.seoul.co.kr/img/upload/2016/10/11/SSI_20161011144833_V.jpg"          
+          "https://imgnn.seoul.co.kr/img/upload/2016/10/11/SSI_20161011144833_V.jpg",
         ],
       },
       {
@@ -40,11 +43,9 @@ export default createStore({
         title: "Vogue Singapore x Luna Ikuta",
         creators: "Praesent sapien massa, convallis a pellentesque nec.",
         curators: "Sunghyun",
-        content: "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.",
-        image: [
-          "https://img.vogue.co.kr/vogue/2020/08/style_5f45be6804e86-1040x1400.jpg",
-          "https://img.vogue.co.kr/vogue/2020/08/style_5f45bea99dec2-1049x1400.jpg"          
-        ],
+        content:
+          "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.",
+        image: ["https://img.vogue.co.kr/vogue/2020/08/style_5f45be6804e86-1040x1400.jpg", "https://img.vogue.co.kr/vogue/2020/08/style_5f45bea99dec2-1049x1400.jpg"],
       },
       {
         id: 3,
@@ -54,11 +55,9 @@ export default createStore({
         title: "For Ukraine Artist Support the Cause",
         creators: "Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. ",
         curators: "Sunghyun",
-        content: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish.",
-        image: [
-          "https://t1.daumcdn.net/cfile/tistory/0153AF4F517F395F14",
-          "http://kunsang1001.cafe24.com/main_images_set/x9788926387696.jpg"          
-        ],
+        content:
+          "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish.",
+        image: ["https://t1.daumcdn.net/cfile/tistory/0153AF4F517F395F14", "http://kunsang1001.cafe24.com/main_images_set/x9788926387696.jpg"],
       },
       {
         id: 4,
@@ -68,11 +67,9 @@ export default createStore({
         title: "Are you okay?",
         creators: "Vestibulum ante ipsum, luctus et ultrices ",
         curators: "Sunghyun",
-        content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. ",
-        image: [
-          "https://t1.daumcdn.net/cfile/tistory/9975434D5BD3F11520",
-          "https://newsimg.hankookilbo.com/cms/articlerelease/2021/06/29/078107fe-18fa-4b42-9234-acd3e35ed68d.jpg"          
-        ],
+        content:
+          "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. ",
+        image: ["https://t1.daumcdn.net/cfile/tistory/9975434D5BD3F11520", "https://newsimg.hankookilbo.com/cms/articlerelease/2021/06/29/078107fe-18fa-4b42-9234-acd3e35ed68d.jpg"],
       },
     ],
   },
@@ -97,6 +94,8 @@ export default createStore({
     SET_USERNAME: function (state, credentials) {
       state.username = credentials.memberId;
     },
+    // return newAddress.address;
+
     SET_ADDRESS: function (state, newAddress) {
       state.myAddress = newAddress;
       console.log(state.myAddress, typeof state.myAddress);
@@ -201,10 +200,31 @@ export default createStore({
           alert("비밀번호가 일치하지 않거나 이미 가입되어 있습니다.");
         });
     },
+    myAddress: function ({ commit }, credentials) {
+      let address = credentials;
+      axios({
+        method: "PUT",
+        url: `${SERVER_URL}/api/members/wallet`,
+        data: {
+          wallet: address,
+        },
+        headers: {
+          Authorization: this.state.authToken,
+        },
+      })
+        .then((res) => {
+          console.log("성공");
+        })
+        .catch(() => {
+          alert("실패");
+        });
+      commit("SET_ADDRESS", address);
+    },
     async wallet({ commit }) {
       console.log("실행은?");
       let newAddress = await web3.eth.accounts.create();
       let myAddress = await commit("SET_ADDRESS", newAddress.address);
+      alert("Warning: keep your private key safely Private key:" + newAddress);
       // let getbalance = await web3.eth.getBalance(newAddress.address);
       // await console.log(getbalance, "계좌 조회");
       // await console.log(newAddress.address, "잘가나용?");
@@ -220,7 +240,7 @@ export default createStore({
           Authorization: this.state.authToken,
         },
       })
-        .then(() => {
+        .then((res) => {
           console.log("성공");
         })
         .catch(() => {
