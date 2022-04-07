@@ -86,7 +86,6 @@
         <div class="modal-content">
           <div class="modal-header d-flex flex-column">
             <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
-
             <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
               <em class="ni ni-cross"></em>
             </button>
@@ -182,6 +181,8 @@ export default {
     },
 
     async submitCreateNFT() {
+      console.log(GANACHE_SERVER_URL, "GANACHE_SERVER_URL");
+      console.log(SERVER_URL, "SERVER_URL");
       /**
        * PJT Ⅱ - 과제 1: 작품 등록 및 NFT 생성
        * Req.1-F1 작품 등록 화면 및 등록 요청
@@ -283,8 +284,8 @@ export default {
           //   console.log("Tx Hash: " + txhash);
           // });
           console.log(tran, "tran");
-          const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
-          console.log(createSaleCAss, "createSaleCAss?");
+          // const createSaleCAss = await web3.eth.getTransactionReceipt(tran.transactionHash);
+          // console.log(createSaleCAss, "createSaleCAss?");
           //   .on("confirmation", console.log);
           console.log(tran, "tran");
           // const resultofCreate = await web3.eth.getTransactionReceipt("0xb39946bd3c149058e66628568c1a818e5ba10647e9eccf4a6e6f50a3ef866885");

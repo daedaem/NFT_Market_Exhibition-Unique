@@ -13,30 +13,31 @@
             <div class="section-head-sm">
               <!-- <router-link :to="SectionData.createData.path" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> {{ SectionData.createData.btnText }}</router-link> -->
               <router-link :to="{ name: 'Home' }" class="btn-link fw-semibold"><em class="ni ni-arrow-left"></em> Home </router-link>
-              <h1 class="mt-2">{{ SectionData.createData.title }}</h1>
+              <h1 class="mt-2">{{}}'s Wallet</h1>
             </div>
           </div>
           <!-- end col -->
           <div class="col-lg-8">
             <form action="#" class="form-create mb-5 mb-lg-0">
               <div class="form-item mb-4">
-                <h5 class="mb-3">Upload file</h5>
-                <div class="file-upload-wrap">
-                  <p class="file-name mb-4" id="file-name">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
-                  <input id="file-upload" class="file-upload-input" data-target="file-name" type="file" enctype="multipart/form-data" @change="selectFile" hidden />
-                  <label for="file-upload" class="input-label btn btn-dark">Choose File</label>
-                </div>
+                <h5 class="mb-3">Get My Balance</h5>
               </div>
               <!-- end form-item -->
               <!-- 작품 제목 및 설명 입력  -->
               <div class="form-item mb-4">
                 <div class="mb-4">
-                  <label class="mb-2 form-label">Title</label>
+                  <label class="mb-2 form-label">My balance</label>
                   <input type="text" class="form-control form-control-s1" v-model="form.nftName" placeholder="e. g. Redeemable T-Shirt with logo" />
                 </div>
                 <div class="mb-4">
-                  <label class="mb-2 form-label">Description</label>
-                  <textarea name="message" class="form-control form-control-s1" v-model="form.nftDescription" placeholder="e. g. After purchasing you’ll be able to get the real T-Shirt"></textarea>
+                  <label class="mb-2 form-label"
+                    >Description <input type="text" class="form-control form-control-s1" v-model="form.nftName" placeholder="e. g. Redeemable T-Shirt with logo" /><button
+                      type="button"
+                      class="btn btn-dark d-block"
+                    >
+                      d
+                    </button>
+                  </label>
                 </div>
               </div>
               <!-- end form-item -->
@@ -54,58 +55,6 @@
     <Footer classname="bg-black on-dark"></Footer>
     <!-- first Modal -->
     <!-- 등록하려는 아이템의 제목, 설명, 파일이 모두 있을 때 다음 모달로 -->
-    <div v-if="this.form.nftDescription && this.form.nftName && this.form.file" class="modal fade" id="createNftModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">{{ SectionData.createNftModal.title }}</h4>
-            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
-              <em class="ni ni-cross"></em>
-            </button>
-          </div>
-          <!-- end modal-header -->
-          <div class="modal-body">
-            <p class="mb-3" v-html="SectionData.createNftModal.content"></p>
-            <div class="mb-3">
-              <label class="form-label">{{ SectionData.createNftModal.labelText }}</label>
-              <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
-            </div>
-            <button class="btn btn-dark d-block" @click="submitCreateNFT" data-bs-target="#createNftModal2" data-bs-toggle="modal">Confirm</button>
-            <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="submitCreateNFT"></a> -->
-          </div>
-          <!-- end modal-body -->
-        </div>
-        <!-- end modal-content -->
-      </div>
-      <!-- end modal-dialog -->
-    </div>
-    <!-- end firstmodal -->
-    <!-- start second modal -->
-    <div class="modal fade" id="createNftModal2" tabindex="-1" aria-hidden="true" v-if="authorPrivateKey && checkInputData === true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header d-flex flex-column">
-            <h4 class="modal-title d-flex justify-content-center">You created {{ form.nftName }}</h4>
-
-            <button type="button" class="btn-close icon-btn" data-bs-dismiss="modal" aria-label="Close">
-              <em class="ni ni-cross"></em>
-            </button>
-            <p class="d-flex justify-content-center">Wow! You just create your NFT</p>
-          </div>
-          <!-- end second modal-header -->
-          <div class="modal-body d-flex flex-column">
-            <div class="mb-3 d-flex justify-content-center">
-              <img src="../images/thumb/nft-full.jpg" class="justify-content-center" alt="" />
-              <!-- <img src=`${}` alt="" /> -->
-            </div>
-            <!-- <a :href="SectionData.createNftModal.btnLink" class="btn btn-dark d-block" @click="submitCreateNFT"></a> -->
-          </div>
-          <!-- end second modal-body -->
-        </div>
-        <!-- end second modal-content -->
-      </div>
-      <!-- end second modal-dialog -->
-    </div>
   </div>
   <!-- end page-wrap -->
 </template>
@@ -176,7 +125,7 @@ export default {
         return true;
       }
     },
-    async submitCreateNFT() {
+    async GetBalance() {
       /**
        * PJT Ⅱ - 과제 1: 작품 등록 및 NFT 생성
        * Req.1-F1 작품 등록 화면 및 등록 요청
@@ -355,8 +304,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["myAddress", "username"]),
-    ...mapState(["authToken"]),
+    ...mapState(["myAddress"]),
   },
   mounted() {
     /*==============File upload =============== */
