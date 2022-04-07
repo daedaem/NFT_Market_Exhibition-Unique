@@ -246,7 +246,7 @@ public class MemberServiceImpl implements MemberService{
 			res.setResult(FAIL);
 		}
 		
-		return null;
+		return res;
 	}
 
 	@Override

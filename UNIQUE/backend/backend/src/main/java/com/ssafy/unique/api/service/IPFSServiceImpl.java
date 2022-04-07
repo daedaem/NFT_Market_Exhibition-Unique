@@ -29,6 +29,35 @@ import io.ipfs.api.MerkleNode;
 import io.ipfs.api.NamedStreamable;
 import io.ipfs.multihash.Multihash;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.UUID;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.unique.api.config.IPFSConfig;
+import com.ssafy.unique.api.request.NftReq;
+import com.ssafy.unique.api.request.NftUpdateReq;
+import com.ssafy.unique.api.response.NftRes;
+import com.ssafy.unique.api.response.ResultRes;
+import com.ssafy.unique.db.entity.FileList;
+import com.ssafy.unique.db.entity.Nft;
+import com.ssafy.unique.db.repository.FileListRepository;
+import com.ssafy.unique.db.repository.MemberRepository;
+import com.ssafy.unique.db.repository.NftRepository;
+
+import io.ipfs.api.IPFS;
+import io.ipfs.api.MerkleNode;
+import io.ipfs.api.NamedStreamable;
+import io.ipfs.multihash.Multihash;
+
 @Service
 public class IPFSServiceImpl implements IPFSService {
 
@@ -38,7 +67,7 @@ public class IPFSServiceImpl implements IPFSService {
 	private final FileListRepository fileRepository;
 
 	public IPFSServiceImpl(IPFSConfig _ipfsConfig, NftRepository _nftRepository, MemberRepository _memberRepository,
-			FileListRepository _fileRepository) {
+						   FileListRepository _fileRepository) {
 		this.ipfsConfig = _ipfsConfig;
 		this.nftRepository = _nftRepository;
 		this.memberRepository = _memberRepository;
@@ -47,12 +76,12 @@ public class IPFSServiceImpl implements IPFSService {
 
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
-	
+
 	String uploadFolder = "upload";
 	String uploadPath = "C:" + File.separator + "SSAFY" + File.separator + "NFT";
 	//	String uploadPath = "/usr" + File.separator + "share" + File.separator + "nginx" + File.separator + "html";
 
-	@SuppressWarnings("finally")
+
 	@Override
 	public NftRes saveFile(NftReq nftReq, MultipartHttpServletRequest request) {
 		NftRes nftRes = new NftRes();
@@ -65,9 +94,9 @@ public class IPFSServiceImpl implements IPFSService {
 
 				// 파일 저장 위치 설정
 				File uploadDir = new File(uploadPath + File.separator + uploadFolder);
-				if (!uploadDir.exists()) 
+				if (!uploadDir.exists())
 					uploadDir.mkdirs();
-				
+
 				// 실제 파일이름 저장
 				String fileName = file.getOriginalFilename();
 
@@ -79,14 +108,14 @@ public class IPFSServiceImpl implements IPFSService {
 				// 파일 저장
 				File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 				System.out.println(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
-				
+
 				// 파일 url
 				String fileUrl = uploadFolder + File.separator + savingFileName;
 
-				
-				
 
-				
+
+
+
 				// IPFS Upload
 				// file.getBytes() 코드는 파일을 저장한 다음 실행하면, 위치를 찾지 못해서 에러가 발생한다
 				InputStream stream = new ByteArrayInputStream(file.getBytes());
@@ -99,7 +128,7 @@ public class IPFSServiceImpl implements IPFSService {
 				nftReq.setNftWorkUri(merkleNode.hash.toBase58());
 
 				// nftWorkUri가 이미 존재하는지 DB에서 확인하고, 없다면 밑으로 진행
-				
+
 
 				// Security Context에서 nftCreatorSeq를 구한다
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -135,9 +164,9 @@ public class IPFSServiceImpl implements IPFSService {
 						.fileUrl(fileUrl)
 						.build()
 				);
-				
-				
-				
+
+
+
 				// 파일 저장 => 해당 코드가 앞에 존재하면 getBytes()에서 에러 발생
 				file.transferTo(destFile);
 				// FILE_LIST DB에 파일 기록 => NFT_SEQ의 값이 정해지고 나서 진행해야함
@@ -191,7 +220,7 @@ public class IPFSServiceImpl implements IPFSService {
 			// Security Context에서 nftCreatorSeq를 구한다
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Long nftSeq = Long.parseLong(authentication.getName());
-			
+
 			// Owner Address를 구한다
 			String ownerAddress = memberRepository.findMemberAddressByMemberSeq(nftSeq);
 

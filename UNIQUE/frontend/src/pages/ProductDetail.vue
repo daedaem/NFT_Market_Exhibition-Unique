@@ -6,9 +6,9 @@
       <HeaderMain></HeaderMain>
     </header>
     <div style="max-width: 1200px; margin: auto">
-      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px;">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
-        <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
+        <router-link v-if="onsale === `Not for Sale`" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
       </div>
     </div>
@@ -33,12 +33,12 @@
                   <div class="tab-pane fade show active" id="owners" role="tabpanel" aria-labelledby="owners-tab">
                     <div class="item-detail-tab-wrap">
                       <div class="card-media card-media-s2 mb-3">
-                        <router-link :to="itemDetailList[1].path" class="card-media-img flex-shrink-0 d-block">
+                        <router-link :to="`/profile/${itemDetailList[1].path}`" class="card-media-img flex-shrink-0 d-block">
                           <img :src="itemDetailList[1].avatar" alt="avatar" />
                         </router-link>
                         <div class="card-media-body text-truncate">
                           <p class="fw-semibold text-truncate">
-                            <a :href="itemDetailList[1].path" class="text-black">{{ itemDetailList[1].title }}</a>
+                            <router-link :to="`/profile/${itemDetailList[1].path}`" class="text-black">{{ itemDetailList[1].title }}</router-link>
                           </p>
                           <p class="small">{{ itemDetailHistoryList[0].subTitle }}</p>
                         </div>
@@ -52,7 +52,7 @@
                   <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
                     <div class="item-detail-tab-wrap">
                       <div class="card-media card-media-s2 mb-3" v-for="item in itemDetailHistoryList" :key="item.id">
-                        <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
+                        <router-link :to="`/profile/${item.path}`" class="card-media-img flex-shrink-0 d-block">
                           <img :src="item.avatar" alt="avatar" />
                         </router-link>
                         <div class="card-media-body text-truncate">
@@ -98,20 +98,19 @@
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
                 <span class="item-detail-text-meta">{{ onsale }}</span>
                 <span class="dot-separeted"></span>
-                <span class="item-detail-text-meta">{{ price }}</span>
-                <span class="dot-separeted"></span>
-                <span class="item-detail-text-meta" v-html="metaTextThree"></span>
+                <span class="item-detail-text-meta">Price : {{ price }} SSF</span>
+
               </div>
               <p class="item-detail-text mb-4">{{ content }}</p>
               <div class="item-credits">
                 <div class="row g-4">
                   <div class="col-xl-6" v-for="item in itemDetailList" :key="item.id">
                     <div class="card-media card-media-s1">
-                      <router-link :to="item.path" class="card-media-img flex-shrink-0 d-block">
+                      <router-link :to="`/profile/${item.path}`" class="card-media-img flex-shrink-0 d-block">
                         <img :src="item.avatar" alt="avatar" />
                       </router-link>
                       <div class="card-media-body">
-                        <router-link :to="item.path" class="fw-semibold">@{{ item.title }}</router-link>
+                        <router-link :to="`/profile/${item.path}`" class="fw-semibold">@{{ item.title }}</router-link>
                         <p class="fw-medium small">{{ item.subTitle }}</p>
                       </div>
                     </div>
@@ -144,7 +143,8 @@
     </section>
     <!-- end item-detail-section -->
     <!-- Related product -->
-    <RelatedProduct></RelatedProduct>
+    <!-- <RelatedProduct></RelatedProduct> -->
+    <Featured></Featured>
     <!-- Footer  -->
     <Footer classname="bg-black on-dark"></Footer>
     <!-- Modal -->
@@ -172,8 +172,8 @@ export default {
       nftCA: null,
       title: "작품 이름", // 작품이름
       imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
-      // imgLg: "@/images/favicon.png",
-      onsale: "Not for sale", // 판매 중 인지
+
+      onsale: "On Sale", // 판매 중 인지
       price: "500 editions",
       metaTextThree: "500 editions",
       content: 'Digital-only* "CB Galaxy" style Coke Boys LA sneakers wearable in the Decentraland metaverse',
@@ -189,24 +189,24 @@ export default {
       itemDetailHistoryList: [
         {
           id: 1,
-          title: "Listed 1 edition for 0.35 ETH",
-          subTitle: "by Medicom 21 hours ago",
+          title: "Not for Sale",
+          subTitle: "",
           avatar: require("@/images/thumb/avatar-4.jpg"),
-          path: "/author",
+          path: "",
         },
       ],
       itemDetailList: [
         {
           id: 1,
           title: "작가 이름",
-          subTitle: "Creator",
+          subTitle: "Artist",
           avatar: require("@/images/thumb/avatar.jpg"),
           path: "/author",
         },
         {
           id: 2,
           title: "보유자 이름",
-          subTitle: "Collection",
+          subTitle: "Owner",
           avatar: require("@/images/thumb/avatar-2.jpg"),
           path: "/author",
         },
@@ -234,36 +234,42 @@ export default {
         // res.data.
         this.itemDetailList[0].title = res.data.AuthorMember.memberId;
         this.itemDetailList[1].title = res.data.OwnerMember.memberId;
-        // this.itemDetailList[0].avatar = res.data.AuthorMember.profile
-        this.itemDetailList[0].avatar = "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E";
+        this.itemDetailList[0].avatar = `https://j6e205.p.ssafy.io/${res.data.AuthorMember.profileImageUrl}`;
+        this.itemDetailList[1].avatar = `https://j6e205.p.ssafy.io/${res.data.OwnerMember.profileImageUrl}`;
+        this.itemDetailList[0].path = res.data.AuthorMember.memberSeq;
+        this.itemDetailList[1].path = res.data.OwnerMember.memberSeq;
+
         this.title = res.data.nft.nftName;
         this.content = res.data.nft.nftDescription;
         this.nftCA = res.data.nft.nftContractAddress;
         if (res.data.marketList.length >= 1) {
           this.price = res.data.marketList[res.data.marketList.length - 1].price;
-        }
-        if (res.data.nft.onsale) {
-          this.onsale = "On Sale";
-        } else {
-          this.onsale = "Not for Sale";
+        }else {
+          this.onsale = "Not for Sale"
         }
         for (var i = 0; i < res.data.marketList.length; i++) {
+          if (res.data.buyerList[i]==null){
+            break;
+          }
+          if (res.data.buyerList[res.data.buyerList.length -1]){
+            this.onsale = "Not for Sale"
+          }
           if (i === 0) {
             this.itemDetailHistoryList[0] = {
               id: i,
-              title: `Listed 1 edition for ${res.data.marketList[i].price} SSF`,
+              title: `Purchased for ${res.data.marketList[i].price} SSF By ${res.data.buyerList[i].memberId}`,
               subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
-              avatar: require("@/images/thumb/avatar-4.jpg"),
-              path: "/author",
+              avatar: `https://j6e205.p.ssafy.io/${res.data.buyerList[i].profileImageUrl}`,
+              path: res.data.buyerList[i].memberSeq,
               // avatar: res.data.buyerList[i].profileImageUrl
             };
           } else {
             this.itemDetailHistoryList.push({
               id: i,
-              title: `Purchased 1 edition for ${res.data.marketList[i].price} SSF`,
+              title: `Purchased for ${res.data.marketList[i].price} SSF By ${res.data.buyerList[i].memberId}`,
               subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
-              avatar: require("@/images/thumb/avatar-4.jpg"),
-              path: "/author",
+              avatar: `https://j6e205.p.ssafy.io/${res.data.buyerList[i].profileImageUrl}`,
+              path: res.data.buyerList[i].memberSeq,
               // avatar: res.data.buyerList[i].profileImageUrl
             });
           }
