@@ -48,7 +48,7 @@
     </div>
     <hr class="bg-white-slim my-0" />
     <div class="copyright-wrap d-flex flex-wrap py-3 align-items-center justify-content-between">
-      <p class="footer-copy-text py-2" v-html="SectionData.copyTitle"></p>
+      <p class="footer-copy-text py-2">Copyright © 2022 Unique.</p>
       <ul class="list-item list-item-s1 list-item-inline">
         <li v-for="(list, i) in SectionData.footerData.footerListTwo" :key="i">
           <router-link :to="list.path">{{ list.title }}</router-link>
