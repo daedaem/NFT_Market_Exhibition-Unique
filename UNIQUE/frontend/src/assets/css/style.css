@@ -1435,9 +1435,6 @@ hr {
   width: 100%;
   background: #ffffff;
 }
-.header-logo {
-  flex-shrink: 0;
-}
 .header-wrap {
   display: flex;
   align-items: center;
@@ -1494,7 +1491,6 @@ hr {
   display: inline-block;
   align-items: center;
 }
-
 .logo-dark {
   opacity: 1;
 }
@@ -3274,6 +3270,7 @@ textarea.form-control {
 .on-dark .list-item li a::after {
   background-color: #ffffff;
 }
+
 
 @media (min-width: 992px) {
   .footer-item {

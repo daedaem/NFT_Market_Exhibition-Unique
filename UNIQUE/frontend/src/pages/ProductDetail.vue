@@ -212,27 +212,13 @@ export default {
         },
       ],
       itemDetailHistoryList: [
-        // {
-        //   id: 1,
-        //   title: "Listed 1 edition for 0.35 ETH",
-        //   subTitle: "by Medicom 21 hours ago",
-        //   avatar: require("@/images/thumb/avatar-4.jpg"),
-        //   path: "/author",
-        // },
-        // {
-        //   id: 2,
-        //   title: "Purchased 1 edition for 0.1 ETH",
-        //   subTitle: "by Medicom 21 hours ago",
-        //   avatar: require("@/images/thumb/avatar-5.jpg"),
-        //   path: "/author",
-        // },
-        // {
-        //   id: 3,
-        //   title: "Purchased 1 edition for 0.1 ETH",
-        //   subTitle: "by French Montana 23/09/2021",
-        //   avatar: require("@/images/thumb/avatar-6.jpg"),
-        //   path: "/author",
-        // },
+        {
+          id: 1,
+          title: "Listed 1 edition for 0.35 ETH",
+          subTitle: "by Medicom 21 hours ago",
+          avatar: require("@/images/thumb/avatar-4.jpg"),
+          path: "/author",
+        },
       ],
       itemDetailList: [
         {
@@ -288,14 +274,14 @@ export default {
         }
         for (var i=0; i < res.data.marketList.length; i++){
           if (i === 0){
-            this.itemDetailHistoryList.push({
+            this.itemDetailHistoryList[0]={
             id : i,
             title : `Listed 1 edition for ${res.data.marketList[i].price} SSF`,
             subTitle: `By Unique at ${res.data.marketList[i].endTime.date.year}/${res.data.marketList[i].endTime.date.month}/${res.data.marketList[i].endTime.date.day}`,
             avatar: require("@/images/thumb/avatar-4.jpg"),
             path: "/author",
             // avatar: res.data.buyerList[i].profileImageUrl
-          })
+          }
           }else {
             this.itemDetailHistoryList.push({
               id : i,

@@ -5,7 +5,9 @@
         <div class="col-lg-3 col-md-9 me-auto">
           <div class="footer-item mb-5 mb-lg-0">
             <!-- logo link -->
-            <LogoLink class="footer-logo-link"></LogoLink>
+            <router-link to="/" class="logo-link" :class="classname">
+              <p class="logo">Unique</p>
+            </router-link>
             <p class="my-4 footer-para" v-if="SectionData.footerData.content">{{ SectionData.footerData.content }}</p>
             <ul class="styled-icon">
               <li>
@@ -71,5 +73,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.logo-link {
+  @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
+  .logo {
+    font-family: "DM Serif Display", serif;
+    letter-spacing: 0px;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+  }
+}
 </style>

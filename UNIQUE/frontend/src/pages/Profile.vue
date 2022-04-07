@@ -18,12 +18,10 @@
         :address="member.memberAddress"
         :btntext="SectionData.authorPersonalData.btnText"
         :btnlink="SectionData.authorPersonalData.btnLink"
+        :myId="member.memberSeq"
       ></AuthorHero>
     </header>
     <!-- Author section  -->
-    <div>
-      <router-link to="/"><p>ddddddddd</p></router-link>
-    </div>
     <ProfileSection
      :content = member.memberBio
      :datetext = member.regDt
@@ -50,26 +48,19 @@ export default {
       SectionData,
       id: this.$route.params.id,
       nftList: null,
-      member:null,
+      member:{
+        memberSeq: 0,
+        memberAddress: "",
+        memberId: 0,
+        memberBio: "",
+        regDt: null,
+      },
       grade: null,
     };
   },
   methods : {
-    async getProfile() {
-      const Profile = await axios({
-        method: "GET",
-        url: `${SERVER_URL}/api/members/profile/${this.$route.params.id}`,
-        headers: {
-          Authorization:
-            this.authToken
-        },
-      })
-      .then((res)=> {
-        console.log(res.data)
-      });
-    },
-    async getProfile() {
-      const Profile = await axios({
+    getProfile() {
+      axios({
         method: "GET",
         url: `${SERVER_URL}/api/members/profile/${this.$route.params.id}`,
         headers: {
@@ -79,7 +70,13 @@ export default {
       })
       .then((res)=> {
         console.log(res.data,'userInfo')
-        this.member = res.data
+        console.log(res.data.regDt,'userInfodddd')
+        console.log(res.data.memberAddress,'userInfoxxxxx')
+        this.member.memberSeq = res.data.memberSeq
+        this.member.memberAddress = res.data.memberAddress
+        this.member.memberId = res.data.memberId
+        this.member.memberBio = res.data.memberBio
+        this.member.regDt = res.data.regDt
         if (res.data.authority == 0) {
           this.grade = "Private Artist"
         }

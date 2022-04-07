@@ -102,7 +102,6 @@ export default {
   },
   methods : {
     calculatedReplyTime(res) {
-      console.log(res,'22e2e2');
       let ReplynewTime = new Date(res);
       var ReplynowTime = new Date();
       const milliSeconds = ReplynowTime - ReplynewTime;
