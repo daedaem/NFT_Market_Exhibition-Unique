@@ -51,7 +51,7 @@
         <div class="container">
           <div class="card card-full" style="max-width: 500px; height: auto">
             <div class="card-image">
-              <img src="`https://j6e205.p.ssafy.io/${ marketInfoData.nft.fileUrl }`" class="card-img-top" style="height: auto" alt="art image" />
+              <img :src="`https://j6e205.p.ssafy.io/${marketInfoData.nft.fileUrl}`" class="card-img-top" style="height: auto" alt="art image" />
               <!-- <img :src="`${marketInfoData.nft.ufleUrl}`" class="card-img-top" style="height: auto" alt="art image" /> -->
             </div>
             <div class="card-body p-4">
@@ -267,7 +267,7 @@ export default {
       // console.log(ds, "ds");
 
       // console.log("되나");
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
 
       const myAccount = this.myAddress;
       // console.log(myAccount, "myAccount");

@@ -37,7 +37,7 @@
                 <div class="mb-4">
                   <h5 class="mb-1">Create New Wallet</h5>
                   <div class="d-flex">
-                    <input class="form-control form-control-s1 col-7" disabled type="text" v-model="password" />
+                    <input class="form-control form-control-s1 col-7" placeholder="Your private key" disabled type="text" v-model="password" />
                     <!-- end form-item -->
                     <button type="button" @click="createWallet" class="btn btn-dark d-block ms-1">Create</button>
                   </div>
@@ -161,7 +161,7 @@ export default {
       let newAddress = await web3.eth.accounts.create();
       this.password = newAddress.privateKey;
       this.$store.dispatch("myAddress", newAddress.address);
-      alert("Warning: keep your private key safely Private key");
+      alert("Warning: keep your private key safely \n Private key : " + newAddress.privateKey);
       this.balanceOf = 0;
       this.amountOfToken = 0;
       // let myAddress = await commit("SET_ADDRESS", newAddress.address);
