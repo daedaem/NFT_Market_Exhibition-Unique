@@ -5,7 +5,7 @@
       <SectionHeading classname="text-center" :text="title" :content="content" isMargin="mb-3"></SectionHeading>
       <div class="row g-gs">
         <div class="col-sm-6 col-md-6 col-lg-3" v-for="item in featuredList" :key="item.id">
-          <router-link :to="`profile/${item.nftAuthorSeq}`" class="card card-full card-collection">
+          <router-link :to="`/profile/${item.nftAuthorSeq}`" class="card card-full card-collection">
             <img :src="item.nftImage" class="card-img-top" alt="featured miage" />
             <div class="card-body card-body-s1">
                 <div class="avatar avatar-1">
@@ -66,14 +66,14 @@ export default {
               nftImage:`https://j6e205.p.ssafy.io/${res.data.nftList[i].fileUrl}`,
               authorImage:`https://j6e205.p.ssafy.io/${res.data.memberList[i].profileImageUrl}`,
               authorName:res.data.memberList[i].memberId,
-              nftAuthorSeq:res.data.memberList[i].nftAuthorSeq,
+              nftAuthorSeq:res.data.memberList[i].memberSeq,
             };
           } else {
             this.featuredList.push({
               nftImage:`https://j6e205.p.ssafy.io/${res.data.nftList[i].fileUrl}`,
               authorImage:`https://j6e205.p.ssafy.io/${res.data.memberList[i].profileImageUrl}`,
               authorName:res.data.memberList[i].memberId,
-              nftAuthorSeq:res.data.memberList[i].nftAuthorSeq,
+              nftAuthorSeq:res.data.memberList[i].memberSeq,
               });
             };
           }
