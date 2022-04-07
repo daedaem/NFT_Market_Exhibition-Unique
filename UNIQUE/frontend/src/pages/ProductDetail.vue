@@ -6,7 +6,7 @@
       <HeaderMain></HeaderMain>
     </header>
     <div style="max-width: 1200px; margin: auto">
-      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px; background: white">
+      <div class="loginbar d-flex justify-content-end align-items-center" style="position: sticky; top: 70px; height: 60px; padding-right: 50px;">
         <!-- sell버튼 시작 난중에 내가 이 nft의 주인이면 조건걸기 -->
         <router-link v-if="true" :to="{ name: 'SaleCreate', params: { id: this.$route.params.id } }" class="btn btn-dark d-block mb-2">Sell</router-link>
         <!-- sell버튼 끝-->
@@ -98,9 +98,8 @@
               <div class="item-detail-meta d-flex flex-wrap align-items-center mb-3">
                 <span class="item-detail-text-meta">{{ onsale }}</span>
                 <span class="dot-separeted"></span>
-                <span class="item-detail-text-meta">{{ price }}</span>
-                <span class="dot-separeted"></span>
-                <span class="item-detail-text-meta" v-html="metaTextThree"></span>
+                <span class="item-detail-text-meta">Price : {{ price }} SSF</span>
+
               </div>
               <p class="item-detail-text mb-4">{{ content }}</p>
               <div class="item-credits">
@@ -144,7 +143,8 @@
     </section>
     <!-- end item-detail-section -->
     <!-- Related product -->
-    <RelatedProduct></RelatedProduct>
+    <!-- <RelatedProduct></RelatedProduct> -->
+    <Featured></Featured>
     <!-- Footer  -->
     <Footer classname="bg-black on-dark"></Footer>
     <!-- Modal -->
@@ -172,7 +172,7 @@ export default {
       nftCA: null,
       title: "작품 이름", // 작품이름
       imgLg: "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E",
-      // imgLg: "@/images/favicon.png",
+
       onsale: "Not for sale", // 판매 중 인지
       price: "500 editions",
       metaTextThree: "500 editions",
@@ -199,14 +199,14 @@ export default {
         {
           id: 1,
           title: "작가 이름",
-          subTitle: "Creator",
+          subTitle: "Artist",
           avatar: require("@/images/thumb/avatar.jpg"),
           path: "/author",
         },
         {
           id: 2,
           title: "보유자 이름",
-          subTitle: "Collection",
+          subTitle: "Owner",
           avatar: require("@/images/thumb/avatar-2.jpg"),
           path: "/author",
         },
@@ -234,8 +234,12 @@ export default {
         // res.data.
         this.itemDetailList[0].title = res.data.AuthorMember.memberId;
         this.itemDetailList[1].title = res.data.OwnerMember.memberId;
-        // this.itemDetailList[0].avatar = res.data.AuthorMember.profile
-        this.itemDetailList[0].avatar = "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/42iI/image/fgznKzwTj38hXdylF03JXH2Gv5E";
+        this.itemDetailList[0].avatar = `https://j6e205.p.ssafy.io/${res.data.AuthorMember.profileImageUrl}`;
+        this.itemDetailList[1].avatar = `https://j6e205.p.ssafy.io/${res.data.OwnerMember.profileImageUrl}`;
+        this.itemDetailList[0].path = `profile/${res.data.AuthorMember.memberSeq}`;
+        this.itemDetailList[1].path = `profile/${res.data.OwnerMember.memberSeq}`;
+
+
         this.title = res.data.nft.nftName;
         this.content = res.data.nft.nftDescription;
         this.nftCA = res.data.nft.nftContractAddress;

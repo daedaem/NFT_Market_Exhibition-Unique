@@ -26,7 +26,7 @@
                 <div class="card card-full">
                   <div class="card-image">
                     <!-- <img :src="product.img" class="card-img-top" alt="art image"> -->
-                    <img src="@/images/thumb/nft-full.0609d1e0.jpg" class="card-img-top" alt="art image" />
+                    <img :src="`https://j6e205.p.ssafy.io/${product.profileImageUrl}`" class="card-img-top" alt="art image" />
                   </div>
                   <div class="card-body p-4">
                     <h5 class="card-title text-truncate mb-0">{{ product.nftName }}</h5>

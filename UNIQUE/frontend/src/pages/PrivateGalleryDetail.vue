@@ -38,7 +38,7 @@
             <div class="single-entry mb-5 mb-lg-0">
               <!-- <img :src="img" class="w-100 rounded mb-3" alt="" /> -->
               <!-- <img :src="reprentiveNft.fileUrl" class="w-100 rounded mb-3" alt="" /> -->
-              <img src="https://i.ytimg.com/vi/-9Be9EtRXvk/maxresdefault.jpg" class="w-100 rounded mb-3" alt="" />
+              <img :src="`https://j6e205.p.ssafy.io/${representiveNft.fileUrl}`" class="w-100 rounded mb-3" alt="representiveImage" />
               <p class="single-entry-text mb-2 text-black d-flex flex-wrap align-items-center">
                 Published <span class="dot-separeted"></span> {{ representiveNft.regDt }} <span class="dot-separeted"></span> By {{ representiveNft.nftAuthorName }}
               </p>
@@ -108,7 +108,8 @@
                 <div class="card">
                   <div class="card-body card-body-s1">
                     <div class="avatar avatar-1 mb-3 mx-auto">
-                      <img src="http://kaihuastudio.com/common/img/default_profile.png" alt="" />
+                      <img :src="`https://j6e205.p.ssafy.io/${creator.profileImageUrl}`" alt="" />
+                      <!-- <p>{{creator.profileImageUrl}}</p> -->
                     </div>
                     <!-- <h4 class="mb-2">{{ creator.memberId }}</h4> -->
                     <h4 align="center" class="mb-2">Shcho21112</h4>

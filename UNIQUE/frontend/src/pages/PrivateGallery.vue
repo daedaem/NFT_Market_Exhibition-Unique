@@ -17,17 +17,19 @@
       <div class="container">
         <!-- blog section -->
         <div class="row g-gs">
-          <div class="col-lg-4 col-md-6" v-for="item of displayedRecords" :key="item">
+          <div class="col-lg-4 col-md-6" v-for="(item,index) of displayedRecords" :key="item.id">
             <div class="card card-full card-blog" @click="moveToDetail(item.exhibitionId)">
               <div class="d-block card-image">
                 <!-- <img :src="item.img" class="card-img-top" alt="" /> -->
-                <img src="https://i.ytimg.com/vi/-9Be9EtRXvk/maxresdefault.jpg" class="card-img-top" alt="" />
+                <img :src="`https://j6e205.p.ssafy.io/${nftList[index].fileUrl}`" class="card-img-top" alt="background" />
                 <div class="bg-dark-transparent card-overlay">
                   <div class="d-flex align-items-center card-author">
                     <div class="flex-shrink-0 avatar avatar-2">
-                      <img src="@/images/thumb/avatar-4.jpg" alt="" class="rounded-circle" />
+                      <img :src="`https://j6e205.p.ssafy.io/${item.member.profileImageUrl}`" alt="" class="rounded-circle" />
+                      <!-- <div>{{item.member.profileImageUrl}}</div> -->
                     </div>
                     <div class="flex-grow-1 ms-2 text-white">
+                      <div>{{nftList[index].nftWork}}</div>
                       <span>{{ item.member.memberId }}</span>
                     </div>
                   </div>
@@ -102,6 +104,7 @@ export default {
     return {
       SectionData,
       exhibitionList: null,
+      nftList:null,
       page: 1,
       perPage: 6,
     };
@@ -140,6 +143,7 @@ export default {
       }).then((res) => {
         console.log(res.data);
         this.exhibitionList = res.data.exhibitionList;
+        this.nftList = res.data.nftList;
       });
     },
   },

@@ -1,8 +1,8 @@
 <template>
   <div class="card card-full">
     <div class="card-image">
-      <img src="http://img.khan.co.kr/news/2020/10/16/2020101601001687000138341.jpg" class="card-img-top" alt="art image" />
-      <!-- {{ product.nft.nftWorkUri }} -->
+      <img :src="`https://j6e205.p.ssafy.io/${product.fileUrl}`" class="card-img-top" alt="art image" />
+      <p>{{ product.fileUrl }}</p>
     </div>
     <div class="card-body p-4">
       <h3 class="card-title text-truncate mb-0">{{ product.nftName }}</h3>
