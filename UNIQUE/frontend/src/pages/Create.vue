@@ -199,7 +199,7 @@ export default {
        */
       // url:해시된, nft:이름, 작성자 일련번호
       console.log(typeof this.authorPrivateKey);
-      const checkPubKey = await getAddressFrom("0x" + this.authorPrivateKey);
+      const checkPubKey = await getAddressFrom(this.authorPrivateKey);
       // 내계좌 조회 1.
       console.log(typeof checkPubKey, "체크퍼브키");
       // 서버 배포 후
