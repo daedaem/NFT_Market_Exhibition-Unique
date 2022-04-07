@@ -124,7 +124,8 @@
 <script>
 // Import component data. You can change the data in the store to reflect in all component
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";

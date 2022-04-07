@@ -76,7 +76,8 @@ const NFT_ABI = SsafyNFT.abi;
 const NFT_CA = SsafyNFT.networks["202112031219"].address;
 
 // 네트워크 연결
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL)); // let Web3 = require("web3");
 // let web3 = new Web3();
 // web3.setProvider(new web3.providers.HttpProvider("http://127.0.0.1:8545"));

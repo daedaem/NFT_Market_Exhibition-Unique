@@ -1,5 +1,5 @@
 import Web3 from "web3";
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+GANACHE_SERVER_URL = "http://20.196.209.2:8545";
 
 /**
  * 개인키로부터 주소를 추출합니다.

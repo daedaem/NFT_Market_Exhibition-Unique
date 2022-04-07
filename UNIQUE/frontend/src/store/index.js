@@ -5,7 +5,8 @@ import router from "@/router/index.js";
 import Web3 from "web3";
 // import getWeb3 from "../utils/getWeb3;";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const GANACHE_SERVER_URL = process.env.GANACHE_SERVER_URL;
+GANACHE_SERVER_URL = "http://20.196.209.2:8545";
+
 let web3 = new Web3(new Web3.providers.HttpProvider(GANACHE_SERVER_URL));
 
 export default createStore({
