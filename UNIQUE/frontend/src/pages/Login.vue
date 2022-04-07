@@ -18,8 +18,7 @@
 import SectionData from "@/store/store.js";
 export default {
   name: "Login",
-  components: {
-  },
+  components: {},
   data() {
     return {
       SectionData,

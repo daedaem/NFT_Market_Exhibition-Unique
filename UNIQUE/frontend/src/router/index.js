@@ -65,7 +65,7 @@ const routes = [
     component: () => import("../pages/Profile.vue"),
   },
   {
-    path: "/profile/account",
+    path: "/account/:id",
     name: "account",
     component: () => import("../pages/Account.vue"),
   },
@@ -83,6 +83,11 @@ const routes = [
     path: "/test",
     name: "Test",
     component: () => import("../pages/Test.vue"),
+  },
+  {
+    path: "/wallet",
+    name: "Wallet",
+    component: () => import("../pages/Wallet.vue"),
   },
   {
     path: "/privateCreate",
