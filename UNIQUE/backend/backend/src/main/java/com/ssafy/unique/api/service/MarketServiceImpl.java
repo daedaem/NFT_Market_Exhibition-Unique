@@ -121,6 +121,7 @@ public class MarketServiceImpl implements MarketService {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 						
 				marketRepository.save(Market.builder()
+						.buyer("n")
 						.marketContractAddress(marketReq.getMarketContractAddress())
 						.seller(member.getMemberAddress())
 						.price(marketReq.getPrice())
