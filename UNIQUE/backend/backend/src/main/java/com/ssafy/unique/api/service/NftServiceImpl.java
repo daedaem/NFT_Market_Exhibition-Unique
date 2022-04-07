@@ -123,7 +123,8 @@ public class NftServiceImpl implements NftService{
 
             List<Member> buyerImageList = new ArrayList<>();
             for (Market m : marketList) {
-                buyerImageList.add(memberRepository.findByMemberAddress(m.getBuyer()));
+                if (m.getBuyer()!=null)
+                    buyerImageList.add(memberRepository.findByMemberAddress(m.getBuyer()));
             }
             System.out.println(buyerImageList.toString());
             res.setNft(nft);

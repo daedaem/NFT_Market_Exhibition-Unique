@@ -41,8 +41,7 @@ import SectionData from "@/store/store.js";
 import { mapState } from "vuex";
 export default {
   name: "profile",
-  components: {
-  },
+  components: {},
   data() {
     return {
       SectionData,
@@ -64,8 +63,7 @@ export default {
         method: "GET",
         url: `${SERVER_URL}/api/members/profile/${this.$route.params.id}`,
         headers: {
-          Authorization:
-            this.authToken
+          Authorization: this.authToken,
         },
       })
       .then((res)=> {
@@ -78,7 +76,7 @@ export default {
         this.member.memberBio = res.data.memberBio
         this.member.regDt = res.data.regDt
         if (res.data.authority == 0) {
-          this.grade = "Private Artist"
+          this.grade = "Private Artist";
         }
       });
     },
@@ -87,27 +85,21 @@ export default {
         method: "GET",
         url: `${SERVER_URL}/api/nft/items/${this.myAddress}`,
         headers: {
-          Authorization:
-            this.authToken
+          Authorization: this.authToken,
         },
-      })
-      .then((res)=> {
-        console.log(res.data,"nft")
-        this.nftList = res.data.nftList
+      }).then((res) => {
+        console.log(res.data, "nft");
+        this.nftList = res.data.nftList;
       });
       // this.total = this.exhibitionWorkList.length;
     },
   },
   computed: {
-    ...mapState([
-      "authToken",
-      "myAddress",
-      "userId"
-      ]),
+    ...mapState(["authToken", "myAddress", "userId"]),
   },
   created() {
-    this.getProfile()
-    this.getNft()
+    this.getProfile();
+    this.getNft();
   },
 };
 </script>

@@ -174,7 +174,7 @@ export default createStore({
       commit("REMOVE_ADDRESS");
       commit("REMOVE_USERNAME");
       commit("REMOVE_ID");
-
+      router.go();
       // router.push({ name: "Login" });
     },
     signup: function ({ commit }, credentials) {
