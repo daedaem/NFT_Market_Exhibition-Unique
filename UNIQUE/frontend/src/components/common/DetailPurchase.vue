@@ -24,7 +24,7 @@
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div> -->
             <div class="mb-3">
-              <label class="form-label">개인키 입력</label>
+              <label class="form-label">Input Private Key</label>
               <input type="text" class="form-control form-control-s1" v-model="authorPrivateKey" placeholder="please typing your Private Key" />
             </div>
             <button class="btn btn-dark d-block" @click="purchaseNFT" data-bs-target="#modal" data-bs-toggle="modal">Confirm</button>
