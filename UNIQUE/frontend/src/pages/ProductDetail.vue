@@ -132,7 +132,7 @@
                     <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#placeBidModal" class="btn btn-dark d-block">Purchase</a> -->
                     <!-- <Purchase :product="product"></Purchase> -->
                     <DetailPurchase
-                      v-if="onsale === `On Sale`"
+                      v-if="onsale === `On Sale` && Owner != userId"
                       :marketContractAddress="marketContractAddress"
                       :nftName="title"
                       :price="price"
