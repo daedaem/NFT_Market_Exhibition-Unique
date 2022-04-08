@@ -59,7 +59,7 @@ export default {
     };
   },
   methods : {
-    getProfile() {
+    async getProfile() {
       axios({
         method: "GET",
         url: `${SERVER_URL}/api/members/profile/${this.$route.params.id}`,
@@ -80,12 +80,15 @@ export default {
         if (res.data.authority == 0) {
           this.grade = "Private Artist";
         }
+      })
+      .then((res) => {
+        this.getNft()
       });
     },
     async getNft() {
       const itmes = await axios({
         method: "GET",
-        url: `${SERVER_URL}/api/nft/items/${this.myAddress}`,
+        url: `${SERVER_URL}/api/nft/items/${this.member.memberAddress}`,
         headers: {
           Authorization: this.authToken,
         },
@@ -101,7 +104,6 @@ export default {
   },
   created() {
     this.getProfile();
-    this.getNft();
   },
 };
 </script>
