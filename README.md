@@ -165,7 +165,7 @@
 
 ##### Private Exhibition (개인 작가 전시회) 생성
 
-![프라이빗 갤러리 생성(test6계정)](README.assets/프라이빗 갤러리 생성(test6계정).gif)
+![프라이빗_갤러리_생성(test6계정)](README.assets/프라이빗_갤러리_생성(test6계정).gif)
 
 ##### Dark Mode
 
@@ -175,7 +175,9 @@
 ### 🖥 화면 구성 기획
 
 <hr>
-##### 와이어 프레임
+
+#### 와이어 프레임
+
 
 - [와이어 프레임 보러가기](https://www.figma.com/file/kPGFasAO9c0Lg3TBPQFsGu/Unique(블록체인-P2P-거래)-5팀?node-id=0%3A1)
 
@@ -202,7 +204,9 @@
 ### 🛠 기술 스택
 
 <hr>
-**아키텍쳐 소개**
+
+**아키텍처 소개**
+
 
 - 사용 기술 스택
   - 배포 환경 : **Nginx.**
