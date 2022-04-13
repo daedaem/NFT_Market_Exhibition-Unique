@@ -2,7 +2,7 @@
 
 ![image-20220318133428864](README.assets/image-20220318133428864.png)
 
-​ **예술가들의 NFT를 소개하고 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 NFT 거래 및 예술관 플랫폼**
+ **예술가들의 NFT를 소개하고 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 NFT 거래 및 예술관 플랫폼**
 
 ### 🖋 기획
 
@@ -12,7 +12,80 @@
 
 ![image-20220318133650872](README.assets/image-20220318133650872.png)
 
-#### 기획에 어떤 내용을 채울까요 ???
+### 🎞 서비스 화면
+
+---
+
+
+
+#### 메인 페이지
+
+---
+
+
+
+![유니크 메인페이지](README.assets/유니크 메인페이지.gif)
+
+
+
+#### 1. 회원관리
+
+---
+
+##### 로그인 및 회원가입
+
+![회원가입](README.assets/회원가입.gif)
+
+##### 지갑 생성
+
+![지갑 생성](README.assets/지갑 생성.gif)
+
+##### 지갑 조회 및 토큰 생성
+
+![지갑 조회 및 토큰 생성](README.assets/지갑 조회 및 토큰 생성.gif)
+
+##### 프로필 및 디테일
+
+![프로필 및 디테일](README.assets/프로필 및 디테일.gif)
+
+
+
+#### 2. NFT 민팅 및 마켓
+
+---
+
+##### NFT 마켓 리스트
+
+![NFT 마켓 리스트](README.assets/NFT 마켓 리스트.gif)
+
+##### NFT 생성
+
+![nft생성](README.assets/nft생성.gif)
+
+##### NFT 판매
+
+![NFT 판매](README.assets/NFT 판매.gif)
+
+##### NFT 구매
+
+![NFT구매](README.assets/NFT구매.gif)
+
+#### 3. 전시회
+
+---
+
+##### Exhibition (전문 Curating)
+
+![전시회](README.assets/전시회.gif)
+
+##### Private Exhibition (개인 작가 전시회) 생성
+
+![프라이빗 갤러리 생성(test6계정)](README.assets/프라이빗 갤러리 생성(test6계정).gif)
+
+##### Dark Mode
+
+![다크모드](README.assets/다크모드.gif)
+
 
 ### 🖥 화면 구성 기획
 
@@ -47,6 +120,7 @@
 <hr>
 
 ![image-20220318120237423](README.assets/image-20220318120237423.png)
+
 
 ### ✨코드 컨벤션
 
