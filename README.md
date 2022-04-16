@@ -103,13 +103,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 # HOW
 
-
-
 ### 🎞 서비스 화면
-
----
-
-
 
 #### 메인 페이지
 
@@ -119,64 +113,67 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ![MainPage](README.assets/MainPage.gif)
 
-#### 1. 회원관리
+
+
+#### 1. NFT 민팅 및 마켓
 
 ---
 
-##### 로그인 및 회원가입
-
-![회원가입](README.assets/회원가입.gif)
-
-##### 지갑 생성
-
-![createWallet](README.assets/createWallet.gif)
-
-##### 지갑 조회 및 토큰 생성
-
-![AccountBalnceWithToken](README.assets/AccountBalnceWithToken.gif)
-
-##### 프로필 및 디테일
-
-![Pofile](README.assets/Pofile.gif)
-
-
-
-#### 2. NFT 민팅 및 마켓
-
----
-
-##### NFT 마켓 리스트
+##### < NFT 마켓 리스트 >
 
 ![NFTMarketList](README.assets/NFTMarketList.gif)
 
-##### NFT 생성
+##### < NFT 생성 > 
 
 ![nft생성](README.assets/nft생성.gif)
 
-##### NFT 판매
+##### < NFT 판매 >
 
 ![NFTSell](README.assets/NFTSell.gif)
 
-##### NFT 구매
+##### < NFT 구매 >
 
 ![NFT구매](README.assets/NFT구매.gif)
 
-#### 3. 전시회
+#### 2. 전시회
 
 ---
 
-##### Exhibition (전문 Curating)
+##### < Exhibition (전문 큐레이팅 서비스) >
 
 ![전시회](README.assets/전시회.gif)
 
-##### Private Exhibition (개인 작가 전시회) 생성
+
+
+##### < Private Exhibition (개인 작가 전시회) 생성 >
 
 ![프라이빗_갤러리_생성(test6계정)](README.assets/프라이빗_갤러리_생성(test6계정).gif)
 
-##### Dark Mode
+
+
+#### 3. 회원관리
+
+---
+
+##### < 지갑 생성 >
+
+![createWallet](README.assets/createWallet.gif)
+
+##### < 지갑 조회 및 토큰 생성 >
+
+![AccountBalnceWithToken](README.assets/AccountBalnceWithToken.gif)
+
+##### < 프로필 및 디테일 >
+
+![Pofile](README.assets/Pofile.gif)
+
+##### < Dark Mode >
 
 ![다크모드](README.assets/다크모드.gif)
 
+##### < 로그인 및 회원가입 >
+
+![회원가입](README.assets/회원가입.gif)
 
 ### 🖥 화면 구성 기획
 
