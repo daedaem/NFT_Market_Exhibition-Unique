@@ -8,8 +8,6 @@
 
 
 
-
-
 # WHAT?
 
 ### **NFT 거래 & 미술관 플랫폼**
@@ -41,6 +39,12 @@
 
   <img src="README.assets/Untitled 3.png" alt="Untitled" style="zoom: 67%;" />
 
+출처:
+ https://www.chosun.com/economy/tech_it/2021/03/12/NCIINJM5BFEKFNM3O2UVDBDBMI/
+https://www.chosun.com/economy/mint/2021/12/16/264ER3Z5P5CV7ETWRRR4NZB2GI/
+https://www.joongang.co.kr/article/24019914#home
+https://m.joseilbo.com/news/view.htm?newsid=449017
+
 ### NFT 작품 가치, 가격에 대한 사람들의 의구심
 
 - 한번쯤은 생각해봤을만한 고가의 NFT 가격의 정당성
@@ -63,17 +67,21 @@
 
     <img src="README.assets/Untitled 6.png" alt="Untitled" style="zoom:67%;" />
 
+  출처: https://opensea.io/
+
 - NFT에 이해도(정보)와 NFT 인식(가치평가)관계
 
   - **NFT에 대해** 전혀 모르는 사람보다 **잘 이해하는 사람일수록** **NFT에 대한 전망을 더 긍정적으로** 바라보는 것으로 나타남.
 
     <img src="README.assets/Untitled 7.png" alt="Untitled" style="zoom:67%;" />
 
+출처: https://www.tokenpost.kr/article-58522
+
 ## 기준 플랫폼 한계
 
 - 유명 사이트의 NFT 작품, 작가에 대한 정보 미흡, 전무한 경우도 존재
 
-![Untitled](README.assets/Untitled 8.png)
+![Untitled8](README.assets/Untitled8.png)
 
 ## 결론
 
@@ -109,9 +117,7 @@
 
 
 
-![유니크 메인페이지](README.assets/유니크 메인페이지.gif)
-
-
+![MainPage](README.assets/MainPage.gif)
 
 #### 1. 회원관리
 
@@ -123,15 +129,15 @@
 
 ##### 지갑 생성
 
-![지갑 생성](README.assets/지갑 생성.gif)
+![createWallet](README.assets/createWallet.gif)
 
 ##### 지갑 조회 및 토큰 생성
 
-![지갑 조회 및 토큰 생성](README.assets/지갑 조회 및 토큰 생성.gif)
+![AccountBalnce & Token](README.assets/AccountBalnce & Token.gif)
 
 ##### 프로필 및 디테일
 
-![프로필 및 디테일](README.assets/프로필 및 디테일.gif)
+![Pofile](README.assets/Pofile.gif)
 
 
 
@@ -141,7 +147,7 @@
 
 ##### NFT 마켓 리스트
 
-![NFT 마켓 리스트](README.assets/NFT 마켓 리스트.gif)
+![NFTMarketList](README.assets/NFTMarketList.gif)
 
 ##### NFT 생성
 
@@ -149,7 +155,7 @@
 
 ##### NFT 판매
 
-![NFT 판매](README.assets/NFT 판매.gif)
+![NFTSell](README.assets/NFTSell.gif)
 
 ##### NFT 구매
 
@@ -325,36 +331,33 @@ ex) S06P22E205-52 feat:[FE] 메인 페이지 - 레이아웃 설정 및 프레임
 
 ---
 
-|                    조해성                     |                         조성현                         |                     **김범주**                     |                          임창현                          |
-| :-------------------------------------------: | :----------------------------------------------------: | :------------------------------------------------: | :------------------------------------------------------: |
-| ![Cho_haisung](README.assets/Cho_haisung.jpg) | ![sunghyun](README.assets/sunghyun-16475797899344.jpg) | ![beomju](README.assets/beomju-16475797929495.jpg) | ![changhyun](README.assets/changhyun-16475797945576.jpg) |
-|               Leader & Frontend               |                        Frontend                        |                      Backend                       |                         Backend                          |
+|                            조해성                            |                            조성현                            |                          **김범주**                          |                            임창현                            |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="README.assets/Cho_haisung.jpg" alt="Cho_haisung" style="width:100px" /> | <img src="README.assets/sunghyun.jpg" alt="sunghyun" style="width:100px" /> | <img src="README.assets/beomju.jpg" alt="beomju" style="width:100px" /> | <img src="README.assets/changhyun.jpg" alt="changhyun" style="width:100px" /> |
+|                      Leader & Frontend                       |                           Frontend                           |                           Backend                            |                           Backend                            |
 
 ### 😃 팀원 역할
 
 ---
 
 - **조해성**
-
-  - **프로젝트 관리**
-
+- **프로젝트 관리**
     - Jira를 활용한 업무 계획 및 프로세스 진행 관리
-
+  
     - Notion을 활용한 데일리 스크럼, 아이디어 회의, 기획안 등 프로젝트 관련업무 기록
-
+  
   - **와이어 프레임**
-
-    - 메인 페이지, 마켓페이지, NFT 상세페이지, NFT 민팅 및 판매 페이지
-
-  - **블록체인 네트워크, 스마트컨트랙트**
-
-    - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
-
-    - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
-
-    - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성, SaleFactory 생성(구매 및 판매))
-
-    - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
+  - 메인 페이지, 마켓페이지, NFT 상세페이지, NFT 민팅 및 판매 페이지
+    
+- **블록체인 네트워크, 스마트컨트랙트**
+  
+  - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
+  
+  - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
+  
+  - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성, SaleFactory 생성(구매 및 판매))
+  
+  - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
 
 
   - **프론트엔드**
