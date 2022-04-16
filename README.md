@@ -133,7 +133,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ##### 지갑 조회 및 토큰 생성
 
-![AccountBalnce & Token](README.assets/AccountBalnce & Token.gif)
+![AccountBalnceWithToken](README.assets/AccountBalnceWithToken.gif)
 
 ##### 프로필 및 디테일
 
