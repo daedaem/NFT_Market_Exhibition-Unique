@@ -6,11 +6,103 @@
 
  **예술가들의 NFT를 소개하고 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 NFT 거래 및 예술관 플랫폼**
 
+# WHEN?
+
+##### **개발 기간: 2022.02.28~ 2022.04.08**
+
+
+
+# WHO?
+
+### ✨유니크(UNIQUE) 팀원을 소개합니다!
+
+---
+
+|                            조해성                            |                            조성현                            |                          **김범주**                          |                            임창현                            |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="README.assets/Cho_haisung.jpg" alt="Cho_haisung" style="width:100px" /> | <img src="README.assets/sunghyun.jpg" alt="sunghyun" style="width:100px" /> | <img src="README.assets/beomju.jpg" alt="beomju" style="width:100px" /> | <img src="README.assets/changhyun.jpg" alt="changhyun" style="width:100px" /> |
+|                      Leader & Frontend                       |                           Frontend                           |                           Backend                            |                           Backend                            |
+
+
+
+### 😃 팀원 역할
+
+---
+
+- **조해성**
+
+  - **프로젝트 관리**
+    - Jira를 활용한 업무 계획 및 프로세스 진행 관리
+
+    - Notion을 활용한 데일리 스크럼, 아이디어 회의, 기획안 등 프로젝트 관련업무 기록
+
+    - **와이어 프레임**
+    - 메인 페이지, 마켓페이지, NFT 상세페이지, NFT 민팅 및 판매 페이지
+
+  - **블록체인 네트워크, 스마트컨트랙트**
+    - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
+
+    - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
+
+    - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성, SaleFactory 생성(구매 및 판매))
+
+    - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
+
+
+
+    - **프론트엔드**
+      - 메인페이지, 마켓 페이지, 지갑 생성, 토큰 발급 및 조회 페이지, NFT 생성 및 판매 페이지, NFT Exhibition 구현
+
+
+  
+
+- **조성현**
+
+  **와이어 프레임**
+
+  - 로그인/회원가입 페이지, 전시회 페이지, 개인 전시회 페이지, 프로필 및 마이페이지
+
+  **블록체인 네트워크, 스마트 컨트랙트**
+
+  - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
+  - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
+  - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성)
+  - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
+
+  **프론트엔드**
+
+  - NFT Exhibition, Private Exhibition, Detail 페이지, Profile/Mypage 페이지
+
+  - Dark Mode
+
+    
+
+- **김범주**
+
+  - Entity와 DB 테이블 구축, ERD 다이어그램 구현
+
+  - Spring Boot & JPA를 활용하여 NFT, 마켓, 유저 관련 기능 구현
+
+  - Web3j를 이용하여 SSAFY Network에 연결 및 SSF 조회, 거래 기능 구현
+
+  - EC2 Ubuntu 환경에서 Docker와 Nginx를 활용하여 BE,FE, IPFS 통합 배포 진행
+
+    
+
+- **임창현**
+
+  - Entity와 DB 테이블 Jpa mapping
+  - Spring Boot와 Jpa를 이용한 멤버 관리, 마켓 관리, 전시회 관리, 프로필 이미지 관리 구현
+  - go-ipfs를 이용한 IPFS에 NFT 파일 업로드 구현
+  - Spring Security를 이용한 JWT 발급 및 JWT를 이용한 권한 관리 구현
+  - web3j를 이용한 SSAFY Network와 연결 및 SSF(싸피토큰) 조회, 거래기능 구현
+  - ERD 다이어그램 구현
+
 
 
 # WHAT?
 
-### **NFT 거래 & 미술관 플랫폼**
+### **NFT 거래 & 미술관 플랫폼 **
 
 - NFT 작가, 작품을 설명하고 비평하고 이해를 도와주는 서비스
 - 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 서비스
@@ -321,85 +413,3 @@ ex) S06P22E205-52 feat:[FE] 메인 페이지 - 레이아웃 설정 및 프레임
     ex) feature/front/login
 
     ex) feature/NFT
-
-
-
-### ✨유니크(UNIQUE) 팀원을 소개합니다!
-
----
-
-|                            조해성                            |                            조성현                            |                          **김범주**                          |                            임창현                            |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="README.assets/Cho_haisung.jpg" alt="Cho_haisung" style="width:100px" /> | <img src="README.assets/sunghyun.jpg" alt="sunghyun" style="width:100px" /> | <img src="README.assets/beomju.jpg" alt="beomju" style="width:100px" /> | <img src="README.assets/changhyun.jpg" alt="changhyun" style="width:100px" /> |
-|                      Leader & Frontend                       |                           Frontend                           |                           Backend                            |                           Backend                            |
-
-### 😃 팀원 역할
-
----
-
-- **조해성**
-- **프로젝트 관리**
-    - Jira를 활용한 업무 계획 및 프로세스 진행 관리
-    
-    - Notion을 활용한 데일리 스크럼, 아이디어 회의, 기획안 등 프로젝트 관련업무 기록
-    
-  - **와이어 프레임**
-  - 메인 페이지, 마켓페이지, NFT 상세페이지, NFT 민팅 및 판매 페이지
-  
-- **블록체인 네트워크, 스마트컨트랙트**
-  
-  - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
-  
-  - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
-  
-  - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성, SaleFactory 생성(구매 및 판매))
-  
-  - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
-
-
-  - **프론트엔드**
-    - 메인페이지, 마켓 페이지, 지갑 생성, 토큰 발급 및 조회 페이지, NFT 생성 및 판매 페이지, NFT Exhibition 구현
-
-  
-
-- **조성현**
-
-  **와이어 프레임**
-
-  - 로그인/회원가입 페이지, 전시회 페이지, 개인 전시회 페이지, 프로필 및 마이페이지
-
-  **블록체인 네트워크, 스마트 컨트랙트**
-
-  - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
-  - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
-  - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성)
-  - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
-
-  **프론트엔드**
-
-  - NFT Exhibition, Private Exhibition, Detail 페이지, Profile/Mypage 페이지
-
-  - Dark Mode
-
-    
-
-- **김범주**
-
-  - Entity와 DB 테이블 구축, ERD 다이어그램 구현
-
-  - Spring Boot & JPA를 활용하여 NFT, 마켓, 유저 관련 기능 구현
-
-  - Web3j를 이용하여 SSAFY Network에 연결 및 SSF 조회, 거래 기능 구현
-
-  - EC2 Ubuntu 환경에서 Docker와 Nginx를 활용하여 BE,FE, IPFS 통합 배포 진행
-
-    
-
-- **임창현**
-
-  - Entity와 DB 테이블 Jpa mapping
-  - Spring Boot와 Jpa를 이용한 멤버 관리, 마켓 관리, 전시회 관리, 프로필 이미지 관리 구현
-  - go-ipfs를 이용한 IPFS에 NFT 파일 업로드 구현
-  - Spring Security를 이용한 JWT 발급 및 JWT를 이용한 권한 관리 구현
-  - web3j를 이용한 SSAFY Network와 연결 및 SSF(싸피토큰) 조회, 거래기능 구현
-  - ERD 다이어그램 구현
