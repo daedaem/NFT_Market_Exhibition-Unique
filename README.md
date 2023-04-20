@@ -1,29 +1,23 @@
 # **🏛 Unique - NFT 거래 및 예술관 플랫폼**
 
-
-
 ![image-20220318133428864](README.assets/image-20220318133428864.png)
 
- **예술가들의 NFT를 소개하고 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 NFT 거래 및 예술관 플랫폼**
+**예술가들의 NFT를 소개하고 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 NFT 거래 및 예술관 플랫폼**
 
 # WHEN?
 
 ##### **개발 기간: 2022.02.28~ 2022.04.08**
 
-
-
 # WHO?
 
-### ✨유니크(UNIQUE) 팀원을 소개합니다!
+### ✨유니크(UNIQUE) 팀원을 소개합니다
 
 ---
 
-|                            조해성                            |                            조성현                            |                          **김범주**                          |                            임창현                            |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                                      조해성                                       |                                   조성현                                    |                               **김범주**                                |                                    임창현                                     |
+| :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
 | <img src="README.assets/Cho_haisung.jpg" alt="Cho_haisung" style="width:100px" /> | <img src="README.assets/sunghyun.jpg" alt="sunghyun" style="width:100px" /> | <img src="README.assets/beomju.jpg" alt="beomju" style="width:100px" /> | <img src="README.assets/changhyun.jpg" alt="changhyun" style="width:100px" /> |
-|                      Leader & Frontend                       |                           Frontend                           |                           Backend                            |                           Backend                            |
-
-
+|                                 Leader & Frontend                                 |                                  Frontend                                   |                                 Backend                                 |                                    Backend                                    |
 
 ### 😃 팀원 역할
 
@@ -31,30 +25,28 @@
 
 - **조해성**
 
-  - **프로젝트 관리**
-    - Jira를 활용한 업무 계획 및 프로세스 진행 관리
+  - **프론트엔드**
 
-    - Notion을 활용한 데일리 스크럼, 아이디어 회의, 기획안 등 프로젝트 관련업무 기록
+    - 메인페이지, 마켓 페이지, 지갑 생성, 토큰 발급 및 조회 페이지, NFT 생성 및 판매 페이지, NFT Exhibition 구현
+    - 메인, NFT마켓, NFT 상세페이지, NFT 민팅 등 와이어 프레임
 
-    - **와이어 프레임**
-    - 메인 페이지, 마켓페이지, NFT 상세페이지, NFT 민팅 및 판매 페이지
+    - web3.js를 이용한 SSAFY Network와 클라이언트 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등
 
   - **블록체인 네트워크, 스마트컨트랙트**
+
     - ganache 및 truffle을 활용한 로컬 블록체인 네트워크 구축
 
     - truffle과 javascript를 활용하여 SSAFY 프라이빗 네트워크(Besu)에 스마트 컨트랙트 배포
 
     - Solidity를 활용한 openzeppelin의 토큰 표준 erc20, erc721 기반의 스마트 컨트랙트 구현(NFT 생성, SaleFactory 생성(구매 및 판매))
 
-    - web3.js를 이용한 SSAFY Network와 연결 및 스마트 컨트랙트 호출(NFT 생성, 거래, 지갑 생성 및 조회, 토큰 발행 및 조회 등)
+    - Mocha를 활용한 스마트컨트랙트 테스트 코드 작성
 
+  - **프로젝트 관리**
 
+    - Jira를 활용한 업무 계획 및 프로세스 진행 관리
 
-    - **프론트엔드**
-      - 메인페이지, 마켓 페이지, 지갑 생성, 토큰 발급 및 조회 페이지, NFT 생성 및 판매 페이지, NFT Exhibition 구현
-
-
-  
+    - Notion을 활용한 데일리 스크럼, 아이디어 회의, 기획안 등 프로젝트 관련업무 기록
 
 - **조성현**
 
@@ -75,8 +67,6 @@
 
   - Dark Mode
 
-    
-
 - **김범주**
 
   - Entity와 DB 테이블 구축, ERD 다이어그램 구현
@@ -87,8 +77,6 @@
 
   - EC2 Ubuntu 환경에서 Docker와 Nginx를 활용하여 BE,FE, IPFS 통합 배포 진행
 
-    
-
 - **임창현**
 
   - Entity와 DB 테이블 Jpa mapping
@@ -98,11 +86,9 @@
   - web3j를 이용한 SSAFY Network와 연결 및 SSF(싸피토큰) 조회, 거래기능 구현
   - ERD 다이어그램 구현
 
-
-
 # WHAT?
 
-### **NFT 거래 & 미술관 플랫폼 **
+### **NFT 거래 & 미술관 플랫폼**
 
 - NFT 작가, 작품을 설명하고 비평하고 이해를 도와주는 서비스
 - 누구나 예술가가 되어 자신의 작품을 거래 할 수 있는 서비스
@@ -132,10 +118,10 @@
   <img src="README.assets/Untitled 3.png" alt="Untitled" style="zoom: 67%;" />
 
 출처:
- https://www.chosun.com/economy/tech_it/2021/03/12/NCIINJM5BFEKFNM3O2UVDBDBMI/
-https://www.chosun.com/economy/mint/2021/12/16/264ER3Z5P5CV7ETWRRR4NZB2GI/
-https://www.joongang.co.kr/article/24019914#home
-https://m.joseilbo.com/news/view.htm?newsid=449017
+<https://www.chosun.com/economy/tech_it/2021/03/12/NCIINJM5BFEKFNM3O2UVDBDBMI/>
+<https://www.chosun.com/economy/mint/2021/12/16/264ER3Z5P5CV7ETWRRR4NZB2GI/>
+<https://www.joongang.co.kr/article/24019914#home>
+<https://m.joseilbo.com/news/view.htm?newsid=449017>
 
 ### NFT 작품 가치, 가격에 대한 사람들의 의구심
 
@@ -159,7 +145,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
     <img src="README.assets/Untitled 6.png" alt="Untitled" style="zoom:67%;" />
 
-  출처: https://opensea.io/
+  출처: <https://opensea.io/>
 
 - NFT에 이해도(정보)와 NFT 인식(가치평가)관계
 
@@ -167,7 +153,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
     <img src="README.assets/Untitled 7.png" alt="Untitled" style="zoom:67%;" />
 
-출처: https://www.tokenpost.kr/article-58522
+출처: <https://www.tokenpost.kr/article-58522>
 
 ## 기준 플랫폼 한계
 
@@ -191,8 +177,6 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ---
 
-
-
 # HOW
 
 ### 🎞 서비스 화면
@@ -201,11 +185,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ---
 
-
-
 ![MainPage](README.assets/MainPage.gif)
-
-
 
 #### 1. NFT 민팅 및 마켓
 
@@ -215,7 +195,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ![NFTMarketList](README.assets/NFTMarketList.gif)
 
-##### < NFT 생성 > 
+##### < NFT 생성 >
 
 ![nft생성](README.assets/nft생성.gif)
 
@@ -235,13 +215,9 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ![전시회](README.assets/전시회.gif)
 
-
-
 ##### < Private Exhibition (개인 작가 전시회) 생성 >
 
-![프라이빗_갤러리_생성(test6계정)](README.assets/프라이빗_갤러리_생성(test6계정).gif)
-
-
+![프라이빗_갤러리_생성(test6계정)](<README.assets/프라이빗_갤러리_생성(test6계정).gif>)
 
 #### 3. 회원관리
 
@@ -273,12 +249,9 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 #### 와이어 프레임
 
-
-- [와이어 프레임 보러가기](https://www.figma.com/file/kPGFasAO9c0Lg3TBPQFsGu/Unique(블록체인-P2P-거래)-5팀?node-id=0%3A1)
+- [와이어 프레임 보러가기](<https://www.figma.com/file/kPGFasAO9c0Lg3TBPQFsGu/Unique(블록체인-P2P-거래)-5팀?node-id=0%3A1>)
 
 ![image-20220414004456769](README.assets/image-20220414004456769.png)
-
-
 
 ### 📟ER Diagram
 
@@ -286,22 +259,17 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 ![image-20220318130204009](README.assets/image-20220318130204009.png)
 
-
-
 ### 📄 **기능 정의서**
 
 <hr>
 
 ![image-20220318131841614](README.assets/image-20220318131841614.png)
 
-
-
 ### 🛠 기술 스택
 
 <hr>
 
 **아키텍처 소개**
-
 
 - 사용 기술 스택
   - 배포 환경 : **Nginx.**
@@ -317,8 +285,7 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
   - RESTful API설계를 위한 **Spring boot**
   - NFT id와 기타 데이터를 저장하기 위한 **MYSQL**
 
-
-![Untitled 12](README.assets/Untitled 12.png)
+![아키텍쳐](./README.assets/Untitled%2012.png)
 
 | 기술 스택 | 포트 넘버 |
 | --------- | --------- |
@@ -327,8 +294,6 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 | DB        | 3307      |
 | IPFS      | 5001      |
 | Ganache   | 8545      |
-
-
 
 **싸피 블록체인 노드**
 
@@ -340,15 +305,13 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 
 - 0x6f2A660762d77974506bd933cEB1D66769fc615c
 
-  
-
 ### ✨코드 컨벤션
 
 ---
 
 ```
 - 의미 없는 변수명 X
-	⇒ 유지보수 힘들고, 알아보기 힘드니 반드시 지양! ex) text1, test2
+ ⇒ 유지보수 힘들고, 알아보기 힘드니 반드시 지양! ex) text1, test2
 
 - 메서드 이름은 소문자로 시작하고, 동사로 지으면 좋다! ex) getName()
 
@@ -358,8 +321,6 @@ https://m.joseilbo.com/news/view.htm?newsid=449017
 ```
 
 해당 [Code Convention 가이드](https://udacity.github.io/git-styleguide/), [네이밍 규칙](https://tyboss.tistory.com/entry/Java-자바-네이밍-관습-java-naming-convention)를 참고하여 정했습니다.
-
-
 
 ### ✨Git 컨벤션
 
@@ -379,8 +340,6 @@ Remove:  파일 삭제
 `#`Jira이슈넘버 + 커밋 타입: Jira내용
 ex) S06P22E205-52 feat:[FE] 메인 페이지 - 레이아웃 설정 및 프레임 제작
 ```
-
-
 
 ### 💡Git Flow 브랜치 전략
 
